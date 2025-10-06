@@ -4,7 +4,7 @@ from typing import Dict, List
 from talk_with_wiski.models.base import ExampleBaseModel
 
 
-class Example1Input(ExampleBaseModel):
+class GetParametersInput(ExampleBaseModel):
     """
     Input model for Example1Input tool.
     Currently, no parameters are required, but this can be extended in the future.

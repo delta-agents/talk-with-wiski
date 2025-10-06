@@ -1,9 +1,3 @@
-from urllib import parse
-# import sys
-# sys.argv = [[], "location=Paalberg"]
-# query = sys.argv[1]
-# form = dict(parse.parse_qsl(query))
-
 """
 Example of a tool cal
 """
