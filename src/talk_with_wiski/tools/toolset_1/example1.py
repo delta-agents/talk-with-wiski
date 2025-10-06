@@ -1,18 +1,14 @@
-"""
-Example of a tool cal
-"""
-
 from talk_with_wiski.models.modelset_1.example1 import (
-    Example1Input,
-    Example1Output,
+    AddIndexInput,
+    AddIndexOutput,
 )
 from talk_with_wiski.utils.logging_utils import log_tool_call
 
 
 @log_tool_call
-async def example1(ctx, input: Example1Input) -> Example1Output:
+async def add_index(ctx, input: AddIndexInput) -> AddIndexOutput:
     """
-    Show example1.
+    adds the index to the data provided
     """
     #  you can access any context added to the ctx: Deps object
     ctx.deps.cache_database_db
@@ -20,4 +16,4 @@ async def example1(ctx, input: Example1Input) -> Example1Output:
     new_data = {}
     for val in data:
         new_data[val] = data[val] + input.index
-    return Example1Output(data=new_data, description="Example data")
+    return AddIndexOutput(data=new_data, description="Example data")

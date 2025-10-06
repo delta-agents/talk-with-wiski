@@ -4,17 +4,18 @@ from typing import Dict
 from talk_with_wiski.models.base import ExampleBaseModel
 
 
-class Example1Input(ExampleBaseModel):
+class AddIndexInput(ExampleBaseModel):
     """
-    Input model for Example1Input tool.
-    Currently, no parameters are required, but this can be extended in the future.
+    Input model for AddIndex tool.
+    Requires index as an input.
     """
 
     index: int = Field(
-        ..., description="Index to use in the example tool. smaller than 5"
+        ..., description="Index to use in the add_index tool. smaller than 5"
     )
+    index2: int = Field(2, description="optional Second index to use in the add_index tool, default 2")
 
 
-class Example1Output(BaseModel):
+class AddIndexOutput(BaseModel):
     data: Dict[str, int] = Field(..., description="data dictionary")
     description: str = Field(..., description="Table relationships")

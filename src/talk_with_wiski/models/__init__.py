@@ -1,7 +1,7 @@
 # Config
 from talk_with_wiski.models.modelset_1.example1 import (
-    Example1Input,
-    Example1Output,
+    AddIndexInput,
+    AddIndexOutput,
 )
 
 from talk_with_wiski.models.modelset_2.example2 import (
@@ -11,8 +11,8 @@ from talk_with_wiski.models.modelset_2.example2 import (
 
 
 __all__ = [
-    "Example1Input",
-    "Example1Output",
+    "AddIndexInput",
+    "AddIndexOutput",
     "Example2Input",
     "Example2Output",
 ]

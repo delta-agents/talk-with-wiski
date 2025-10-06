@@ -36,6 +36,16 @@ These are functions called by the tools but are generic and can be used by multi
 
 Here are a couple quick useful things to know when using this repo.
 
+### starting up the mcp server 
+
+`pixi run start`
+
+check if the docs are runnning: http://localhost:8000/docs  \
+
+In `.\vscode\mcp.json` start the server.
+
+To stop: `cntrl+c` and hit stop in the mcp.json file. 
+
 ### Pre-commit
 
 This repo uses pre-commit, make sure you run `pixi run pre-commit` before you commit anything.
