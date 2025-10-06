@@ -1,14 +1,7 @@
-# AI_agents_template
+# Talk with WISKI
 
-This template package contains core functionality for a AI agent package, developed to showcase and speed up the process of developing a AI agent. This AI agent template is developed by HKV and is published under the GNU GPL-3 license.
-
-Search and replace:
-
-- `AI agent`/`AI agents`
-- `AI_agents_template`
-- `AI-agents-template`
-
-with your own names when you start a new project.
+This package contains core functionality for Talk with WISKI.
+Talk with WISKI template is developed by HKV and is published under the GNU GPL-3 license.
 
 ## Project structure
 
@@ -59,7 +52,7 @@ Read bellow for more information on pixi and a quick guideline you can include i
 
 ### Using install
 
-run `pip install AI_agents_template`
+run `pip install talk_with_wiski`
 
 ### developing with pixi
 
@@ -88,10 +81,10 @@ curl -fsSL https://pixi.sh/install.sh | bash
 With the `Pixi` command in powershell install the python environment:
 
 ```bash
- cd ../AI_agents_template
+ cd ../talk_with_wiski
  pixi install
 ```
 
 The `pixi.lock` file loads the correct packages and downloads to the `.pixi` folder.
 
-For questions about how to use this package contact `hoek@hkv.nl` or `haasnoot@hkv.nl`.
+For questions about how to use this package contact `haasnoot@hkv.nl`.

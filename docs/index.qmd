@@ -1,7 +1,7 @@
 ---
-title: "AI agents"
+title: "Talk with WISKI"
 ---
 
-Documentatie voor AI agents.
+Documentatie voor Talk with WISKI.
 
 Dit is ontwikkeld door HKV en wordt gepubliceerd onder de GNU GPL-3 licentie.

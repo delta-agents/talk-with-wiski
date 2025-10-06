@@ -1,8 +1,8 @@
 import pytest
 
-from AI_agents_template.models.modelset_1.example1 import Example1Input, Example1Output
-from AI_agents_template.routers.setup_connections import get_runtime_ctx
-from AI_agents_template.tools.toolset_1.example1 import example1
+from talk_with_wiski.models.modelset_1.example1 import Example1Input, Example1Output
+from talk_with_wiski.routers.setup_connections import get_runtime_ctx
+from talk_with_wiski.tools.toolset_1.example1 import example1
 from tests.utils_tests import setup_dot_env
 
 

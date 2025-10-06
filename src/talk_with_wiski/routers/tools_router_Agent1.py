@@ -1,19 +1,19 @@
 from fastapi import APIRouter
 from fastmcp import FastMCP
-from AI_agents_template.utils.docstring_generator import auto_docstring
-from AI_agents_template.models import (
+from talk_with_wiski.utils.docstring_generator import auto_docstring
+from talk_with_wiski.models import (
     Example1Input,
     Example1Output,
 )
-from AI_agents_template.tools import example1 as example1_pydanctic_ai
+from talk_with_wiski.tools import example1 as example1_pydanctic_ai
 
 # Import tool functions and their models
-from AI_agents_template.routers.setup_connections import get_runtime_ctx
+from talk_with_wiski.routers.setup_connections import get_runtime_ctx
 
 router = APIRouter()
 
 ### in case of authentication
-# from AI_agents_template.routers.setup_connections import setup_env
+# from talk_with_wiski.routers.setup_connections import setup_env
 # from fastmcp.server.auth.providers.jwt import StaticTokenVerifier
 # tokens = setup_env()
 # verifier = StaticTokenVerifier(tokens=tokens, required_scopes=["read:data"])

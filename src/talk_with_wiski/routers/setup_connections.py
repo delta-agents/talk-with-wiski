@@ -3,8 +3,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from pydantic_ai import RunContext
-from AI_agents_template.models.base import Deps
-from AI_agents_template.utils.utils import connect_to_database
+from talk_with_wiski.models.base import Deps
+from talk_with_wiski.utils.utils import connect_to_database
 import duckdb
 
 

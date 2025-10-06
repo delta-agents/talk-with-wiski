@@ -1,16 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.AI_agents_template.routers.tools_router_Agent1 import (
+from src.talk_with_wiski.routers.tools_router_Agent1 import (
     router as router_agent1,
 )
-from src.AI_agents_template.routers.tools_router_Agent1 import (
+from src.talk_with_wiski.routers.tools_router_Agent1 import (
     mcp as mcp_agent1,
 )
-from src.AI_agents_template.routers.tools_router_Agent2 import (
+from src.talk_with_wiski.routers.tools_router_Agent2 import (
     router as router_agent2,
 )
-from src.AI_agents_template.routers.tools_router_Agent2 import (
+from src.talk_with_wiski.routers.tools_router_Agent2 import (
     mcp as mcp_agent2,
 )
 
@@ -43,7 +43,7 @@ async def combined_lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(
-    title="AI Agents Tools API",
+    title="Talk with WISKI Tools API",
     version="0.1.0",
     description="API and MCP server exposing selected tools",
     lifespan=combined_lifespan,

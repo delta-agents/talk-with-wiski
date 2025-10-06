@@ -1,14 +1,14 @@
 from fastapi import APIRouter
 from fastmcp import FastMCP
-from AI_agents_template.utils.docstring_generator import auto_docstring
-from AI_agents_template.models import (
+from talk_with_wiski.utils.docstring_generator import auto_docstring
+from talk_with_wiski.models import (
     Example2Input,
     Example2Output,
 )
-from AI_agents_template.tools import example2 as example1_pydanctic_ai
+from talk_with_wiski.tools import example2 as example1_pydanctic_ai
 
 # Import tool functions and their models
-from AI_agents_template.routers.setup_connections import get_runtime_ctx
+from talk_with_wiski.routers.setup_connections import get_runtime_ctx
 
 router = APIRouter()
 mcp = FastMCP(name="Agent2")

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Dict
 
-from AI_agents_template.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import ExampleBaseModel
 
 
 class Example2Input(ExampleBaseModel):

@@ -1,5 +1,5 @@
 """
-Utility functions for the AI Agent.
+Utility functions for the Talk with WISKI.
 
 This module provides utility functions for connecting to the database and formatting results.
 """

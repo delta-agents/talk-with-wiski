@@ -1,5 +1,5 @@
 """
-Logging utilities for the AI Agent.
+Logging utilities for the Talk with WISKI.
 
 This module defines logging tools used throughout the codebase.
 """

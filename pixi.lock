@@ -1481,19 +1481,6 @@ packages:
   purls: []
   size: 8191
   timestamp: 1744137672556
-- pypi: src
-  name: ai-agents-template
-  version: 0.0.1
-  sha256: 21cd57e085f32495dc019364f48f95f5dfa471c18f1e092e4338aae59dba934d
-  requires_dist:
-  - python-dotenv
-  - openai
-  - pydantic
-  - pydantic-ai
-  - streamlit
-  - pytest
-  - pytest-asyncio
-  editable: true
 - conda: https://conda.anaconda.org/conda-forge/noarch/aiohappyeyeballs-2.6.1-pyhd8ed1ab_0.conda
   sha256: 7842ddc678e77868ba7b92a726b437575b23aaec293bca0d40826f1026d90e27
   md5: 18fd895e0e775622906cdabfc3cf0fb4
@@ -11412,6 +11399,19 @@ packages:
   - pkg:pypi/tabulate?source=hash-mapping
   size: 37554
   timestamp: 1733589854804
+- pypi: src
+  name: talk-with-wiski
+  version: 0.0.1
+  sha256: be1481612337c8e52e088609215101fb13897a7fa6ca3a22bbc3638a2989c068
+  requires_dist:
+  - python-dotenv
+  - openai
+  - pydantic
+  - pydantic-ai
+  - streamlit
+  - pytest
+  - pytest-asyncio
+  editable: true
 - conda: https://conda.anaconda.org/conda-forge/win-64/tbb-2021.13.0-h62715c5_1.conda
   sha256: 03cc5442046485b03dd1120d0f49d35a7e522930a2ab82f275e938e17b07b302
   md5: 9190dd0a23d925f7602f9628b3aed511

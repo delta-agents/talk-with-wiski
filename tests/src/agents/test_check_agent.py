@@ -1,4 +1,4 @@
-from AI_agents_template.agents import AIAgent1, AIAgent2
+from talk_with_wiski.agents import AIAgent1, AIAgent2
 
 
 def test_check_config_agent_import():

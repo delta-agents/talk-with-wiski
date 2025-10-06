@@ -2,11 +2,11 @@
 Example of a tool call
 """
 
-from AI_agents_template.models.modelset_2.example2 import (
+from talk_with_wiski.models.modelset_2.example2 import (
     Example2Input,
     Example2Output,
 )
-from AI_agents_template.utils.logging_utils import log_tool_call
+from talk_with_wiski.utils.logging_utils import log_tool_call
 
 
 @log_tool_call

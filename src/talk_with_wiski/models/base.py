@@ -1,5 +1,5 @@
 """
-Base models for the AI Agent.
+Base models for the Talk with WISKI.
 
 This module defines the base models used by the agent to query and analyze
 """
@@ -87,7 +87,7 @@ class ToolCallTracker:
 
 class Deps:
     """
-    Dependencies for the AI Agent.
+    Dependencies for the Talk with WISKI.
 
     Attributes:
         db_connection: SQLite database connection

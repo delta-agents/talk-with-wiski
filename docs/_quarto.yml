@@ -3,7 +3,7 @@ project:
   type: website
 
 website:
-  title: "AI Agents"
+  title: "Talk with WISKI"
   navbar:
     left:
       - text: "Documentatie"
@@ -13,7 +13,7 @@ website:
         file: reference/index.qmd
     right:
       - icon: github
-        href: https://github.com/HKV-products-services/AI_agents_template
+        href: https://github.com/HKV-products-services/talk_with_wiski
         aria-label: GitHub
       - text: "Contributing"
         file: contributing.qmd
@@ -27,7 +27,7 @@ quartodoc:
   style: pkgdown
   dir: reference
   title: API Reference
-  package: AI_agents_template
+  package: talk_with_wiski
   parser: google
   dynamic: True
   rewrite_all_pages: True
@@ -40,7 +40,7 @@ quartodoc:
   sections:
     - title: Tools
       desc: Beschikbare tools
-      package: AI_agents_template.tools
+      package: talk_with_wiski.tools
       contents:
         - example1
         - example2
