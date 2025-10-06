@@ -8,5 +8,8 @@
       "local-agent2":{
         "url": "http://localhost:8000/mcp/agent2"
       },
+      "local-wiski":{
+        "url": "http://localhost:8000/mcp/wiski"
+      },
     }
   }
