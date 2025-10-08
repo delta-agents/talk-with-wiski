@@ -2,10 +2,10 @@ from fastapi import APIRouter
 from fastmcp import FastMCP
 from talk_with_wiski.utils.docstring_generator import auto_docstring
 from talk_with_wiski.models import (
-    Example1Input,
-    Example1Output,
+    AddIndexInput,
+    AddIndexOutput,
 )
-from talk_with_wiski.tools import example1 as example1_pydanctic_ai
+from talk_with_wiski.tools import add_index as add_index_pydanctic_ai
 
 # Import tool functions and their models
 from talk_with_wiski.routers.setup_connections import get_runtime_ctx
@@ -24,10 +24,10 @@ mcp = FastMCP(name="Agent1")
 
 # describe_timeseries tool registration
 @mcp.tool()
-@router.post("/tools.agent1/example1")
-@auto_docstring("example1")
-async def example1(
-    input: Example1Input,
-) -> Example1Output:
+@router.post("/tools.agent1/add_index")
+@auto_docstring("Tool to add index. Can also be used to subtract if negative numbers are provided.")
+async def add_index(
+    input: AddIndexInput,
+) -> AddIndexOutput:
     ctx = get_runtime_ctx()
-    return await example1_pydanctic_ai(ctx, input)
+    return await add_index_pydanctic_ai(ctx, input)

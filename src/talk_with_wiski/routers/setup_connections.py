@@ -4,7 +4,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 from pydantic_ai import RunContext
 from talk_with_wiski.models.base import Deps
-from talk_with_wiski.utils.utils import connect_to_database
 import duckdb
 
 
@@ -14,8 +13,8 @@ class CtxWithDeps:
 
 
 # Shared/cached context globals
-_db_connection = None
 _cache_database_db = None
+_url = None
 
 
 def setup_env():
@@ -34,23 +33,24 @@ def get_runtime_ctx() -> RunContext:
     """
 
     # See talk-with-fews for user based connections: currently only one config
-    global _db_connection, _cache_database_db
+    global _cache_database_db, _url
 
-    ## here you can make database connections for example
-    db_path = os.environ.get("DB_PATH", "./database.db3")
-    if _db_connection is None:
-        _db_connection = connect_to_database(db_path)
 
     # handle webservice URL
     disable_cache_db = os.environ.get("DISABLE_CACHE", False)
 
+    # TODO: later nog toevoegen aan de environmental variables?
+    if _url is None:
+        _url = os.environ.get("WEB_SERVICE_URL", "http://vpweb600.wsbd.nl:8080/KiWIS/")
+
+    # TODO: later nog toevoegen
     if _cache_database_db is None and not disable_cache_db:
         _cache_database_db = duckdb.connect(database=":memory:", read_only=False)
         _cache_database_db.execute("INSTALL spatial;")
         _cache_database_db.execute("LOAD spatial;")
 
     # combine all three into a Deps object
-    deps = Deps(db_path=db_path, db_connection=_db_connection)
+    deps = Deps(url=_url)
     # for now this is limited to the session
     deps.cache_database_db = _cache_database_db
     return CtxWithDeps(deps)
