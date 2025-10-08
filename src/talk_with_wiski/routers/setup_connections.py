@@ -4,7 +4,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 from pydantic_ai import RunContext
 from talk_with_wiski.models.base import Deps
-from talk_with_wiski.utils.utils import connect_to_database
 import duckdb
 
 
@@ -34,16 +33,15 @@ def get_runtime_ctx() -> RunContext:
     """
 
     # See talk-with-fews for user based connections: currently only one config
-    global _cache_database_db
-    global _url
+    global _cache_database_db, _url
 
 
     # handle webservice URL
     disable_cache_db = os.environ.get("DISABLE_CACHE", False)
 
     # TODO: later nog toevoegen aan de environmental variables?
-    if _url is not None:
-        _url = os.environ.get("WEB_SERVICE_URL", "http://vpweb600.wsbd.nl:8080/KiWIS")
+    if _url is None:
+        _url = os.environ.get("WEB_SERVICE_URL", "http://vpweb600.wsbd.nl:8080/KiWIS/")
 
     # TODO: later nog toevoegen
     if _cache_database_db is None and not disable_cache_db:

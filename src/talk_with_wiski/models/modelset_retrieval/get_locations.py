@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Dict, Any
+from typing import Dict, List
 
 from talk_with_wiski.models.base import ExampleBaseModel
 
@@ -16,5 +16,5 @@ class GetLocationsInput(ExampleBaseModel):
 
 
 class GetLocationsOutput(BaseModel):
-    data: Dict[str, Dict[str, Any]] = Field(..., description="data dictionary")
+    data: List[Dict[str, str]] = Field(..., description="data dictionary")
     description: str = Field(..., description="Table relationships")

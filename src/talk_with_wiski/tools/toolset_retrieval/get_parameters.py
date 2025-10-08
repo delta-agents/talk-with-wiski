@@ -8,6 +8,7 @@ from talk_with_wiski.models.modelset_retrieval.get_parameters import (
 )
 from talk_with_wiski.utils.logging_utils import log_tool_call
 import requests
+import json
 
 @log_tool_call
 async def get_parameters(ctx, location: GetParametersInput) -> GetParametersOutput:
@@ -18,7 +19,7 @@ async def get_parameters(ctx, location: GetParametersInput) -> GetParametersOutp
     url = ctx.deps.url
     endpoint = url + 'KiWIS?datasource=0&service=kisters&type=queryServices&request=getParameterList&format=objson'
     res = requests.get(endpoint)
-    data = dict(res.json())
+    data = list(json.loads(res.text))
 
     # location = location.index
     # data = [
