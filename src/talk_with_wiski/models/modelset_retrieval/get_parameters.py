@@ -10,8 +10,8 @@ class GetParametersInput(ExampleBaseModel):
     Currently, no parameters are required, but this can be extended in the future.
     """
 
-    location: str = Field(
-        ..., description="Location for which to list all available parameters."
+    station_id: str|None = Field(
+        None, description="Location for which to list all available parameters."
     )
 
 

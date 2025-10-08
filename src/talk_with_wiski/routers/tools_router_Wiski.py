@@ -31,7 +31,7 @@ async def get_locations(
 @mcp.tool()
 @router.post("/tools/get_parameters")
 @auto_docstring("get_parameters")
-async def get_locations(
+async def get_parameters(
     input: GetParametersInput,
 ) -> GetParametersOutput:
     # TODO: add authentication passing to the get_runtime

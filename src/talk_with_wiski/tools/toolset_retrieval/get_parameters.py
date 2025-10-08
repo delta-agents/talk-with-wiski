@@ -11,16 +11,27 @@ import requests
 import json
 
 @log_tool_call
-async def get_parameters(ctx, location: GetParametersInput) -> GetParametersOutput:
+async def get_parameters(ctx, station_id: GetParametersInput) -> GetParametersOutput:
     """
     Show available parameters for a measurement station
     """
+
     #  you can access any context added to the ctx: Deps object
     url = ctx.deps.url
-    endpoint = url + 'KiWIS?datasource=0&service=kisters&type=queryServices&request=getParameterList&format=objson'
-    res = requests.get(endpoint)
-    data = list(json.loads(res.text))
+    # endpoint = url + 'KiWIS?datasource=0&service=kisters&type=queryServices&request=getParameterList&format=objson'
+    endpoint = url + 'KiWIS'
+    params={'datasource': '0',
+            'service': 'kisters',
+            'type': 'queryServices',
+            'request': 'getParameterList',
+            'format': 'objson',
+            }
+    if station_id.station_id is not None:
+        params['station_id'] = station_id.station_id
 
+    res = requests.get(endpoint, params=params)
+    data = list(json.loads(res.text))
+    
     # location = location.index
     # data = [
     #     {"parameter": "hoogte", "eenheid": "m"},
