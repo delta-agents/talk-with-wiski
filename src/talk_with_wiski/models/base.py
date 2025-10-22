@@ -90,17 +90,14 @@ class Deps:
     Dependencies for the Talk with WISKI.
 
     Attributes:
-        db_connection: SQLite database connection
-        db_path: Path to the SQLite database
+        url: URL for the web service
     """
 
     def __init__(
         self,
-        db_path: str = None,
-        db_connection: sqlite3.Connection = None,
+        url: str = None,
         tracker: ToolCallTracker = None,
     ):
-        self.db_path = db_path
-        self.db_connection = db_connection
+        self.url = url
         self.tracker = tracker
         self.cache_database_db: Optional[duckdb.DuckDBPyConnection] = None
