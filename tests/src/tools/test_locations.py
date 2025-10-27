@@ -1,3 +1,4 @@
+import os
 import pytest
 import asyncio
 
@@ -18,6 +19,10 @@ def test_context():
     return get_runtime_ctx()
 
 
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Kan alleen lokaal getest worden",
+)
 @pytest.mark.asyncio
 async def test_getlocations_by_station_id_list(test_context):
     """Get station name for (max 5) locations with a certain station_id"""
