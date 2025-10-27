@@ -58,6 +58,7 @@ async def test_getlocations_by_station_id_list(test_context):
     logger.debug(len(output.data))
     logger.debug("\n")
 
+
 @pytest.mark.skipif(
     os.getenv("GITHUB_ACTIONS") == "true",
     reason="Kan alleen lokaal getest worden",
