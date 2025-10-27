@@ -11,14 +11,17 @@ class GetParametersInput(ExampleBaseModel):
     Currently, no parameters are required, but this can be extended in the future.
     """
 
-    station_no: Optional[str|List[str]] = Field(
-        default=None, description="Station number or numbers for which to list all available parameters."
+    station_no: Optional[str | List[str]] = Field(
+        default=None,
+        description="Station number or numbers for which to list all available parameters.",
     )
-    site_no: Optional[str|List[str]] = Field(
-        default=None, description="Site number or numbersfor which to list all available parameters."
+    site_no: Optional[str | List[str]] = Field(
+        default=None,
+        description="Site number or numbersfor which to list all available parameters.",
     )
     parameter_type: Optional[str] = Field(
-        default=None, description="List all available parameters that feature the parameter type. Examples of parameter types are 'debiet', 'waterhoogte' or 'drempelhoogte'"
+        default=None,
+        description="List all available parameters that feature the parameter type. Examples of parameter types are 'debiet', 'waterhoogte' or 'drempelhoogte'",
     )
 
     @model_validator(mode="after")

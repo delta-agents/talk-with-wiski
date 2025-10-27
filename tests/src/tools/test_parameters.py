@@ -24,5 +24,6 @@ async def test_example1(test_context):
 
     res.data
 
+
 if __name__ == "__main__":
     asyncio.run(test_example1(test_context()))

@@ -25,7 +25,9 @@ mcp = FastMCP(name="Agent1")
 # describe_timeseries tool registration
 @mcp.tool()
 @router.post("/tools.agent1/add_index")
-@auto_docstring("Tool to add index. Can also be used to subtract if negative numbers are provided.")
+@auto_docstring(
+    "Tool to add index. Can also be used to subtract if negative numbers are provided."
+)
 async def add_index(
     input: AddIndexInput,
 ) -> AddIndexOutput:
