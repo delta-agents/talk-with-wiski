@@ -27,6 +27,7 @@ async def get_parameters(ctx, input: GetParametersInput) -> GetParametersOutput:
             'type': 'queryServices',
             'request': 'getParameterList',
             'format': 'objson',
+            'returnfields': 'station_name,station_no,station_id,parametertype_id,parametertype_name,stationparameter_name,stationparameter_longname',
             }
 
     # extend url
