@@ -42,5 +42,5 @@ quartodoc:
       desc: Beschikbare tools
       package: talk_with_wiski.tools
       contents:
-        - example1
-        - example2
+        - get_locations
+        - get_parameters
