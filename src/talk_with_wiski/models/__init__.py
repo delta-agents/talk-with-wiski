@@ -19,6 +19,12 @@ from talk_with_wiski.models.modelset_retrieval.get_parameters import (
     GetParametersOutput,
 )
 
+from talk_with_wiski.models.modelset_retrieval.get_group_list import (
+    GetGroupListInput,
+    GetGroupListOutput,
+    GroupItem,
+)
+
 __all__ = [
     "AddIndexInput",
     "AddIndexOutput",
@@ -28,4 +34,7 @@ __all__ = [
     "GetLocationsOutput",
     "GetParametersInput",
     "GetParametersOutput",
+    "GetGroupListInput",
+    "GetGroupListOutput",
+    "GroupItem",
 ]
