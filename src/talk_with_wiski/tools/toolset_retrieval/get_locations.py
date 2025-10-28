@@ -10,6 +10,7 @@ from talk_with_wiski.models.modelset_retrieval.get_locations import (
     GetLocationsOutput,
 )
 from talk_with_wiski.utils.logging_utils import log_tool_call
+from talk_with_wiski.utils.logging_utils import logger
 
 
 @log_tool_call
@@ -44,7 +45,7 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     # filter on WSBDstations by default
     endpoint += "&object_type_shortname=WSBD_*"
 
-    # print(endpoint) # for debugging
+    # logger.debug(endpoint) # for debugging
 
     # call to KiWIS API
     res = requests.get(endpoint)
@@ -56,21 +57,21 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
         item.get("station_id") for item in data if item.get("station_id") is not None
     }
     unique_ids = sorted(list(unique_ids))
-    print("unique station_ids:", unique_ids)
-    print("unique count:", len(unique_ids))
+    logger.debug("unique station_ids:", unique_ids)
+    logger.debug("unique count:", len(unique_ids))
 
     Nstats = 5  # default: max 5 stations teruggeven, tenzij gebruiker dit overschrijft
     if getattr(input, "max_number_of_station_ids", None):
         Nstats = input.max_number_of_station_ids
     # first N sorted station_ids
     firstN_station_ids = unique_ids[:Nstats]
-    print("firstN station_ids:", firstN_station_ids)
+    logger.debug("firstN station_ids:", firstN_station_ids)
 
     # filter data to only items that belong to these top5 station_ids
     filtered_data = [
         item for item in data if item.get("station_id") in firstN_station_ids
     ]
 
-    print("filtered count:", len(filtered_data))
+    logger.debug("filtered count:", len(filtered_data))
 
     return GetLocationsOutput(data=filtered_data, description="Data from KiWIS API")
