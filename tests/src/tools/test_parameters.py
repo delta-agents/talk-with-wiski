@@ -1,3 +1,4 @@
+import os
 import pytest
 import asyncio
 
@@ -14,6 +15,10 @@ def test_context():
     return get_runtime_ctx()
 
 
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Kan alleen lokaal getest worden",
+)
 @pytest.mark.asyncio
 async def test_example1(test_context):
     """Test handling of invalid time ranges"""
@@ -23,6 +28,7 @@ async def test_example1(test_context):
     res: AddIndexOutput = await add_index(test_context, input)
 
     res.data
+
 
 if __name__ == "__main__":
     asyncio.run(test_example1(test_context()))

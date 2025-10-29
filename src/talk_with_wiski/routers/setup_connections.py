@@ -35,7 +35,6 @@ def get_runtime_ctx() -> RunContext:
     # See talk-with-fews for user based connections: currently only one config
     global _cache_database_db, _url
 
-
     # handle webservice URL
     disable_cache_db = os.environ.get("DISABLE_CACHE", False)
 

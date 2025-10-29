@@ -1,0 +1,39 @@
+# Overzicht endoints
+
+| Function | Description | Toevoegen?| Status|
+|----------|-------------| ----------- |-----------|
+| getStationList | retrieves a list of stations with metadata | Ja | Klaar|
+| getParameterList | retrieves a list of parameters available at sites and/or stations | Ja| Klaar|
+| getGroupList | retrieves a list of object groups | Ja - geeft overzicht van beschikbare data types ||
+| getSiteList | retrieves a list of sites with metadata | Ja - koppeling naam en lists - site is anders dan station||
+| getParameterTypeList | retrieves the system defined parameter type list | Ja - koppeling parameter type en naam||
+| getTimeseriesList | retrieves a list of timeseries with metadata | Ja - koppeling naar timeseries beschikbaar||
+| getTimeseriesTypeList | retrieves a timeseries type list | Ja - meer info over type timseries ||
+| getTimeseriesValues | retrieves timeseries data |Ja ||
+| getCatchmentList | retrieves a list of catchments with metadata | Nee - leeg| n.v.t.|
+| getCatchmentHierarchy | retrieves a hierarchical list of catchments with metadata and parent catchments | Nee - zie getCatchmentList |n.v.t.|
+| getRiverList | retrieves a list of rivers and water objects with metadata | Nee - leeg|n.v.t.|
+| getStandardRemarkTypeList | retrieves a hierarchical list of standard remark types | Nee - later wellicht wel |n.v.t.|
+| getRatingCurveList | retrieves a list of rating curves | Nee - voor nu buiten de scope| n.v.t. |
+| getStationLithology | retrieves a list of lithology layers for a station | Nee - leeg | n.v.t.|
+| getStationCasing | retrieves a list of casings for a station | Nee - leeg | n.v.t.|
+| getTimeseriesValueLayer | retrieves timeseries data as layer |Needit is een combi van wat we al hebben,|N.v.t.|
+| getGraphTemplateList | retrieves a list of available graph templates | Nee, graphs vallen voor nu buiten de scope|N.v.t|
+| getGraph | retrieves a graph image of timeseries data  |Nee, graphs vallen voor nu buiten de scope|N.v.t|
+| getStationGraph | retrieves a graph image of timeseries data based on stations | Nee, graphs vallen voor nu buiten de scope|N.v.t|
+| getColorClassifications | retrieves a list of WISKI color classifications | Nee - later wellicht nuttig|N.v.t.|
+| getQualityCodes | retrieves the list of WISKI quality codes |Nee - later wellicht nuttig|N.v.t.|
+| getReleaseStateClasses | retrieves the list of WISKI release state classes |Nee - later wellicht nuttig|N.v.t.|
+| getTimeseriesReleaseStateList | retrieves a list of timeseries release states|Nee - later wellicht nuttig|N.v.t.|
+| getTimeseriesEnsembleValues | retrieves a list of timeseries ensembles with values for one or more timeseries |  Nee |N.v.t|
+| getTimeseriesChanges | retrieves a list of changes for a timeseries |  Nee |N.v.t|
+| getTimeseriesComments | retrieves object comments/remarks|  Nee |N.v.t|
+| checkValueLimit | checks value limitations for time range value requests|  Nee |N.v.t|
+
+Voorbeelden:
+
+[getTimeseriesList](http://vpweb600.wsbd.nl:8080/KiWIS/KiWIS?datasource=0&service=kisters&type=queryServices&request=getTimeseriesList&station_id=155747&returnfields=ts_type_id,station_name,station_no,ts_id,ts_name)
+
+[getTimeseriesTypeList](http://vpweb600.wsbd.nl:8080/KiWIS/KiWIS?datasource=0&service=kisters&type=queryServices&request=getTimeseriesTypeList&ts_type_id=14042)
+
+[getTimeseriesValues](http://vpweb600.wsbd.nl:8080/KiWIS/KiWIS?datasource=0&service=kisters&type=queryServices&request=getTimeseriesValues&ts_id=86052042)

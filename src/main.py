@@ -48,8 +48,6 @@ async def combined_lifespan(app: FastAPI) -> AsyncIterator[None]:
         mcp_app_config.lifespan(mcp_app_config),
         mcp_app_validator.lifespan(mcp_app_validator),
         mcp_app_wiski.lifespan(mcp_app_wiski),
-
-
     ):
         yield
 

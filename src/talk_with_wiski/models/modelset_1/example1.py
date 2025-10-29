@@ -13,7 +13,9 @@ class AddIndexInput(ExampleBaseModel):
     index: int = Field(
         ..., description="Index to use in the add_index tool. smaller than 5"
     )
-    index2: int = Field(2, description="optional Second index to use in the add_index tool, default 2")
+    index2: int = Field(
+        2, description="optional Second index to use in the add_index tool, default 2"
+    )
 
 
 class AddIndexOutput(BaseModel):
