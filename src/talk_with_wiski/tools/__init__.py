@@ -4,6 +4,7 @@ from talk_with_wiski.tools.toolset_2.example2 import example2
 from talk_with_wiski.tools.toolset_retrieval.get_locations import get_locations
 from talk_with_wiski.tools.toolset_retrieval.get_sites import get_sites
 from talk_with_wiski.tools.toolset_retrieval.get_parameters import get_parameters
+from talk_with_wiski.tools.toolset_retrieval.get_group_list import get_group_list
 
 __all__ = [
     add_index,
@@ -11,4 +12,5 @@ __all__ = [
     get_locations,
     get_sites,
     get_parameters,
+    get_group_list,
 ]
