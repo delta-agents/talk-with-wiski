@@ -11,12 +11,26 @@ from talk_with_wiski.models.modelset_retrieval.get_locations import (
 )
 from talk_with_wiski.utils.logging_utils import log_tool_call
 from talk_with_wiski.utils.logging_utils import logger
+from geopy.distance import distance
+
+
+def calculate_bbox_from_geocoding(lon, lat, r=5):
+    """Return (xmin, ymin, xmax, ymax) around a point [lon, lat] within r km."""
+    """Default radius is 5 [km], note that geolocator is not perfectly accurate in NL?!"""
+    """Radius is a float in km"""
+    return [
+        distance(kilometers=r).destination((lat, lon), 270).longitude,  # xmin (west)
+        distance(kilometers=r).destination((lat, lon), 180).latitude,  # ymin (south)
+        distance(kilometers=r).destination((lat, lon), 90).longitude,  # xmax (east)
+        distance(kilometers=r).destination((lat, lon), 0).latitude,  # ymax (north)
+    ]
 
 
 @log_tool_call
 async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     """
     get_locations from WISKI.
+    input.station_no:   list of station_names
     input.station_id:   list of station_ids
     input.returnfields: string of returnfields
     input.bbox:         list of 4 floats defining bbox in lon/lat
@@ -39,13 +53,35 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     if getattr(input, "station_id", None):
         endpoint += "&station_id=" + ",".join(map(str, input.station_id))
 
+    if getattr(input, "station_no", None):
+        endpoint += "&station_no=" + ",".join(map(str, input.station_no))
+
     if getattr(input, "bbox", None):
         endpoint += "&bbox=" + ",".join(map(str, input.bbox))
+
+    if getattr(input, "requested_geolocation", None):
+        from geopy.geocoders import Nominatim
+
+        geolocator = Nominatim(user_agent="talk-with-wiski-notebook")
+        # LET OP @@@
+        logger.debug(input.requested_geolocation)
+        location, radius = input.requested_geolocation
+        radius = float(radius)
+        geo_location = geolocator.geocode(location)
+        logger.debug(geo_location)
+        # print((geo_location.longitude, geo_location.latitude))
+        loc_bbox = calculate_bbox_from_geocoding(
+            geo_location.longitude, geo_location.latitude, r=radius
+        )
+        logger.debug(loc_bbox)
+        endpoint += "&bbox=" + ",".join(map(str, loc_bbox))
 
     # filter on WSBDstations by default
     endpoint += "&object_type_shortname=WSBD_*"
 
-    # logger.debug(endpoint) # for debugging
+    # For debugging
+    logger.debug(endpoint)
+    logger.debug("\n".join(endpoint.split("&")))
 
     # call to KiWIS API
     res = requests.get(endpoint)
