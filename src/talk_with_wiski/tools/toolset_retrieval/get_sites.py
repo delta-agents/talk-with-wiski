@@ -19,10 +19,11 @@ def calculate_bbox_from_geocoding(lon, lat, r=5):
     """Default radius is 5 [km], not that geolocator is not perfectly accurate in NL?!"""
     return [
         distance(kilometers=r).destination((lat, lon), 270).longitude,  # xmin (west)
-        distance(kilometers=r).destination((lat, lon), 180).latitude,   # ymin (south)
-        distance(kilometers=r).destination((lat, lon), 90).longitude,   # xmax (east)
-        distance(kilometers=r).destination((lat, lon), 0).latitude      # ymax (north)
+        distance(kilometers=r).destination((lat, lon), 180).latitude,  # ymin (south)
+        distance(kilometers=r).destination((lat, lon), 90).longitude,  # xmax (east)
+        distance(kilometers=r).destination((lat, lon), 0).latitude,  # ymax (north)
     ]
+
 
 @log_tool_call
 async def get_sites(ctx, input: GetSitesInput) -> GetSitesOutput:
@@ -74,19 +75,19 @@ async def get_sites(ctx, input: GetSitesInput) -> GetSitesOutput:
     #     )
     #     print(loc_bbox)
     #     endpoint += "&bbox=" + ",".join(map(str, loc_bbox))
-        
+
     # filter on WSBDstations by default
     # dit moet alleen voor stations, niet voor sites
     # endpoint += "&object_type_shortname=WSBD_*"
 
     # For debugging
-    #print(endpoint)
+    # print(endpoint)
 
     # call to KiWIS API
     res = requests.get(endpoint)
     # maak er een json object van om terug te geven (default)
     data = list(json.loads(res.text))
-    
+
     # get unique site_ids
     unique_ids = {
         item.get("site_id") for item in data if item.get("site_id") is not None
@@ -103,9 +104,7 @@ async def get_sites(ctx, input: GetSitesInput) -> GetSitesOutput:
     logger.debug("firstN site_ids:", firstN_site_ids)
 
     # filter data to only items that belong to these top5 site_ids
-    filtered_data = [
-        item for item in data if item.get("site_id") in firstN_site_ids
-    ]
+    filtered_data = [item for item in data if item.get("site_id") in firstN_site_ids]
 
     logger.debug("filtered count:", len(filtered_data))
 

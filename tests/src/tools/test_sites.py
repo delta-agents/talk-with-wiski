@@ -34,9 +34,7 @@ async def test_getsites_by_site_id_list(test_context):
     logger.debug("\n")
 
     logger.debug("Test 2: single station, specific returnfields")
-    input = GetSitesInput(
-        site_id=[48290], returnfields="site_no,site_id,site_name"
-    )
+    input = GetSitesInput(site_id=[48290], returnfields="site_no,site_id,site_name")
     output: GetSitesOutput = await get_sites(test_context, input)
     logger.debug(output.data)
     logger.debug(len(output.data))

@@ -45,8 +45,8 @@ def get_runtime_ctx() -> RunContext:
     # TODO: later nog toevoegen
     if _cache_database_db is None and not disable_cache_db:
         _cache_database_db = duckdb.connect(database=":memory:", read_only=False)
-        #_cache_database_db.execute("INSTALL spatial;")
-        #_cache_database_db.execute("LOAD spatial;")
+        # _cache_database_db.execute("INSTALL spatial;")
+        # _cache_database_db.execute("LOAD spatial;")
 
     # combine all three into a Deps object
     deps = Deps(url=_url)

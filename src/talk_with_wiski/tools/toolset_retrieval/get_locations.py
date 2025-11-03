@@ -20,10 +20,11 @@ def calculate_bbox_from_geocoding(lon, lat, r=5):
     """Radius is a float in km"""
     return [
         distance(kilometers=r).destination((lat, lon), 270).longitude,  # xmin (west)
-        distance(kilometers=r).destination((lat, lon), 180).latitude,   # ymin (south)
-        distance(kilometers=r).destination((lat, lon), 90).longitude,   # xmax (east)
-        distance(kilometers=r).destination((lat, lon), 0).latitude      # ymax (north)
+        distance(kilometers=r).destination((lat, lon), 180).latitude,  # ymin (south)
+        distance(kilometers=r).destination((lat, lon), 90).longitude,  # xmax (east)
+        distance(kilometers=r).destination((lat, lon), 0).latitude,  # ymax (north)
     ]
+
 
 @log_tool_call
 async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
@@ -60,18 +61,17 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
 
     if getattr(input, "requested_geolocation", None):
         from geopy.geocoders import Nominatim
+
         geolocator = Nominatim(user_agent="talk-with-wiski-notebook")
         # LET OP @@@
         logger.debug(input.requested_geolocation)
         location, radius = input.requested_geolocation
-        radius=float(radius)
+        radius = float(radius)
         geo_location = geolocator.geocode(location)
         logger.debug(geo_location)
-        #print((geo_location.longitude, geo_location.latitude))
-        loc_bbox=calculate_bbox_from_geocoding(
-            geo_location.longitude,
-            geo_location.latitude,
-            r=radius
+        # print((geo_location.longitude, geo_location.latitude))
+        loc_bbox = calculate_bbox_from_geocoding(
+            geo_location.longitude, geo_location.latitude, r=radius
         )
         logger.debug(loc_bbox)
         endpoint += "&bbox=" + ",".join(map(str, loc_bbox))
@@ -81,7 +81,7 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
 
     # For debugging
     logger.debug(endpoint)
-    logger.debug('\n'.join(endpoint.split('&')))
+    logger.debug("\n".join(endpoint.split("&")))
 
     # call to KiWIS API
     res = requests.get(endpoint)

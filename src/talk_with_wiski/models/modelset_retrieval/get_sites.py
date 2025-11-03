@@ -26,7 +26,7 @@ class GetSitesInput(ExampleBaseModel):
         default="site_no,site_id,site_uuid,site_name,site_longname,site_latitude,site_longitude,site_type_name,site_type_shortname",
         description="Returnfields from API as string",
     )
-    
+
     # DEZE WERKEN NIET OP sites (wel op stations)
     # requested_geolocation: Optional[List[str | float]] = Field(
     #     default=None,

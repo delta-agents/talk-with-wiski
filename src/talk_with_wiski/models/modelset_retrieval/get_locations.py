@@ -25,10 +25,10 @@ class GetLocationsInput(ExampleBaseModel):
     max_number_of_station_ids: Optional[int] = Field(
         default=None,
         description="Maximum number is by default 5. If more required, increase this number",
-        #default=10,  # verhoogd van None naar 10
-        #description="Maximum number of station_ids to return (default: 10)",
-        #ge=1,  # minimum value of 1
-        #le=100  # maximum value of 100   
+        # default=10,  # verhoogd van None naar 10
+        # description="Maximum number of station_ids to return (default: 10)",
+        # ge=1,  # minimum value of 1
+        # le=100  # maximum value of 100
     )
     returnfields: Optional[str] = Field(
         default="station_no,station_id,station_name,station_latitude,station_longitude,site_id,site_name,parametertype_id,stationparameter_name,stationparameter_id,object_type,object_type_shortname",

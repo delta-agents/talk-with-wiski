@@ -105,7 +105,7 @@ async def test_getlocations_by_bbox(test_context):
     logger.debug("Test 5: stations, using a geocoding")
 
     input = GetLocationsInput(
-        requested_geolocation=['Loon op Zand',5.0],
+        requested_geolocation=["Loon op Zand", 5.0],
         returnfields="station_id,station_name,station_latitude,station_longitude",
     )
     output: GetLocationsOutput = await get_locations(test_context, input)
