@@ -14,7 +14,9 @@ import json
 
 
 @log_tool_call
-async def get_parametertype_list(ctx, input: GetParametertypeListInput) -> GetParametertypeListOutput:
+async def get_parametertype_list(
+    ctx, input: GetParametertypeListInput
+) -> GetParametertypeListOutput:
     """
     Show list of available parametertypes, either get id or list of parameters using a wildcard
     """
@@ -34,19 +36,23 @@ async def get_parametertype_list(ctx, input: GetParametertypeListInput) -> GetPa
         endpoint += "&parametertype_id=" + ",".join(map(str, input.parametertype_id))
 
     if getattr(input, "parametertype_name", None):
-        endpoint += "&parametertype_name=" + ",".join(map(str, input.parametertype_name))
+        endpoint += "&parametertype_name=" + ",".join(
+            map(str, input.parametertype_name)
+        )
 
     # For debugging
     logger.debug(endpoint)
     logger.debug("\n".join(endpoint.split("&")))
-    
+
     # call to KiWIS API
     res = requests.get(endpoint)
     # maak er een json object van om terug te geven (default)
     data = json.loads(res.text)
-    
-    #for d in data:
+
+    # for d in data:
     #    d['parametertype_id'] = int(d['parametertype_id'])
     logger.debug(data)
-    
-    return GetParametertypeListOutput(data=data, description="ParametertypeList obtained from KiWIS API")
+
+    return GetParametertypeListOutput(
+        data=data, description="ParametertypeList obtained from KiWIS API"
+    )

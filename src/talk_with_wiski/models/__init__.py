@@ -35,6 +35,16 @@ from talk_with_wiski.models.modelset_retrieval.get_parametertype_list import (
     GetParametertypeListOutput,
 )
 
+from talk_with_wiski.models.modelset_retrieval.get_timeseries_list import (
+    GetTimeseriesListInput,
+    GetTimeseriesListOutput,
+)
+
+from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import (
+    GetTimeseriesValuesInput,
+    GetTimeseriesValuesOutput,
+)
+
 __all__ = [
     "AddIndexInput",
     "AddIndexOutput",
@@ -51,4 +61,8 @@ __all__ = [
     "GroupItem",
     "GetParametertypeListInput",
     "GetParametertypeListOutput",
+    "GetTimeseriesListInput",
+    "GetTimeseriesListOutput",
+    "GetTimeseriesValuesInput",
+    "GetTimeseriesValuesOutput",
 ]
