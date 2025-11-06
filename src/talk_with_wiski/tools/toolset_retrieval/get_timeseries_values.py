@@ -10,8 +10,11 @@ from talk_with_wiski.utils.logging_utils import log_tool_call
 import requests
 import json
 
+
 @log_tool_call
-async def get_timeseries_values(ctx, input: GetTimeseriesValuesInput) -> GetTimeseriesValuesOutput:
+async def get_timeseries_values(
+    ctx, input: GetTimeseriesValuesInput
+) -> GetTimeseriesValuesOutput:
     """
     Show the timeseries data
     """
@@ -47,7 +50,7 @@ async def get_timeseries_values(ctx, input: GetTimeseriesValuesInput) -> GetTime
 
     if input.futureperiod is not None:
         params["futureperiod"] = input.futureperiod
-    
+
     # requst data
     res = requests.get(endpoint, params=params)
     data = list(json.loads(res.text))

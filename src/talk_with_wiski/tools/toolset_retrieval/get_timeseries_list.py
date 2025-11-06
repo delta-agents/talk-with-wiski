@@ -10,8 +10,11 @@ from talk_with_wiski.utils.logging_utils import log_tool_call
 import requests
 import json
 
+
 @log_tool_call
-async def get_timeseries_list(ctx, input: GetTimeseriesListInput) -> GetTimeseriesListOutput:
+async def get_timeseries_list(
+    ctx, input: GetTimeseriesListInput
+) -> GetTimeseriesListOutput:
     """
     Show a list of available timeseries with metadata
     """

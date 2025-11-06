@@ -42,9 +42,7 @@ class GetTimeseriesValuesInput(ExampleBaseModel):
             values.futureperiod,
         )
         if not ts_id:
-            raise ModelRetry(
-                "'ts_id' must be provided."
-            )
+            raise ModelRetry("'ts_id' must be provided.")
         elif not (from_date or to_date or period or futureperiod):
             raise ModelRetry(
                 "At least one of the arguments 'from', 'to', 'period' or 'futureperiod' must be provided."
