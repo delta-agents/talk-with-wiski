@@ -33,25 +33,25 @@ async def test_getlocations_by_station_id_list(test_context):
     #   station_no,station_id,station_name,station_latitude,station_longitude,site_id,site_name,parametertype_id,stationparameter_name,stationparameter_id,object_type,object_type_shortname
     # Default returnfields: only station_name
 
-    logger.debug("Test 1 stations, all relevant returnfields")
+    logger.debug("Test 1: stations, all relevant returnfields")
     input = GetLocationsInput(station_id=[56620, 68870])
     output: GetLocationsOutput = await get_locations(test_context, input)
     logger.debug(output.data)
     logger.debug(len(output.data))
     logger.debug("\n")
 
-    logger.debug("Test 2 station")
+    logger.debug("Test 2: single station, specific returnfields")
     input = GetLocationsInput(
-        station_id=[56620], returnfields="station_id,station_name"
+        station_id=[56620], returnfields="station_no,station_id,station_name"
     )
     output: GetLocationsOutput = await get_locations(test_context, input)
     logger.debug(output.data)
     logger.debug(len(output.data))
     logger.debug("\n")
 
-    logger.debug("Test 3 stations")
+    logger.debug("Test 3: combination")
     input = GetLocationsInput(
-        station_id=[56620, 68870], returnfields="station_id,station_name"
+        station_id=[56620, 68870], returnfields="station_no,station_id,station_name"
     )
     output: GetLocationsOutput = await get_locations(test_context, input)
     logger.debug(output.data)
@@ -101,6 +101,24 @@ async def test_getlocations_by_bbox(test_context):
     # assert len(output.data)==7
     logger.debug(len(output.data))
     logger.debug("\n")
+
+
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Kan alleen lokaal getest worden",
+)
+@pytest.mark.asyncio
+async def test_getlocations_by_geocodeing(test_context):
+    logger.debug("Test 5: stations, using a geocoding")
+
+    input = GetLocationsInput(
+        requested_geolocation=["Loon op Zand", 5.0],
+        returnfields="station_id,station_name,station_latitude,station_longitude",
+    )
+    output: GetLocationsOutput = await get_locations(test_context, input)
+    logger.debug(output.data)
+    assert len(output.data) == 5
+    logger.debug(len(output.data))
 
 
 if __name__ == "__main__":

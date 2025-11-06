@@ -8,7 +8,7 @@ path = "talk_with_wiski/__init__.py"
 [tool.hatch.build.targets.wheel]
 packages = ["talk_with_wiski"]
 
-[workspace]
+[project]
 name = "talk_with_wiski"
 version = "0.0.1"
 description = "Python package template"

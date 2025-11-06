@@ -3,7 +3,9 @@ Tool to getStationList from KiWIS API
 Different parameters can be specified to build the getrequest string
 """
 
+import hashlib
 import json
+from time import sleep
 import requests
 from talk_with_wiski.models.modelset_retrieval.get_locations import (
     GetLocationsInput,
@@ -11,12 +13,30 @@ from talk_with_wiski.models.modelset_retrieval.get_locations import (
 )
 from talk_with_wiski.utils.logging_utils import log_tool_call
 from talk_with_wiski.utils.logging_utils import logger
+from geopy.distance import distance
+from datetime import datetime
+import urllib3
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
+
+
+def calculate_bbox_from_geocoding(lon, lat, r=5):
+    """Return (xmin, ymin, xmax, ymax) around a point [lon, lat] within r km."""
+    """Default radius is 5 [km], note that geolocator is not perfectly accurate in NL?!"""
+    """Radius is a float in km"""
+    return [
+        distance(kilometers=r).destination((lat, lon), 270).longitude,  # xmin (west)
+        distance(kilometers=r).destination((lat, lon), 180).latitude,  # ymin (south)
+        distance(kilometers=r).destination((lat, lon), 90).longitude,  # xmax (east)
+        distance(kilometers=r).destination((lat, lon), 0).latitude,  # ymax (north)
+    ]
 
 
 @log_tool_call
 async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     """
     get_locations from WISKI.
+    input.station_no:   list of station_names
     input.station_id:   list of station_ids
     input.returnfields: string of returnfields
     input.bbox:         list of 4 floats defining bbox in lon/lat
@@ -39,13 +59,45 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     if getattr(input, "station_id", None):
         endpoint += "&station_id=" + ",".join(map(str, input.station_id))
 
+    if getattr(input, "station_no", None):
+        endpoint += "&station_no=" + ",".join(map(str, input.station_no))
+
     if getattr(input, "bbox", None):
         endpoint += "&bbox=" + ",".join(map(str, input.bbox))
+
+    if getattr(input, "requested_geolocation", None):
+        try:
+            changing_var = hashlib.md5(datetime.now().isoformat().encode()).hexdigest()
+            geolocator = Nominatim(
+                user_agent=f"talk-with-wiski-notebook-{changing_var}"
+            )
+            # LET OP @@@
+            logger.debug(input.requested_geolocation)
+            location, radius = input.requested_geolocation
+            radius = float(radius)
+            geo_location = do_geocode(location, geolocator)
+
+        except urllib3.exceptions.MaxRetryError as e:
+            logger.warning(f"Geocoding failed: {e}")
+            return GetLocationsOutput(
+                data=[],
+                description="Geocoding failed, maximum request retries exceeded",
+            )
+
+        logger.debug(geo_location)
+        # print((geo_location.longitude, geo_location.latitude))
+        loc_bbox = calculate_bbox_from_geocoding(
+            geo_location.longitude, geo_location.latitude, r=radius
+        )
+        logger.debug(loc_bbox)
+        endpoint += "&bbox=" + ",".join(map(str, loc_bbox))
 
     # filter on WSBDstations by default
     endpoint += "&object_type_shortname=WSBD_*"
 
-    # logger.debug(endpoint) # for debugging
+    # For debugging
+    logger.debug(endpoint)
+    logger.debug("\n".join(endpoint.split("&")))
 
     # call to KiWIS API
     res = requests.get(endpoint)
@@ -75,3 +127,15 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     logger.debug("filtered count:", len(filtered_data))
 
     return GetLocationsOutput(data=filtered_data, description="Data from KiWIS API")
+
+
+def do_geocode(address, geolocator, attempt=1, max_attempts=10):
+    try:
+        return geolocator.geocode(address)
+    except GeocoderTimedOut:
+        sleep(0.5)
+        if attempt <= max_attempts:
+            return do_geocode(
+                address, geolocator, attempt=attempt + 1, max_attempts=max_attempts
+            )
+        raise

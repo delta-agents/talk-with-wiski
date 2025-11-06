@@ -14,9 +14,25 @@ from talk_with_wiski.models.modelset_retrieval.get_locations import (
     GetLocationsOutput,
 )
 
+from talk_with_wiski.models.modelset_retrieval.get_sites import (
+    GetSitesInput,
+    GetSitesOutput,
+)
+
 from talk_with_wiski.models.modelset_retrieval.get_parameters import (
     GetParametersInput,
     GetParametersOutput,
+)
+
+from talk_with_wiski.models.modelset_retrieval.get_group_list import (
+    GetGroupListInput,
+    GetGroupListOutput,
+    GroupItem,
+)
+
+from talk_with_wiski.models.modelset_retrieval.get_parametertype_list import (
+    GetParametertypeListInput,
+    GetParametertypeListOutput,
 )
 
 __all__ = [
@@ -26,6 +42,13 @@ __all__ = [
     "Example2Output",
     "GetLocationsInput",
     "GetLocationsOutput",
+    "GetSitesInput",
+    "GetSitesOutput",
     "GetParametersInput",
     "GetParametersOutput",
+    "GetGroupListInput",
+    "GetGroupListOutput",
+    "GroupItem",
+    "GetParametertypeListInput",
+    "GetParametertypeListOutput",
 ]
