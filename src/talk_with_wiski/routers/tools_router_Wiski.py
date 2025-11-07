@@ -112,6 +112,7 @@ async def get_timeseries_values(
     ctx = get_runtime_ctx()
     return await get_timeseries_values_pydantic_ai(ctx, input)
 
+
 @mcp.tool()
 @router.post("/tools/get_timeseries_type")
 @auto_docstring("Retrieves the timeseries data from the WISKI API")
@@ -120,4 +121,3 @@ async def get_timeseries_type(
 ) -> GetTimeseriesTypeOutput:
     ctx = get_runtime_ctx()
     return await get_timeseries_type_pydantic_ai(ctx, input)
-
