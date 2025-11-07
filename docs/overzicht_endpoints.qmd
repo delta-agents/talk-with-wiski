@@ -2,14 +2,14 @@
 
 | Function | Description | Toevoegen?| Status|
 |----------|-------------| ----------- |-----------|
-| getStationList | retrieves a list of stations with metadata | Ja | Klaar|
-| getParameterList | retrieves a list of parameters available at sites and/or stations | Ja| Klaar|
-| getGroupList | retrieves a list of object groups | Ja - geeft overzicht van beschikbare data types ||
-| getSiteList | retrieves a list of sites with metadata | Ja - koppeling naam en lists - site is anders dan station||
-| getParameterTypeList | retrieves the system defined parameter type list | Ja - koppeling parameter type en naam||
-| getTimeseriesList | retrieves a list of timeseries with metadata | Ja - koppeling naar timeseries beschikbaar||
-| getTimeseriesTypeList | retrieves a timeseries type list | Ja - meer info over type timseries ||
-| getTimeseriesValues | retrieves timeseries data |Ja ||
+| getStationList | retrieves a list of stations with metadata | Ja | Beschikbaar via tool|
+| getParameterList | retrieves a list of parameters available at sites and/or stations | Ja| Beschikbaar via tool|
+| getGroupList | retrieves a list of object groups | Ja - geeft overzicht van beschikbare data types |Beschikbaar via tool|
+| getSiteList | retrieves a list of sites with metadata | Ja - koppeling naam en lists - site is anders dan station|Beschikbaar via tool|
+| getParameterTypeList | retrieves the system defined parameter type list | Ja - koppeling parameter type en naam|Beschikbaar via tool|
+| getTimeseriesList | retrieves a list of timeseries with metadata | Ja - koppeling naar timeseries beschikbaar|Beschikbaar via tool|
+| getTimeseriesTypeList | retrieves a timeseries type list | Ja - meer info over type timseries |Beschikbaar via tool|
+| getTimeseriesValues | retrieves timeseries data |Ja |Beschikbaar via tool|
 | getCatchmentList | retrieves a list of catchments with metadata | Nee - leeg| n.v.t.|
 | getCatchmentHierarchy | retrieves a hierarchical list of catchments with metadata and parent catchments | Nee - zie getCatchmentList |n.v.t.|
 | getRiverList | retrieves a list of rivers and water objects with metadata | Nee - leeg|n.v.t.|

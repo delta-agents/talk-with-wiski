@@ -10,11 +10,24 @@ from talk_with_wiski.models import (
     GetGroupListOutput,
     GetSitesInput,
     GetSitesOutput,
+    GetParametertypeListInput,
+    GetParametertypeListOutput,
+    GetTimeseriesListInput,
+    GetTimeseriesListOutput,
+    GetTimeseriesValuesInput,
+    GetTimeseriesValuesOutput,
 )
 from talk_with_wiski.tools import get_locations as get_locations_pydantic_ai
 from talk_with_wiski.tools import get_parameters as get_parameters_pydantic_ai
 from talk_with_wiski.tools import get_group_list as get_group_list_pydantic_ai
 from talk_with_wiski.tools import get_sites as get_sites_pydantic_ai
+from talk_with_wiski.tools import get_timeseries_list as get_timeseries_list_pydantic_ai
+from talk_with_wiski.tools import (
+    get_timeseries_values as get_timeseries_values_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    get_parametertype_list as get_parametertype_list_pydantic_ai,
+)
 
 # Import tool functions and their models
 from talk_with_wiski.routers.setup_connections import get_runtime_ctx
@@ -66,3 +79,36 @@ async def get_group_list(
     # TODO: add authentication passing to the get_runtime
     ctx = get_runtime_ctx()
     return await get_group_list_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/get_parametertype_list")
+@auto_docstring("Retrieves the parametertype list from the WISKI API")
+async def get_parametertype_list(
+    input: GetParametertypeListInput,
+) -> GetParametertypeListOutput:
+    # TODO: add authentication passing to the get_runtime
+    ctx = get_runtime_ctx()
+    return await get_parametertype_list_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/get_timeseries_list")
+@auto_docstring("Retrieves the available timeseries from the WISKI API")
+async def get_timeseries_list(
+    input: GetTimeseriesListInput,
+) -> GetTimeseriesListOutput:
+    # TODO: add authentication passing to the get_runtime
+    ctx = get_runtime_ctx()
+    return await get_timeseries_list_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/get_timeseries_values")
+@auto_docstring("Retrieves the timeseries data from the WISKI API")
+async def get_timeseries_values(
+    input: GetTimeseriesValuesInput,
+) -> GetTimeseriesValuesOutput:
+    # TODO: add authentication passing to the get_runtime
+    ctx = get_runtime_ctx()
+    return await get_timeseries_values_pydantic_ai(ctx, input)

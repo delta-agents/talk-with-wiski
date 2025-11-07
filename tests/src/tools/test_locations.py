@@ -102,6 +102,13 @@ async def test_getlocations_by_bbox(test_context):
     logger.debug(len(output.data))
     logger.debug("\n")
 
+
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Kan alleen lokaal getest worden",
+)
+@pytest.mark.asyncio
+async def test_getlocations_by_geocodeing(test_context):
     logger.debug("Test 5: stations, using a geocoding")
 
     input = GetLocationsInput(
@@ -110,9 +117,8 @@ async def test_getlocations_by_bbox(test_context):
     )
     output: GetLocationsOutput = await get_locations(test_context, input)
     logger.debug(output.data)
-    # assert len(output.data)==7
+    assert len(output.data) == 5
     logger.debug(len(output.data))
-    logger.debug("\n")
 
 
 if __name__ == "__main__":

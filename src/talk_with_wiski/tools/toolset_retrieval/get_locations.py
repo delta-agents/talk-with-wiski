@@ -3,7 +3,9 @@ Tool to getStationList from KiWIS API
 Different parameters can be specified to build the getrequest string
 """
 
+import hashlib
 import json
+from time import sleep
 import requests
 from talk_with_wiski.models.modelset_retrieval.get_locations import (
     GetLocationsInput,
@@ -12,6 +14,10 @@ from talk_with_wiski.models.modelset_retrieval.get_locations import (
 from talk_with_wiski.utils.logging_utils import log_tool_call
 from talk_with_wiski.utils.logging_utils import logger
 from geopy.distance import distance
+from datetime import datetime
+import urllib3
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
 
 
 def calculate_bbox_from_geocoding(lon, lat, r=5):
@@ -60,14 +66,24 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
         endpoint += "&bbox=" + ",".join(map(str, input.bbox))
 
     if getattr(input, "requested_geolocation", None):
-        from geopy.geocoders import Nominatim
+        try:
+            changing_var = hashlib.md5(datetime.now().isoformat().encode()).hexdigest()
+            geolocator = Nominatim(
+                user_agent=f"talk-with-wiski-notebook-{changing_var}"
+            )
+            # LET OP @@@
+            logger.debug(input.requested_geolocation)
+            location, radius = input.requested_geolocation
+            radius = float(radius)
+            geo_location = do_geocode(location, geolocator)
 
-        geolocator = Nominatim(user_agent="talk-with-wiski-notebook")
-        # LET OP @@@
-        logger.debug(input.requested_geolocation)
-        location, radius = input.requested_geolocation
-        radius = float(radius)
-        geo_location = geolocator.geocode(location)
+        except urllib3.exceptions.MaxRetryError as e:
+            logger.warning(f"Geocoding failed: {e}")
+            return GetLocationsOutput(
+                data=[],
+                description="Geocoding failed, maximum request retries exceeded",
+            )
+
         logger.debug(geo_location)
         # print((geo_location.longitude, geo_location.latitude))
         loc_bbox = calculate_bbox_from_geocoding(
@@ -111,3 +127,15 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     logger.debug("filtered count:", len(filtered_data))
 
     return GetLocationsOutput(data=filtered_data, description="Data from KiWIS API")
+
+
+def do_geocode(address, geolocator, attempt=1, max_attempts=10):
+    try:
+        return geolocator.geocode(address)
+    except GeocoderTimedOut:
+        sleep(0.5)
+        if attempt <= max_attempts:
+            return do_geocode(
+                address, geolocator, attempt=attempt + 1, max_attempts=max_attempts
+            )
+        raise
