@@ -27,11 +27,12 @@ def test_context():
 async def test_get_parametertype_list(test_context):
     """Test handling of invalid time ranges"""
     # Test end time before start time
-    #input = GetParametertypeListInput(parametertype_name=['Evaporation','WNS*'])
-    input = GetParametertypeListInput(parametertype_name=['Evaporation'])
+    # input = GetParametertypeListInput(parametertype_name=['Evaporation','WNS*'])
+    input = GetParametertypeListInput(parametertype_name=["Evaporation"])
 
-    output: GetParametertypeListOutput = await get_parametertype_list(test_context, input)
+    output: GetParametertypeListOutput = await get_parametertype_list(
+        test_context, input
+    )
 
     assert len(output.data) > 0  # by default
     assert "ParametertypeList obtained from KiWIS API" in output.description
-

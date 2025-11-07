@@ -5,13 +5,13 @@ import asyncio
 from talk_with_wiski.models.modelset_1.example1 import AddIndexInput, AddIndexOutput
 from talk_with_wiski.routers.setup_connections import get_runtime_ctx
 from talk_with_wiski.tools.toolset_1.example1 import add_index
-from tests.utils_tests import setup_dot_env
+# from tests.utils_tests import setup_dot_env
 
 
-@pytest.fixture
+# @pytest.fixture
 def test_context():
     """Create a test context with FEWS webservice URL"""
-    setup_dot_env()
+    # setup_dot_env()
     return get_runtime_ctx()
 
 
