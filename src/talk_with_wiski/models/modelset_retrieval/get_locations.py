@@ -6,8 +6,7 @@ from talk_with_wiski.models.base import ExampleBaseModel
 
 class GetLocationsInput(ExampleBaseModel):
     """
-    Input model for Example1Input tool.
-    Currently, no parameters are required, but this can be extended in the future.
+    Input model for get_locations tool.
     """
 
     requested_geolocation: Optional[List[str | float]] = Field(

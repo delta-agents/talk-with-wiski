@@ -7,8 +7,7 @@ from talk_with_wiski.models.base import ExampleBaseModel
 
 class GetParametertypeListInput(ExampleBaseModel):
     """
-    Input model for Example1Input tool.
-    Currently, no parameters are required, but this can be extended in the future.
+    Input model for get_parameter_type_list tool.
     """
 
     parametertype_id: Optional[List[int]] = Field(
@@ -41,6 +40,10 @@ class GetParametertypeListInput(ExampleBaseModel):
 
 
 class GetParametertypeListOutput(BaseModel):
+    """
+    Output model for get_parameter_type_list tool.
+    """
+
     data: List[Dict[str, str]] = Field(
         ...,
         description="List containing dictionaries with pairs of parametertype_id and parametertype_name",

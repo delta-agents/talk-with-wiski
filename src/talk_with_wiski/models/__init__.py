@@ -45,6 +45,12 @@ from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import (
     GetTimeseriesValuesOutput,
 )
 
+from talk_with_wiski.models.modelset_retrieval.get_timeseries_type import (
+    GetTimeseriesTypeInput,
+    GetTimeseriesTypeOutput,
+    TimeseriesType,
+)
+
 __all__ = [
     "AddIndexInput",
     "AddIndexOutput",
@@ -65,4 +71,7 @@ __all__ = [
     "GetTimeseriesListOutput",
     "GetTimeseriesValuesInput",
     "GetTimeseriesValuesOutput",
+    "GetTimeseriesTypeInput",
+    "GetTimeseriesTypeOutput",
+    "TimeseriesType",
 ]

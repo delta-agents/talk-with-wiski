@@ -6,8 +6,7 @@ from talk_with_wiski.models.base import ExampleBaseModel
 
 class GetSitesInput(ExampleBaseModel):
     """
-    Input model for Example1Input tool.
-    Currently, no parameters are required, but this can be extended in the future.
+    Input model for get_sites tool.
     """
 
     site_no: Optional[List[str]] = Field(
@@ -40,5 +39,9 @@ class GetSitesInput(ExampleBaseModel):
 
 
 class GetSitesOutput(BaseModel):
+    """
+    Output model for get_sites tool.
+    """
+
     data: List[Dict[str, str]] = Field(..., description="data dictionary")
     description: str = Field(..., description="Table relationships")

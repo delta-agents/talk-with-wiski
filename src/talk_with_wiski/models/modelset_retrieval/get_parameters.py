@@ -7,8 +7,7 @@ from talk_with_wiski.models.base import ExampleBaseModel
 
 class GetParametersInput(ExampleBaseModel):
     """
-    Input model for Example1Input tool.
-    Currently, no parameters are required, but this can be extended in the future.
+    Input model for get_parameters tool.
     """
 
     station_no: Optional[str | List[str]] = Field(
@@ -38,5 +37,9 @@ class GetParametersInput(ExampleBaseModel):
 
 
 class GetParametersOutput(BaseModel):
+    """
+    Output model for get_parameters tool.
+    """
+
     data: List[Dict[str, str]] = Field(..., description="list of parameter dictionary")
     description: str = Field(..., description="Parameters")

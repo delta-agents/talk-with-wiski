@@ -7,8 +7,7 @@ from talk_with_wiski.models.base import ExampleBaseModel
 
 class GetTimeseriesValuesInput(ExampleBaseModel):
     """
-    Input model for Example1Input tool.
-    Currently, no parameters are required, but this can be extended in the future.
+    Input model for GetTimeseriesValuesInput tool.
     """
 
     ts_id: str | List[str] = Field(
@@ -72,5 +71,7 @@ class GetTimeseriesValuesInput(ExampleBaseModel):
 
 
 class GetTimeseriesValuesOutput(BaseModel):
+    """Output model for GetTimeseriesValuesOutput tool."""
+
     data: List[Dict[str, str | List]] = Field(..., description="timeseries data")
     description: str = Field(..., description="Timeseries data")

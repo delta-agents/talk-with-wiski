@@ -1,6 +1,8 @@
-# CONFIG
+# Example tools
 from talk_with_wiski.tools.toolset_1.example1 import add_index
 from talk_with_wiski.tools.toolset_2.example2 import example2
+
+# Actual tools
 from talk_with_wiski.tools.toolset_retrieval.get_locations import get_locations
 from talk_with_wiski.tools.toolset_retrieval.get_sites import get_sites
 from talk_with_wiski.tools.toolset_retrieval.get_parameters import get_parameters
@@ -14,6 +16,9 @@ from talk_with_wiski.tools.toolset_retrieval.get_timeseries_values import (
 from talk_with_wiski.tools.toolset_retrieval.get_parametertype_list import (
     get_parametertype_list,
 )
+from talk_with_wiski.tools.toolset_retrieval.get_timeseries_type import (
+    get_timeseries_type,
+)
 
 __all__ = [
     add_index,
@@ -25,4 +30,5 @@ __all__ = [
     get_parametertype_list,
     get_timeseries_list,
     get_timeseries_values,
+    get_timeseries_type,
 ]

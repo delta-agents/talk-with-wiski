@@ -30,6 +30,7 @@ async def get_timeseries_list(
         "type": "queryServices",
         "request": "getTimeseriesList",
         "format": "objson",
+        "returnfields": "station_name,station_no,station_id,ts_id,ts_name,parametertype_id,parametertype_name,ts_type_id,ts_type_name",
     }
 
     # extend url
@@ -51,8 +52,11 @@ async def get_timeseries_list(
         else:
             params["parametertype_name"] = input.parametertype_name
 
-    # requst data
+    # request data
     res = requests.get(endpoint, params=params)
     data = list(json.loads(res.text))
 
-    return GetTimeseriesListOutput(data=data, description="list of available timeseries. The variable ts_id can be used as input for GetTimeseriesValuesInput")
+    return GetTimeseriesListOutput(
+        data=data,
+        description="list of available timeseries. The variable ts_id can be used as input for GetTimeseriesValuesInput",
+    )

@@ -7,8 +7,7 @@ from talk_with_wiski.models.base import ExampleBaseModel
 
 class GetGroupListInput(ExampleBaseModel):
     """
-    Input model for Example1Input tool.
-    Currently, no parameters are required, but this can be extended in the future.
+    Input model for GetGroupList tool.
     """
 
     number_of_groups_retrieved: int = Field(
