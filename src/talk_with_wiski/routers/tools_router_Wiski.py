@@ -16,6 +16,8 @@ from talk_with_wiski.models import (
     GetTimeseriesListOutput,
     GetTimeseriesValuesInput,
     GetTimeseriesValuesOutput,
+    GetTimeseriesTypeInput,
+    GetTimeseriesTypeOutput,
 )
 from talk_with_wiski.tools import get_locations as get_locations_pydantic_ai
 from talk_with_wiski.tools import get_parameters as get_parameters_pydantic_ai
@@ -24,6 +26,9 @@ from talk_with_wiski.tools import get_sites as get_sites_pydantic_ai
 from talk_with_wiski.tools import get_timeseries_list as get_timeseries_list_pydantic_ai
 from talk_with_wiski.tools import (
     get_timeseries_values as get_timeseries_values_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    get_timeseries_type as get_timeseries_type_pydantic_ai,
 )
 from talk_with_wiski.tools import (
     get_parametertype_list as get_parametertype_list_pydantic_ai,
@@ -44,7 +49,6 @@ mcp = FastMCP(name="Wiski")
 async def get_locations(
     input: GetLocationsInput,
 ) -> GetLocationsOutput:
-    # TODO: add authentication passing to the get_runtime
     ctx = get_runtime_ctx()
     return await get_locations_pydantic_ai(ctx, input)
 
@@ -55,7 +59,6 @@ async def get_locations(
 async def get_parameters(
     input: GetParametersInput,
 ) -> GetParametersOutput:
-    # TODO: add authentication passing to the get_runtime
     ctx = get_runtime_ctx()
     return await get_parameters_pydantic_ai(ctx, input)
 
@@ -76,7 +79,6 @@ async def get_sites(
 async def get_group_list(
     input: GetGroupListInput,
 ) -> GetGroupListOutput:
-    # TODO: add authentication passing to the get_runtime
     ctx = get_runtime_ctx()
     return await get_group_list_pydantic_ai(ctx, input)
 
@@ -87,7 +89,6 @@ async def get_group_list(
 async def get_parametertype_list(
     input: GetParametertypeListInput,
 ) -> GetParametertypeListOutput:
-    # TODO: add authentication passing to the get_runtime
     ctx = get_runtime_ctx()
     return await get_parametertype_list_pydantic_ai(ctx, input)
 
@@ -98,7 +99,6 @@ async def get_parametertype_list(
 async def get_timeseries_list(
     input: GetTimeseriesListInput,
 ) -> GetTimeseriesListOutput:
-    # TODO: add authentication passing to the get_runtime
     ctx = get_runtime_ctx()
     return await get_timeseries_list_pydantic_ai(ctx, input)
 
@@ -109,6 +109,15 @@ async def get_timeseries_list(
 async def get_timeseries_values(
     input: GetTimeseriesValuesInput,
 ) -> GetTimeseriesValuesOutput:
-    # TODO: add authentication passing to the get_runtime
     ctx = get_runtime_ctx()
     return await get_timeseries_values_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/get_timeseries_type")
+@auto_docstring("Retrieves the timeseries data from the WISKI API")
+async def get_timeseries_type(
+    input: GetTimeseriesTypeInput,
+) -> GetTimeseriesTypeOutput:
+    ctx = get_runtime_ctx()
+    return await get_timeseries_type_pydantic_ai(ctx, input)

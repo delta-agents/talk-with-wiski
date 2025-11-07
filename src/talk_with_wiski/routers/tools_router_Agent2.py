@@ -21,6 +21,5 @@ mcp = FastMCP(name="Agent2")
 async def example2(
     input: Example2Input,
 ) -> Example2Output:
-    # TODO: add authentication passing to the get_runtime
     ctx = get_runtime_ctx()
     return await example1_pydanctic_ai(ctx, input)
