@@ -43,5 +43,5 @@ class GetTimeseriesListInput(ExampleBaseModel):
 
 
 class GetTimeseriesListOutput(BaseModel):
-    data: List[Dict[str, str]] = Field(..., description="list of available timeseries")
-    description: str = Field(..., description="Timeseries list")
+    data: List[Dict[str, str]] = Field(..., description="list of available timeseries. The variable ts_id can be used as input for GetTimeseriesValuesInput.")
+    description: str = Field(..., description="description of the timeseries data")

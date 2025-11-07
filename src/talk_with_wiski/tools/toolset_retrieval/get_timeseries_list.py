@@ -55,4 +55,4 @@ async def get_timeseries_list(
     res = requests.get(endpoint, params=params)
     data = list(json.loads(res.text))
 
-    return GetTimeseriesListOutput(data=data, description="Parameters")
+    return GetTimeseriesListOutput(data=data, description="list of available timeseries. The variable ts_id can be used as input for GetTimeseriesValuesInput")
