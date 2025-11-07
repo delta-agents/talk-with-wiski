@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -67,14 +67,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0dab428fd1ac68d91f80535f802a2546.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0b1189524dc19e09ab363e9b4d3e2f65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -114,6 +115,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Talk with WISKI</span>
     </a>
@@ -166,13 +169,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">Parameters</a></li>
-  <li><a href="#locations" id="toc-locations" class="nav-link" data-scroll-target="#locations">Locations</a>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">1. Parameters</a></li>
+  <li><a href="#locations" id="toc-locations" class="nav-link" data-scroll-target="#locations">2. Locations</a>
   <ul class="collapse">
   <li><a href="#using-geocoding-is-also-possible" id="toc-using-geocoding-is-also-possible" class="nav-link" data-scroll-target="#using-geocoding-is-also-possible">Using geocoding is also possible</a></li>
   </ul></li>
-  <li><a href="#sites" id="toc-sites" class="nav-link" data-scroll-target="#sites">Sites</a></li>
-  <li><a href="#group-lists" id="toc-group-lists" class="nav-link" data-scroll-target="#group-lists">Group lists</a></li>
+  <li><a href="#sites" id="toc-sites" class="nav-link" data-scroll-target="#sites">3. Sites</a></li>
+  <li><a href="#group-lists" id="toc-group-lists" class="nav-link" data-scroll-target="#group-lists">4. Group lists</a></li>
+  <li><a href="#parametertypelist" id="toc-parametertypelist" class="nav-link" data-scroll-target="#parametertypelist">5. ParametertypeList</a></li>
+  <li><a href="#timeseries-list" id="toc-timeseries-list" class="nav-link" data-scroll-target="#timeseries-list">6. Timeseries list</a></li>
+  <li><a href="#timeseries-values" id="toc-timeseries-values" class="nav-link" data-scroll-target="#timeseries-values">7. Timeseries values</a></li>
+  <li><a href="#timeseries-type" id="toc-timeseries-type" class="nav-link" data-scroll-target="#timeseries-type">8. Timeseries Type</a></li>
   </ul>
 </nav>
     </div>
@@ -198,84 +205,162 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Voorbeeld hoe je de example tool gebruikt.</p>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
-<p>Met de tool <code>get_parameters</code> kan je de parameters van WISKI opvragen.</p>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetLocationsInput, GetParametersInput</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_locations, get_parameters</span>
+<p><em>Leave <code>eval: false, output: asis</code>for Github CI, remove to generate docs locally</em></p>
+<p>In de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># zorg dat alle variable goed staan</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setup_quarto <span class="im">import</span> setup_dot_env</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> setup_dot_env()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>example_input <span class="op">=</span> GetParametersInput(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    station_no<span class="op">=</span>[<span class="st">"ZUN0034_KKL_OW"</span>, <span class="st">"0300_TDB"</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>)  <span class="co"># , parametertype_name="WNS9536"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>example_output <span class="op">=</span> <span class="cf">await</span> get_parameters(ctx, example_input)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>datadict <span class="op">=</span> example_output.data</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>datastr <span class="op">=</span> json.dumps(datadict, indent<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(datastr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> setup_dot_env()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="parameters" class="level2">
+<h2 class="anchored" data-anchor-id="parameters">1. Parameters</h2>
+<p>Met de tool <code>get_parameters</code> kan je de parameters van WISKI opvragen.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetLocationsInput, GetParametersInput</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_locations, get_parameters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Dit kan voor een aantal stations</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>get_parameter_input <span class="op">=</span> GetParametersInput(station_no<span class="op">=</span>[<span class="st">"ZUN0034_KKL_OW"</span>, <span class="st">"0300_TDB"</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>get_parameter_output <span class="op">=</span> <span class="cf">await</span> get_parameters(ctx, get_parameter_input)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>get_parameter_output.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Of voor alle stations</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>example_input <span class="op">=</span> GetParametersInput()</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>example_output <span class="op">=</span> <span class="cf">await</span> get_parameters(ctx, example_input)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>get_parameter_input <span class="op">=</span> GetParametersInput()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>get_parameter_output <span class="op">=</span> <span class="cf">await</span> get_parameters(ctx, get_parameter_input)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>datadict <span class="op">=</span> example_output.data</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># datastr = json.dumps(datadict, indent=2)</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> np.unique(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    [row[<span class="st">"stationparameter_longname"</span>].split(<span class="st">" ["</span>)[<span class="dv">0</span>].lower() <span class="cf">for</span> row <span class="kw">in</span> datadict]</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(parameters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data_dict <span class="op">=</span> get_parameter_output.data</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> np.unique(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    [row[<span class="st">"stationparameter_longname"</span>].split(<span class="st">" ["</span>)[<span class="dv">0</span>].lower() <span class="cf">for</span> row <span class="kw">in</span> data_dict]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(parameters)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>get_parameter_input <span class="op">=</span> GetParametersInput(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    station_no<span class="op">=</span><span class="st">"BRE0301_PMP1"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>get_parameter_output <span class="op">=</span> <span class="cf">await</span> get_parameters(ctx, get_parameter_input)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>get_parameter_output.data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="locations" class="level2">
-<h2 class="anchored" data-anchor-id="locations">Locations</h2>
+<h2 class="anchored" data-anchor-id="locations">2. Locations</h2>
 <p>Met de tool <code>get_locations</code> kan je de parameters van WISKI opvragen.</p>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>example_input <span class="op">=</span> GetLocationsInput(max_number_of_station_ids<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> setup_dot_env()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>example_output <span class="op">=</span> <span class="cf">await</span> get_locations(ctx, example_input)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(json.dumps(example_output.data, indent<span class="op">=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>get_locations_input <span class="op">=</span> GetLocationsInput(max_number_of_station_ids<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> setup_dot_env()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>get_locations_output <span class="op">=</span> <span class="cf">await</span> get_locations(ctx, get_locations_input)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>get_locations_output.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="using-geocoding-is-also-possible" class="level3">
 <h3 class="anchored" data-anchor-id="using-geocoding-is-also-possible">Using geocoding is also possible</h3>
 <p>This uses <code>from geopy.geocoders import Nominatim</code>, <br> which uses the OSM API, <a href="https://operations.osmfoundation.org/policies/nominatim/">See the policy</a><br> -&gt; <code>No heavy uses (an absolute maximum of 1 request per second).</code></p>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> GetLocationsInput(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    requested_geolocation<span class="op">=</span>[<span class="st">"Loon op Zand"</span>, <span class="fl">5.0</span>],</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    returnfields<span class="op">=</span><span class="st">"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">input</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="cf">await</span> get_locations(ctx, <span class="bu">input</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> output.data:</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(json.dumps(item, indent<span class="op">=</span><span class="dv">2</span>))</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Aantal records returned </span><span class="sc">{</span><span class="bu">len</span>(output.data)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>get_locations_input <span class="op">=</span> GetLocationsInput(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    requested_geolocation<span class="op">=</span>[<span class="st">"Loon op Zand"</span>, <span class="fl">5.0</span>],</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    returnfields<span class="op">=</span><span class="st">"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">input</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>get_locations_output <span class="op">=</span> <span class="cf">await</span> get_locations(ctx, <span class="bu">input</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> get_locations_output.data:</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(json.dumps(item, indent<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Aantal records returned </span><span class="sc">{</span><span class="bu">len</span>(get_locations_output.data)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="sites" class="level2">
-<h2 class="anchored" data-anchor-id="sites">Sites</h2>
+<h2 class="anchored" data-anchor-id="sites">3. Sites</h2>
 <p>Met de tool <code>get_sites</code> kun je de beschikbare sites van WISKI opvragen.</p>
 <p>Hier een aantal voorbeelden.</p>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetSitesInput</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_sites</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> GetSitesInput(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    returnfields<span class="op">=</span><span class="st">"site_no,site_id,site_name"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> <span class="cf">await</span> get_sites(ctx, <span class="bu">input</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> output.data:</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(json.dumps(item, indent<span class="op">=</span><span class="dv">2</span>))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Aantal records returned </span><span class="sc">{</span><span class="bu">len</span>(output.data)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetSitesInput</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_sites</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>get_sites_input <span class="op">=</span> GetSitesInput(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    returnfields<span class="op">=</span><span class="st">"site_no,site_id,site_name"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>get_sites_output <span class="op">=</span> <span class="cf">await</span> get_sites(ctx, get_sites_input)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> get_sites_output.data:</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(json.dumps(item, indent<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Aantal records returned </span><span class="sc">{</span><span class="bu">len</span>(get_sites_output.data)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="group-lists" class="level2">
-<h2 class="anchored" data-anchor-id="group-lists">Group lists</h2>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetGroupListInput, GetGroupListOutput</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_group_list</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Test end time before start time</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> GetGroupListInput(group_type<span class="op">=</span><span class="st">"timeseries"</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>output: GetGroupListOutput <span class="op">=</span> <span class="cf">await</span> get_group_list(ctx, <span class="bu">input</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>output.model_dump()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h2 class="anchored" data-anchor-id="group-lists">4. Group lists</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetGroupListInput, GetGroupListOutput</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_group_list</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Test end time before start time</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>get_group_list_input <span class="op">=</span> GetGroupListInput(group_type<span class="op">=</span><span class="st">"timeseries"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>get_group_list_output: GetGroupListOutput <span class="op">=</span> <span class="cf">await</span> get_group_list(</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ctx, get_group_list_input</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>get_group_list_output.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="parametertypelist" class="level2">
+<h2 class="anchored" data-anchor-id="parametertypelist">5. ParametertypeList</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetParametertypeListInput, GetParametertypeListOutput</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_parametertype_list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Test ParametertypeList: get ids for given names"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>get_parametertype_list_input <span class="op">=</span> GetParametertypeListInput(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    parametertype_name<span class="op">=</span>[<span class="st">"Evaporation"</span>, <span class="st">"WNS*"</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_parametertype_list_input)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>get_parametertype_list_output: GetParametertypeListOutput <span class="op">=</span> (</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> get_parametertype_list(ctx, get_parametertype_list_input)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Aantal parametertype gevonden </span><span class="sc">{</span><span class="bu">len</span>(get_parametertype_list_output.data)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>get_parametertype_list_output.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="timeseries-list" class="level2">
+<h2 class="anchored" data-anchor-id="timeseries-list">6. Timeseries list</h2>
+<p>Met de tool <code>get_timeseries_list</code> kan je de beschikbare timeseries ophalen voor een locatie, site en/of een parameter.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetTimeseriesListInput, GetTimeseriesListOutput</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_timeseries_list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Hiervoor gebruiken we de eerste op gehaalde parameter en locatie combinatie:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>previously_retrieved_station <span class="op">=</span> get_parameter_output.data[<span class="dv">0</span>][<span class="st">"station_no"</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>previously_retrieved_parameter <span class="op">=</span> [</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    data[<span class="st">"parametertype_name"</span>] <span class="cf">for</span> data <span class="kw">in</span> get_parameter_output.data</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>previously_retrieved_station, previously_retrieved_parameter</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_input <span class="op">=</span> GetTimeseriesListInput(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    station_no<span class="op">=</span>previously_retrieved_station,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    parametertype_name<span class="op">=</span>previously_retrieved_parameter,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_output: GetTimeseriesListOutput <span class="op">=</span> <span class="cf">await</span> get_timeseries_list(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    ctx, get_timeseries_list_input</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_output.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_output.model_dump()[<span class="st">"data"</span>][<span class="dv">0</span>].keys()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="timeseries-values" class="level2">
+<h2 class="anchored" data-anchor-id="timeseries-values">7. Timeseries values</h2>
+<p>Met de tool <code>get_timeseries_values</code> kan je de timeseries data ophalen voor een timeseries_id.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetTimeseriesValuesInput, GetTimeseriesValuesOutput</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_timeseries_values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>get_timeseries_value_input <span class="op">=</span> GetTimeseriesValuesInput(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    ts_id<span class="op">=</span>[item[<span class="st">"ts_id"</span>] <span class="cf">for</span> item <span class="kw">in</span> get_timeseries_list_output.data],</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    from_date<span class="op">=</span><span class="st">"2025-11-01"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    period<span class="op">=</span><span class="st">"P1D"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to_date="2025-11-06"</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>get_timeseries_value_output: GetTimeseriesValuesOutput <span class="op">=</span> <span class="cf">await</span> get_timeseries_values(</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    ctx, get_timeseries_value_input</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>get_timeseries_value_output.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>[item[<span class="st">"ts_id"</span>] <span class="cf">for</span> item <span class="kw">in</span> get_timeseries_list_output.data]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="timeseries-type" class="level2">
+<h2 class="anchored" data-anchor-id="timeseries-type">8. Timeseries Type</h2>
+<p>Met de tool <code>get_timeseries_Type</code> kan je de informatie ophalen of het type tijdserie.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetTimeseriesTypeInput, GetTimeseriesTypeOutput</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_timeseries_type</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We reuse the timeseries types from when we retrieved the timeseries list</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ts_type_id <span class="op">=</span> get_timeseries_list_output.data[<span class="dv">0</span>][<span class="st">"ts_type_id"</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>ts_type_id</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>get_timeseries_type_input <span class="op">=</span> GetTimeseriesTypeInput(ts_type_id<span class="op">=</span>ts_type_id)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>get_timeseries_type_output: GetTimeseriesTypeOutput <span class="op">=</span> <span class="cf">await</span> get_timeseries_type(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    ctx, get_timeseries_type_input</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>get_timeseries_type_output.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
@@ -332,13 +417,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

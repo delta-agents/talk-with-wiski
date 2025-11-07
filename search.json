@@ -4,7 +4,7 @@
     "href": "overzicht_endpoints.html",
     "title": "Overzicht endoints",
     "section": "",
-    "text": "Overzicht endoints\n\n\n\n\n\n\n\n\n\nFunction\nDescription\nToevoegen?\nStatus\n\n\n\n\ngetStationList\nretrieves a list of stations with metadata\nJa\nKlaar\n\n\ngetParameterList\nretrieves a list of parameters available at sites and/or stations\nJa\nKlaar\n\n\ngetGroupList\nretrieves a list of object groups\nJa - geeft overzicht van beschikbare data types\n\n\n\ngetSiteList\nretrieves a list of sites with metadata\nJa - koppeling naam en lists - site is anders dan station\n\n\n\ngetParameterTypeList\nretrieves the system defined parameter type list\nJa - koppeling parameter type en naam\n\n\n\ngetTimeseriesList\nretrieves a list of timeseries with metadata\nJa - koppeling naar timeseries beschikbaar\n\n\n\ngetTimeseriesTypeList\nretrieves a timeseries type list\nJa - meer info over type timseries\n\n\n\ngetTimeseriesValues\nretrieves timeseries data\nJa\n\n\n\ngetCatchmentList\nretrieves a list of catchments with metadata\nNee - leeg\nn.v.t.\n\n\ngetCatchmentHierarchy\nretrieves a hierarchical list of catchments with metadata and parent catchments\nNee - zie getCatchmentList\nn.v.t.\n\n\ngetRiverList\nretrieves a list of rivers and water objects with metadata\nNee - leeg\nn.v.t.\n\n\ngetStandardRemarkTypeList\nretrieves a hierarchical list of standard remark types\nNee - later wellicht wel\nn.v.t.\n\n\ngetRatingCurveList\nretrieves a list of rating curves\nNee - voor nu buiten de scope\nn.v.t.\n\n\ngetStationLithology\nretrieves a list of lithology layers for a station\nNee - leeg\nn.v.t.\n\n\ngetStationCasing\nretrieves a list of casings for a station\nNee - leeg\nn.v.t.\n\n\ngetTimeseriesValueLayer\nretrieves timeseries data as layer\nNeedit is een combi van wat we al hebben,\nN.v.t.\n\n\ngetGraphTemplateList\nretrieves a list of available graph templates\nNee, graphs vallen voor nu buiten de scope\nN.v.t\n\n\ngetGraph\nretrieves a graph image of timeseries data\nNee, graphs vallen voor nu buiten de scope\nN.v.t\n\n\ngetStationGraph\nretrieves a graph image of timeseries data based on stations\nNee, graphs vallen voor nu buiten de scope\nN.v.t\n\n\ngetColorClassifications\nretrieves a list of WISKI color classifications\nNee - later wellicht nuttig\nN.v.t.\n\n\ngetQualityCodes\nretrieves the list of WISKI quality codes\nNee - later wellicht nuttig\nN.v.t.\n\n\ngetReleaseStateClasses\nretrieves the list of WISKI release state classes\nNee - later wellicht nuttig\nN.v.t.\n\n\ngetTimeseriesReleaseStateList\nretrieves a list of timeseries release states\nNee - later wellicht nuttig\nN.v.t.\n\n\ngetTimeseriesEnsembleValues\nretrieves a list of timeseries ensembles with values for one or more timeseries\nNee\nN.v.t\n\n\ngetTimeseriesChanges\nretrieves a list of changes for a timeseries\nNee\nN.v.t\n\n\ngetTimeseriesComments\nretrieves object comments/remarks\nNee\nN.v.t\n\n\ncheckValueLimit\nchecks value limitations for time range value requests\nNee\nN.v.t\n\n\n\nVoorbeelden:\ngetTimeseriesList\ngetTimeseriesTypeList\ngetTimeseriesValues"
+    "text": "Overzicht endoints\n\n\n\n\n\n\n\n\n\nFunction\nDescription\nToevoegen?\nStatus\n\n\n\n\ngetStationList\nretrieves a list of stations with metadata\nJa\nBeschikbaar via tool\n\n\ngetParameterList\nretrieves a list of parameters available at sites and/or stations\nJa\nBeschikbaar via tool\n\n\ngetGroupList\nretrieves a list of object groups\nJa - geeft overzicht van beschikbare data types\nBeschikbaar via tool\n\n\ngetSiteList\nretrieves a list of sites with metadata\nJa - koppeling naam en lists - site is anders dan station\nBeschikbaar via tool\n\n\ngetParameterTypeList\nretrieves the system defined parameter type list\nJa - koppeling parameter type en naam\nBeschikbaar via tool\n\n\ngetTimeseriesList\nretrieves a list of timeseries with metadata\nJa - koppeling naar timeseries beschikbaar\nBeschikbaar via tool\n\n\ngetTimeseriesTypeList\nretrieves a timeseries type list\nJa - meer info over type timseries\nBeschikbaar via tool\n\n\ngetTimeseriesValues\nretrieves timeseries data\nJa\nBeschikbaar via tool\n\n\ngetCatchmentList\nretrieves a list of catchments with metadata\nNee - leeg\nn.v.t.\n\n\ngetCatchmentHierarchy\nretrieves a hierarchical list of catchments with metadata and parent catchments\nNee - zie getCatchmentList\nn.v.t.\n\n\ngetRiverList\nretrieves a list of rivers and water objects with metadata\nNee - leeg\nn.v.t.\n\n\ngetStandardRemarkTypeList\nretrieves a hierarchical list of standard remark types\nNee - later wellicht wel\nn.v.t.\n\n\ngetRatingCurveList\nretrieves a list of rating curves\nNee - voor nu buiten de scope\nn.v.t.\n\n\ngetStationLithology\nretrieves a list of lithology layers for a station\nNee - leeg\nn.v.t.\n\n\ngetStationCasing\nretrieves a list of casings for a station\nNee - leeg\nn.v.t.\n\n\ngetTimeseriesValueLayer\nretrieves timeseries data as layer\nNeedit is een combi van wat we al hebben,\nN.v.t.\n\n\ngetGraphTemplateList\nretrieves a list of available graph templates\nNee, graphs vallen voor nu buiten de scope\nN.v.t\n\n\ngetGraph\nretrieves a graph image of timeseries data\nNee, graphs vallen voor nu buiten de scope\nN.v.t\n\n\ngetStationGraph\nretrieves a graph image of timeseries data based on stations\nNee, graphs vallen voor nu buiten de scope\nN.v.t\n\n\ngetColorClassifications\nretrieves a list of WISKI color classifications\nNee - later wellicht nuttig\nN.v.t.\n\n\ngetQualityCodes\nretrieves the list of WISKI quality codes\nNee - later wellicht nuttig\nN.v.t.\n\n\ngetReleaseStateClasses\nretrieves the list of WISKI release state classes\nNee - later wellicht nuttig\nN.v.t.\n\n\ngetTimeseriesReleaseStateList\nretrieves a list of timeseries release states\nNee - later wellicht nuttig\nN.v.t.\n\n\ngetTimeseriesEnsembleValues\nretrieves a list of timeseries ensembles with values for one or more timeseries\nNee\nN.v.t\n\n\ngetTimeseriesChanges\nretrieves a list of changes for a timeseries\nNee\nN.v.t\n\n\ngetTimeseriesComments\nretrieves object comments/remarks\nNee\nN.v.t\n\n\ncheckValueLimit\nchecks value limitations for time range value requests\nNee\nN.v.t\n\n\n\nVoorbeelden:\ngetTimeseriesList\ngetTimeseriesTypeList\ngetTimeseriesValues"
   },
   {
     "objectID": "reference/index.html",
@@ -28,46 +28,67 @@
     "text": "Documentatie voor Talk with WISKI.\nOverzicht van de uitgewerkte endpoints is [overzicht_endpoints.qmd] is hier te vinden.\nDit is ontwikkeld door HKV en wordt gepubliceerd onder de GNU GPL-3 licentie."
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html",
-    "title": "Werk versie van Andries",
+    "objectID": "examples/notebooks/AI_agent.html",
+    "href": "examples/notebooks/AI_agent.html",
+    "title": "Talk with WISKI",
     "section": "",
-    "text": "RUN een cell met SHIFT-ENTER"
+    "text": "Leave eval: false, output: asisfor Github CI, remove to generate docs locally\nIn de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt."
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#locations-stations",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#locations-stations",
-    "title": "Werk versie van Andries",
-    "section": "Locations (Stations)",
-    "text": "Locations (Stations)\nMet de tool get_locations kun je de beschikbare locaties van WISKI opvragen.\nHier een aantal voorbeelden.\nfrom talk_with_wiski.models import GetLocationsInput, GetSitesInput\nfrom talk_with_wiski.tools import get_locations, get_sites\nfrom setup_quarto import setup_dot_env\nimport json\nctx = setup_dot_env()\nprint(\"Test 1: stations, by station_id, all relevant returnfields\")\ninput = GetLocationsInput(station_id=[56620, 68870])\nprint(input)\noutput = await get_locations(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")\nctx = setup_dot_env()\nprint(\"Test 2: stations, by station_no, only few returnfields\")\ninput = GetLocationsInput(\n    station_no=[\"KST01159_WTH_BOV\", \"KST01159_KKL\"],\n    returnfields=\"station_no,station_id\",\n)\nprint(input)\noutput = await get_locations(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")\nctx = setup_dot_env()\nprint(\"Test 3: stations, using a bbox, return only station_name\")\n# test voor 'Loon op Zand', dit zijn er 100\n# &crs=global&bbox=5.053676588980831,51.61540080594861,5.096864369453537,51.635290829498146\n# maar by default max returned is 5\n\ninput = GetLocationsInput(\n    bbox=[\n        5.053676588980831,\n        51.61540080594861,\n        5.096864369453537,\n        51.635290829498146,\n    ],\n    returnfields=\"station_no,station_id,station_name\",\n)\nprint(input)\noutput = await get_locations(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")\nctx = setup_dot_env()\nprint(\n    \"Test 4: stations, using a bbox, return only station_name, forcing max num of records\"\n)\n# test voor 'Loon op Zand', dit zijn er 43, met stationparameter_name 100\n# &crs=global&bbox=5.053676588980831,51.61540080594861,5.096864369453537,51.635290829498146\n# maar by default max returned is 5\n\ninput = GetLocationsInput(\n    bbox=[\n        5.053676588980831,\n        51.61540080594861,\n        5.096864369453537,\n        51.635290829498146,\n    ],\n    # station_latitude,station_longitude,site_id,site_name,parametertype_id,stationparameter_name,stationparameter_id,object_type,object_type_shortname'\n    # returnfields=\"station_no,station_id,station_name,stationparameter_name\",\n    # returnfields=\"station_no,station_id,station_name,stationparameter_name\",\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude\",\n    max_number_of_station_ids=1000,\n)\nprint(input)\noutput = await get_locations(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")\nfrom geopy.geocoders import Nominatim\nfrom pyproj import Transformer\n\n# Maak een transformer van WGS84 (EPSG:4326) naar RD New (EPSG:28992)\ntransformer = Transformer.from_crs(\"EPSG:4326\", \"EPSG:28992\", always_xy=True)\n\nrequested_geolocation = \"Loon op Zand\"\n\ngeolocator = Nominatim(user_agent=\"talk-with-wiski-notebook\")\nlocation = geolocator.geocode(requested_geolocation)\nprint(location.address)\nprint((location.longitude, location.latitude))\nprint(location.raw)\n\nx_rd, y_rd = transformer.transform(location.longitude, location.latitude)\nprint(f\"RD New X: {x_rd:.2f}, Y: {y_rd:.2f}\")\nprint(location.longitude)\nfrom geopy.distance import distance\n\n# hier nu een straal van 1 km omheen\nlon, lat = location.longitude, location.latitude\nradius = 1  # radius in km around this point\n\n\ndef bbox(lon, lat, r=5):\n    \"\"\"Return (xmin, ymin, xmax, ymax) around a point [lon, lat] within r km.\"\"\"\n    return [\n        distance(kilometers=r).destination((lat, lon), 270).longitude,  # xmin (west)\n        distance(kilometers=r).destination((lat, lon), 180).latitude,  # ymin (south)\n        distance(kilometers=r).destination((lat, lon), 90).longitude,  # xmax (east)\n        distance(kilometers=r).destination((lat, lon), 0).latitude,  # ymax (north)\n    ]\n\n\nprint(bbox(lon, lat, r=radius))\nctx = setup_dot_env()\nprint(\"Test 5: stations, using radius from a certain geocoding\")\ninput = GetLocationsInput(\n    bbox=bbox(lon, lat),\n    returnfields=\"station_no,station_id,station_name,stationparameter_name\",\n    max_number_of_station_ids=100,\n)\nprint(input)\noutput = await get_locations(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")\nctx = setup_dot_env()\nprint(\"Test 6: stations, using radius from a certain geocoding\")\ninput = GetLocationsInput(\n    # bbox=bbox(lon,lat),\n    requested_geolocation=[\"Loon op Zand\", 5.0],\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n    # max_number_of_station_ids=100,\n)\nprint(input)\noutput = await get_locations(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")"
+    "objectID": "examples/notebooks/AI_agent.html#parameters",
+    "href": "examples/notebooks/AI_agent.html#parameters",
+    "title": "Talk with WISKI",
+    "section": "1. Parameters",
+    "text": "1. Parameters\nMet de tool get_parameters kan je de parameters van WISKI opvragen.\nfrom talk_with_wiski.models import GetLocationsInput, GetParametersInput\nfrom talk_with_wiski.tools import get_locations, get_parameters\nDit kan voor een aantal stations\nget_parameter_input = GetParametersInput(station_no=[\"ZUN0034_KKL_OW\", \"0300_TDB\"])\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.model_dump()\nOf voor alle stations\nimport numpy as np\n\nget_parameter_input = GetParametersInput()\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\ndata_dict = get_parameter_output.data\nparameters = np.unique(\n    [row[\"stationparameter_longname\"].split(\" [\")[0].lower() for row in data_dict]\n)\nprint(parameters)\nget_parameter_input = GetParametersInput(\n    station_no=\"BRE0301_PMP1\",\n)\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.data"
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#sites",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#sites",
-    "title": "Werk versie van Andries",
-    "section": "Sites",
-    "text": "Sites\nMet de tool get_sites kun je de beschikbare sites van WISKI opvragen.\nHier een aantal voorbeelden.\nctx = setup_dot_env()\nprint(\"Test 6: sites, using site_id / site_no / returnfield or combinations\")\ninput = GetSitesInput(\n    # site_id=[48290, 115783],\n    # site_no=['MOE0052', 'KST02225'],\n    returnfields=\"site_no,site_id,site_name\",\n    # returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n    # max_number_of_station_ids=100,\n    # bbox werkt niet op sites!!!!, dus requested geolocation ook niet\n    # requested_geolocation=['Loon op Zand',5.0],\n)\nprint(input)\noutput = await get_sites(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")"
+    "objectID": "examples/notebooks/AI_agent.html#locations",
+    "href": "examples/notebooks/AI_agent.html#locations",
+    "title": "Talk with WISKI",
+    "section": "2. Locations",
+    "text": "2. Locations\nMet de tool get_locations kan je de parameters van WISKI opvragen.\nget_locations_input = GetLocationsInput(max_number_of_station_ids=5)\n\nctx = setup_dot_env()\n\nget_locations_output = await get_locations(ctx, get_locations_input)\n\nget_locations_output.model_dump()\n\nUsing geocoding is also possible\nThis uses from geopy.geocoders import Nominatim,  which uses the OSM API, See the policy -&gt; No heavy uses (an absolute maximum of 1 request per second).\nget_locations_input = GetLocationsInput(\n    requested_geolocation=[\"Loon op Zand\", 5.0],\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n)\nprint(input)\nget_locations_output = await get_locations(ctx, input)\nfor item in get_locations_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_locations_output.data)}\")"
   },
   {
-    "objectID": "MCP_instalatie.html",
-    "href": "MCP_instalatie.html",
-    "title": "MCP verbinding maken",
-    "section": "",
-    "text": "Model Context Protocol (MCP) is een open-source framework gemaakt om verschillende LLM chatbots te verbinden aan Agents. Dit gebruiken wij zodat de Delta Agents beschikbaar zijn waar jij het meeste tijd doorbrengt. Hier leggen we uit hoe je dit in VSCode kan doen."
+    "objectID": "examples/notebooks/AI_agent.html#sites",
+    "href": "examples/notebooks/AI_agent.html#sites",
+    "title": "Talk with WISKI",
+    "section": "3. Sites",
+    "text": "3. Sites\nMet de tool get_sites kun je de beschikbare sites van WISKI opvragen.\nHier een aantal voorbeelden.\nfrom talk_with_wiski.models import GetSitesInput\nfrom talk_with_wiski.tools import get_sites\n\nget_sites_input = GetSitesInput(\n    returnfields=\"site_no,site_id,site_name\",\n)\nget_sites_output = await get_sites(ctx, get_sites_input)\nfor item in get_sites_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_sites_output.data)}\")"
   },
   {
-    "objectID": "MCP_instalatie.html#voorbereidingen",
-    "href": "MCP_instalatie.html#voorbereidingen",
-    "title": "MCP verbinding maken",
-    "section": "voorbereidingen",
-    "text": "voorbereidingen\nZorg dat je de laatste versie van VSCode op hebt, via deze link of run:\npowershell -command \"Get-Process Code  | Stop-Process\"\nwinget upgrade --id Microsoft.VisualStudioCode\nZorg dat je toegang hebt to Copilot met je GitHub account, je krijgt standaard een aantal tokens. Zie deze link voor meer uitleg."
+    "objectID": "examples/notebooks/AI_agent.html#group-lists",
+    "href": "examples/notebooks/AI_agent.html#group-lists",
+    "title": "Talk with WISKI",
+    "section": "4. Group lists",
+    "text": "4. Group lists\nfrom talk_with_wiski.models import GetGroupListInput, GetGroupListOutput\nfrom talk_with_wiski.tools import get_group_list\n\n# Test end time before start time\nget_group_list_input = GetGroupListInput(group_type=\"timeseries\")\n\nget_group_list_output: GetGroupListOutput = await get_group_list(\n    ctx, get_group_list_input\n)\nget_group_list_output.model_dump()"
   },
   {
-    "objectID": "MCP_instalatie.html#toevoegen-van-mcp-server",
-    "href": "MCP_instalatie.html#toevoegen-van-mcp-server",
-    "title": "MCP verbinding maken",
-    "section": "Toevoegen van MCP server",
-    "text": "Toevoegen van MCP server\nOpen een project waar in je met de Delta Agents wilt praten. In de .vscode map voeg je een mcp.json bestand toe. Soms staat deze map er al met bijvoorbeeld settings.json.\nVoeg de volgende configuratie toe:\n{\n    \"servers\": {\n      // test servers\n      \"talk-with-wiski-webservice-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithWebservice\"\n\n      },\n      \"talk-with-wiski-config-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithConfig\"\n\n      },\n      \"talk-with-wiski-validator-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithValidator\"\n\n      },\n    }\n  }\nJe kan nu de verschillende servers op starten in het bestand: \nVervolgens zie je de tools in je Copilot chat scherm."
+    "objectID": "examples/notebooks/AI_agent.html#parametertypelist",
+    "href": "examples/notebooks/AI_agent.html#parametertypelist",
+    "title": "Talk with WISKI",
+    "section": "5. ParametertypeList",
+    "text": "5. ParametertypeList\nfrom talk_with_wiski.models import GetParametertypeListInput, GetParametertypeListOutput\nfrom talk_with_wiski.tools import get_parametertype_list\nprint(\"Test ParametertypeList: get ids for given names\")\nget_parametertype_list_input = GetParametertypeListInput(\n    parametertype_name=[\"Evaporation\", \"WNS*\"],\n)\nprint(get_parametertype_list_input)\nget_parametertype_list_output: GetParametertypeListOutput = (\n    await get_parametertype_list(ctx, get_parametertype_list_input)\n)\n\nprint(f\"Aantal parametertype gevonden {len(get_parametertype_list_output.data)}\")\nget_parametertype_list_output.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent.html#timeseries-list",
+    "href": "examples/notebooks/AI_agent.html#timeseries-list",
+    "title": "Talk with WISKI",
+    "section": "6. Timeseries list",
+    "text": "6. Timeseries list\nMet de tool get_timeseries_list kan je de beschikbare timeseries ophalen voor een locatie, site en/of een parameter.\nfrom talk_with_wiski.models import GetTimeseriesListInput, GetTimeseriesListOutput\nfrom talk_with_wiski.tools import get_timeseries_list\nHiervoor gebruiken we de eerste op gehaalde parameter en locatie combinatie:\npreviously_retrieved_station = get_parameter_output.data[0][\"station_no\"]\npreviously_retrieved_parameter = [\n    data[\"parametertype_name\"] for data in get_parameter_output.data\n]\npreviously_retrieved_station, previously_retrieved_parameter\nget_timeseries_list_input = GetTimeseriesListInput(\n    station_no=previously_retrieved_station,\n    parametertype_name=previously_retrieved_parameter,\n)\nget_timeseries_list_output: GetTimeseriesListOutput = await get_timeseries_list(\n    ctx, get_timeseries_list_input\n)\n\nget_timeseries_list_output.model_dump()\nget_timeseries_list_output.model_dump()[\"data\"][0].keys()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent.html#timeseries-values",
+    "href": "examples/notebooks/AI_agent.html#timeseries-values",
+    "title": "Talk with WISKI",
+    "section": "7. Timeseries values",
+    "text": "7. Timeseries values\nMet de tool get_timeseries_values kan je de timeseries data ophalen voor een timeseries_id.\nfrom talk_with_wiski.models import GetTimeseriesValuesInput, GetTimeseriesValuesOutput\nfrom talk_with_wiski.tools import get_timeseries_values\nget_timeseries_value_input = GetTimeseriesValuesInput(\n    ts_id=[item[\"ts_id\"] for item in get_timeseries_list_output.data],\n    from_date=\"2025-11-01\",\n    period=\"P1D\",\n    # to_date=\"2025-11-06\"\n)\nget_timeseries_value_output: GetTimeseriesValuesOutput = await get_timeseries_values(\n    ctx, get_timeseries_value_input\n)\n\nget_timeseries_value_output.model_dump()\n[item[\"ts_id\"] for item in get_timeseries_list_output.data]"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent.html#timeseries-type",
+    "href": "examples/notebooks/AI_agent.html#timeseries-type",
+    "title": "Talk with WISKI",
+    "section": "8. Timeseries Type",
+    "text": "8. Timeseries Type\nMet de tool get_timeseries_Type kan je de informatie ophalen of het type tijdserie.\nfrom talk_with_wiski.models import GetTimeseriesTypeInput, GetTimeseriesTypeOutput\nfrom talk_with_wiski.tools import get_timeseries_type\nWe reuse the timeseries types from when we retrieved the timeseries list\nts_type_id = get_timeseries_list_output.data[0][\"ts_type_id\"]\nts_type_id\nget_timeseries_type_input = GetTimeseriesTypeInput(ts_type_id=ts_type_id)\nget_timeseries_type_output: GetTimeseriesTypeOutput = await get_timeseries_type(\n    ctx, get_timeseries_type_input\n)\nget_timeseries_type_output.model_dump()"
   },
   {
     "objectID": "contributing.html",
@@ -105,39 +126,151 @@
     "text": "Dit is een stukje voor de hoofdontwikkelaars van Talk with WISKI.\n\nCheckout HEAD van de main branch met git checkout main en git pull.\nBeslis welke nieuwe versie (major, minor or patch) gebruikt gaat worden. We gebruiken semantic versioning.\nOmdat je niet direct naar de main branch kan schrijven (protected), maak een nieuwe branch aan met git checkout -b release-&lt;version&gt;.\nIndien dependencies zijn aangepast, maak een nieuw pixi lock bestand.\nPas de versie aan in src/talk_with_wiski/__init__.py, de pyproject.toml leest deze uit. \nZorg dat de format van je code correct is met pixi run ruff check.\nZorg dat alle bestaande testen werken met pixi run pytest.\nCommit & push je aanpassingen naar GitHub.\nMaak een pull request aan, laat iemand het reviewen, wacht op alle acties, deze worden groen, en merge de pull request.\nWacht tot de GitHub-acties op de main branch klaar zijn en er een groen vinkje bij staat.\nMaak een nieuwe 'release' aan op GitHub\n\nGebruik de versie als titel en pas een versie tag toe.\nAls beschrijving gebruik de intro van de README.md en veranderingen uit de changelog.qmd.\n\nCheck\n\nIs de wiki bijgewerkt?  \n\nVier je nieuwe versie!"
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html",
-    "href": "examples/notebooks/AI_agent.html",
+    "objectID": "MCP_instalatie.html",
+    "href": "MCP_instalatie.html",
+    "title": "MCP verbinding maken",
+    "section": "",
+    "text": "Model Context Protocol (MCP) is een open-source framework gemaakt om verschillende LLM chatbots te verbinden aan Agents. Dit gebruiken wij zodat de Delta Agents beschikbaar zijn waar jij het meeste tijd doorbrengt. Hier leggen we uit hoe je dit in VSCode kan doen."
+  },
+  {
+    "objectID": "MCP_instalatie.html#voorbereidingen",
+    "href": "MCP_instalatie.html#voorbereidingen",
+    "title": "MCP verbinding maken",
+    "section": "voorbereidingen",
+    "text": "voorbereidingen\nZorg dat je de laatste versie van VSCode op hebt, via deze link of run:\npowershell -command \"Get-Process Code  | Stop-Process\"\nwinget upgrade --id Microsoft.VisualStudioCode\nZorg dat je toegang hebt to Copilot met je GitHub account, je krijgt standaard een aantal tokens. Zie deze link voor meer uitleg."
+  },
+  {
+    "objectID": "MCP_instalatie.html#toevoegen-van-mcp-server",
+    "href": "MCP_instalatie.html#toevoegen-van-mcp-server",
+    "title": "MCP verbinding maken",
+    "section": "Toevoegen van MCP server",
+    "text": "Toevoegen van MCP server\nOpen een project waar in je met de Delta Agents wilt praten. In de .vscode map voeg je een mcp.json bestand toe. Soms staat deze map er al met bijvoorbeeld settings.json.\nVoeg de volgende configuratie toe:\n{\n    \"servers\": {\n      // test servers\n      \"talk-with-wiski-webservice-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithWebservice\"\n\n      },\n      \"talk-with-wiski-config-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithConfig\"\n\n      },\n      \"talk-with-wiski-validator-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithValidator\"\n\n      },\n    }\n  }\nJe kan nu de verschillende servers op starten in het bestand: \nVervolgens zie je de tools in je Copilot chat scherm."
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html",
     "title": "Talk with WISKI",
     "section": "",
-    "text": "Voorbeeld hoe je de example tool gebruikt."
+    "text": "In de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt."
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html#parameters",
-    "href": "examples/notebooks/AI_agent.html#parameters",
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#parameters",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html#parameters",
     "title": "Talk with WISKI",
-    "section": "Parameters",
-    "text": "Parameters\nMet de tool get_parameters kan je de parameters van WISKI opvragen.\nfrom talk_with_wiski.models import GetLocationsInput, GetParametersInput\nfrom talk_with_wiski.tools import get_locations, get_parameters\nfrom setup_quarto import setup_dot_env\nimport json\nctx = setup_dot_env()\nexample_input = GetParametersInput(\n    station_no=[\"ZUN0034_KKL_OW\", \"0300_TDB\"]\n)  # , parametertype_name=\"WNS9536\"\nexample_output = await get_parameters(ctx, example_input)\n\ndatadict = example_output.data\ndatastr = json.dumps(datadict, indent=2)\nprint(datastr)\nimport numpy as np\n\nexample_input = GetParametersInput()\nexample_output = await get_parameters(ctx, example_input)\n\ndatadict = example_output.data\n# datastr = json.dumps(datadict, indent=2)\nparameters = np.unique(\n    [row[\"stationparameter_longname\"].split(\" [\")[0].lower() for row in datadict]\n)\nprint(parameters)"
+    "section": "1. Parameters",
+    "text": "1. Parameters\nMet de tool get_parameters kan je de parameters van WISKI opvragen.\nfrom talk_with_wiski.models import GetLocationsInput, GetParametersInput\nfrom talk_with_wiski.tools import get_locations, get_parameters\nDit kan voor een aantal stations\nget_parameter_input = GetParametersInput(station_no=[\"ZUN0034_KKL_OW\", \"0300_TDB\"])\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.model_dump()\nOf voor alle stations\nimport numpy as np\n\nget_parameter_input = GetParametersInput()\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\ndata_dict = get_parameter_output.data\nparameters = np.unique(\n    [row[\"stationparameter_longname\"].split(\" [\")[0].lower() for row in data_dict]\n)\nprint(parameters)\nget_parameter_input = GetParametersInput(\n    station_no=\"BRE0301_PMP1\",\n)\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.data"
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html#locations",
-    "href": "examples/notebooks/AI_agent.html#locations",
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#locations",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html#locations",
     "title": "Talk with WISKI",
-    "section": "Locations",
-    "text": "Locations\nMet de tool get_locations kan je de parameters van WISKI opvragen.\nexample_input = GetLocationsInput(max_number_of_station_ids=5)\n\nctx = setup_dot_env()\n\nexample_output = await get_locations(ctx, example_input)\n\nprint(json.dumps(example_output.data, indent=2))\n\nUsing geocoding is also possible\nThis uses from geopy.geocoders import Nominatim,  which uses the OSM API, See the policy -&gt; No heavy uses (an absolute maximum of 1 request per second).\ninput = GetLocationsInput(\n    requested_geolocation=[\"Loon op Zand\", 5.0],\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n)\nprint(input)\noutput = await get_locations(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")"
+    "section": "2. Locations",
+    "text": "2. Locations\nMet de tool get_locations kan je de parameters van WISKI opvragen.\nget_locations_input = GetLocationsInput(max_number_of_station_ids=5)\n\nctx = setup_dot_env()\n\nget_locations_output = await get_locations(ctx, get_locations_input)\n\nget_locations_output.model_dump()\n\nUsing geocoding is also possible\nThis uses from geopy.geocoders import Nominatim,  which uses the OSM API, See the policy -&gt; No heavy uses (an absolute maximum of 1 request per second).\nget_locations_input = GetLocationsInput(\n    requested_geolocation=[\"Loon op Zand\", 5.0],\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n)\nprint(input)\nget_locations_output = await get_locations(ctx, input)\nfor item in get_locations_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_locations_output.data)}\")"
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html#sites",
-    "href": "examples/notebooks/AI_agent.html#sites",
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#sites",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html#sites",
     "title": "Talk with WISKI",
-    "section": "Sites",
-    "text": "Sites\nMet de tool get_sites kun je de beschikbare sites van WISKI opvragen.\nHier een aantal voorbeelden.\nfrom talk_with_wiski.models import GetSitesInput\nfrom talk_with_wiski.tools import get_sites\n\ninput = GetSitesInput(\n    returnfields=\"site_no,site_id,site_name\",\n)\noutput = await get_sites(ctx, input)\nfor item in output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(output.data)}\")"
+    "section": "3. Sites",
+    "text": "3. Sites\nMet de tool get_sites kun je de beschikbare sites van WISKI opvragen.\nHier een aantal voorbeelden.\nfrom talk_with_wiski.models import GetSitesInput\nfrom talk_with_wiski.tools import get_sites\n\nget_sites_input = GetSitesInput(\n    returnfields=\"site_no,site_id,site_name\",\n)\nget_sites_output = await get_sites(ctx, get_sites_input)\nfor item in get_sites_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_sites_output.data)}\")"
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html#group-lists",
-    "href": "examples/notebooks/AI_agent.html#group-lists",
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#group-lists",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html#group-lists",
     "title": "Talk with WISKI",
-    "section": "Group lists",
-    "text": "Group lists\nfrom talk_with_wiski.models import GetGroupListInput, GetGroupListOutput\nfrom talk_with_wiski.tools import get_group_list\n\n# Test end time before start time\ninput = GetGroupListInput(group_type=\"timeseries\")\n\noutput: GetGroupListOutput = await get_group_list(ctx, input)\noutput.model_dump()"
+    "section": "4. Group lists",
+    "text": "4. Group lists\nfrom talk_with_wiski.models import GetGroupListInput, GetGroupListOutput\nfrom talk_with_wiski.tools import get_group_list\n\n# Test end time before start time\nget_group_list_input = GetGroupListInput(group_type=\"timeseries\")\n\nget_group_list_output: GetGroupListOutput = await get_group_list(\n    ctx, get_group_list_input\n)\nget_group_list_output.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#parametertypelist",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html#parametertypelist",
+    "title": "Talk with WISKI",
+    "section": "5. ParametertypeList",
+    "text": "5. ParametertypeList\nfrom talk_with_wiski.models import GetParametertypeListInput, GetParametertypeListOutput\nfrom talk_with_wiski.tools import get_parametertype_list\nprint(\"Test ParametertypeList: get ids for given names\")\nget_parametertype_list_input = GetParametertypeListInput(\n    parametertype_name=[\"Evaporation\", \"WNS*\"],\n)\nprint(get_parametertype_list_input)\nget_parametertype_list_output: GetParametertypeListOutput = (\n    await get_parametertype_list(ctx, get_parametertype_list_input)\n)\n\nprint(f\"Aantal parametertype gevonden {len(get_parametertype_list_output.data)}\")\nget_parametertype_list_output.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-list",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-list",
+    "title": "Talk with WISKI",
+    "section": "6. Timeseries list",
+    "text": "6. Timeseries list\nMet de tool get_timeseries_list kan je de beschikbare timeseries ophalen voor een locatie, site en/of een parameter.\nfrom talk_with_wiski.models import GetTimeseriesListInput, GetTimeseriesListOutput\nfrom talk_with_wiski.tools import get_timeseries_list\nHiervoor gebruiken we de eerste op gehaalde parameter en locatie combinatie:\npreviously_retrieved_station = get_parameter_output.data[0][\"station_no\"]\npreviously_retrieved_parameter = [\n    data[\"parametertype_name\"] for data in get_parameter_output.data\n]\npreviously_retrieved_station, previously_retrieved_parameter\nget_timeseries_list_input = GetTimeseriesListInput(\n    station_no=previously_retrieved_station,\n    parametertype_name=previously_retrieved_parameter,\n)\nget_timeseries_list_output: GetTimeseriesListOutput = await get_timeseries_list(\n    ctx, get_timeseries_list_input\n)\n\nget_timeseries_list_output.model_dump()\nget_timeseries_list_output.model_dump()[\"data\"][0].keys()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-values",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-values",
+    "title": "Talk with WISKI",
+    "section": "7. Timeseries values",
+    "text": "7. Timeseries values\nMet de tool get_timeseries_values kan je de timeseries data ophalen voor een timeseries_id.\nfrom talk_with_wiski.models import GetTimeseriesValuesInput, GetTimeseriesValuesOutput\nfrom talk_with_wiski.tools import get_timeseries_values\nget_timeseries_value_input = GetTimeseriesValuesInput(\n    ts_id=[item[\"ts_id\"] for item in get_timeseries_list_output.data],\n    from_date=\"2025-11-01\",\n    period=\"P1D\",\n    # to_date=\"2025-11-06\"\n)\nget_timeseries_value_output: GetTimeseriesValuesOutput = await get_timeseries_values(\n    ctx, get_timeseries_value_input\n)\n\nget_timeseries_value_output.model_dump()\n[item[\"ts_id\"] for item in get_timeseries_list_output.data]"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-type",
+    "href": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-type",
+    "title": "Talk with WISKI",
+    "section": "8. Timeseries Type",
+    "text": "8. Timeseries Type\nMet de tool get_timeseries_Type kan je de informatie ophalen of het type tijdserie.\nfrom talk_with_wiski.models import GetTimeseriesTypeInput, GetTimeseriesTypeOutput\nfrom talk_with_wiski.tools import get_timeseries_type\nWe reuse the timeseries types from when we retrieved the timeseries list\nts_type_id = get_timeseries_list_output.data[0][\"ts_type_id\"]\nts_type_id\nget_timeseries_type_input = GetTimeseriesTypeInput(ts_type_id=ts_type_id)\nget_timeseries_type_output: GetTimeseriesTypeOutput = await get_timeseries_type(\n    ctx, get_timeseries_type_input\n)\nget_timeseries_type_output.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html",
+    "title": "Talk with WISKI",
+    "section": "",
+    "text": "In de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt."
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#parameters",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html#parameters",
+    "title": "Talk with WISKI",
+    "section": "1. Parameters",
+    "text": "1. Parameters\nMet de tool get_parameters kan je de parameters van WISKI opvragen.\nfrom talk_with_wiski.models import GetLocationsInput, GetParametersInput\nfrom talk_with_wiski.tools import get_locations, get_parameters\nDit kan voor een aantal stations\nget_parameter_input = GetParametersInput(station_no=[\"ZUN0034_KKL_OW\", \"0300_TDB\"])\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.model_dump()\nOf voor alle stations\nimport numpy as np\n\nget_parameter_input = GetParametersInput()\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\ndata_dict = get_parameter_output.data\nparameters = np.unique(\n    [row[\"stationparameter_longname\"].split(\" [\")[0].lower() for row in data_dict]\n)\nprint(parameters)\nget_parameter_input = GetParametersInput(\n    station_no=\"BRE0301_PMP1\",\n)\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.data"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#locations",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html#locations",
+    "title": "Talk with WISKI",
+    "section": "2. Locations",
+    "text": "2. Locations\nMet de tool get_locations kan je de parameters van WISKI opvragen.\nget_locations_input = GetLocationsInput(max_number_of_station_ids=5)\n\nctx = setup_dot_env()\n\nget_locations_output = await get_locations(ctx, get_locations_input)\n\nget_locations_output.model_dump()\n\nUsing geocoding is also possible\nThis uses from geopy.geocoders import Nominatim,  which uses the OSM API, See the policy -&gt; No heavy uses (an absolute maximum of 1 request per second).\nget_locations_input = GetLocationsInput(\n    requested_geolocation=[\"Loon op Zand\", 5.0],\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n)\nprint(input)\nget_locations_output = await get_locations(ctx, input)\nfor item in get_locations_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_locations_output.data)}\")"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#sites",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html#sites",
+    "title": "Talk with WISKI",
+    "section": "3. Sites",
+    "text": "3. Sites\nMet de tool get_sites kun je de beschikbare sites van WISKI opvragen.\nHier een aantal voorbeelden.\nfrom talk_with_wiski.models import GetSitesInput\nfrom talk_with_wiski.tools import get_sites\n\nget_sites_input = GetSitesInput(\n    returnfields=\"site_no,site_id,site_name\",\n)\nget_sites_output = await get_sites(ctx, get_sites_input)\nfor item in get_sites_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_sites_output.data)}\")"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#group-lists",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html#group-lists",
+    "title": "Talk with WISKI",
+    "section": "4. Group lists",
+    "text": "4. Group lists\nfrom talk_with_wiski.models import GetGroupListInput, GetGroupListOutput\nfrom talk_with_wiski.tools import get_group_list\n\n# Test end time before start time\nget_group_list_input = GetGroupListInput(group_type=\"timeseries\")\n\nget_group_list_output: GetGroupListOutput = await get_group_list(\n    ctx, get_group_list_input\n)\nget_group_list_output.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#parametertypelist",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html#parametertypelist",
+    "title": "Talk with WISKI",
+    "section": "5. ParametertypeList",
+    "text": "5. ParametertypeList\nfrom talk_with_wiski.models import GetParametertypeListInput, GetParametertypeListOutput\nfrom talk_with_wiski.tools import get_parametertype_list\nprint(\"Test ParametertypeList: get ids for given names\")\nget_parametertype_list_input = GetParametertypeListInput(\n    parametertype_name=[\"Evaporation\", \"WNS*\"],\n)\nprint(get_parametertype_list_input)\nget_parametertype_list_output: GetParametertypeListOutput = (\n    await get_parametertype_list(ctx, get_parametertype_list_input)\n)\n\nprint(f\"Aantal parametertype gevonden {len(get_parametertype_list_output.data)}\")\nget_parametertype_list_output.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-list",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-list",
+    "title": "Talk with WISKI",
+    "section": "6. Timeseries list",
+    "text": "6. Timeseries list\nMet de tool get_timeseries_list kan je de beschikbare timeseries ophalen voor een locatie, site en/of een parameter.\nfrom talk_with_wiski.models import GetTimeseriesListInput, GetTimeseriesListOutput\nfrom talk_with_wiski.tools import get_timeseries_list\nHiervoor gebruiken we de eerste op gehaalde parameter en locatie combinatie:\npreviously_retrieved_station = get_parameter_output.data[0][\"station_no\"]\npreviously_retrieved_parameter = [\n    data[\"parametertype_name\"] for data in get_parameter_output.data\n]\npreviously_retrieved_station, previously_retrieved_parameter\nget_timeseries_list_input = GetTimeseriesListInput(\n    station_no=previously_retrieved_station,\n    parametertype_name=previously_retrieved_parameter,\n)\nget_timeseries_list_output: GetTimeseriesListOutput = await get_timeseries_list(\n    ctx, get_timeseries_list_input\n)\n\nget_timeseries_list_output.model_dump()\nget_timeseries_list_output.model_dump()[\"data\"][0].keys()"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-values",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-values",
+    "title": "Talk with WISKI",
+    "section": "7. Timeseries values",
+    "text": "7. Timeseries values\nMet de tool get_timeseries_values kan je de timeseries data ophalen voor een timeseries_id.\nfrom talk_with_wiski.models import GetTimeseriesValuesInput, GetTimeseriesValuesOutput\nfrom talk_with_wiski.tools import get_timeseries_values\nget_timeseries_value_input = GetTimeseriesValuesInput(\n    ts_id=[item[\"ts_id\"] for item in get_timeseries_list_output.data],\n    from_date=\"2025-11-01\",\n    period=\"P1D\",\n    # to_date=\"2025-11-06\"\n)\nget_timeseries_value_output: GetTimeseriesValuesOutput = await get_timeseries_values(\n    ctx, get_timeseries_value_input\n)\n\nget_timeseries_value_output.model_dump()\n[item[\"ts_id\"] for item in get_timeseries_list_output.data]"
+  },
+  {
+    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-type",
+    "href": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-type",
+    "title": "Talk with WISKI",
+    "section": "8. Timeseries Type",
+    "text": "8. Timeseries Type\nMet de tool get_timeseries_Type kan je de informatie ophalen of het type tijdserie.\nfrom talk_with_wiski.models import GetTimeseriesTypeInput, GetTimeseriesTypeOutput\nfrom talk_with_wiski.tools import get_timeseries_type\nWe reuse the timeseries types from when we retrieved the timeseries list\nts_type_id = get_timeseries_list_output.data[0][\"ts_type_id\"]\nts_type_id\nget_timeseries_type_input = GetTimeseriesTypeInput(ts_type_id=ts_type_id)\nget_timeseries_type_output: GetTimeseriesTypeOutput = await get_timeseries_type(\n    ctx, get_timeseries_type_input\n)\nget_timeseries_type_output.model_dump()"
   },
   {
     "objectID": "reference/get_parameters.html",
