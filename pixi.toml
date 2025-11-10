@@ -48,7 +48,7 @@ test = "pytest"
 # ]
 
 [dependencies]
-python = ">=3.11,<3.14"
+python = "==3.13.9"
 ipykernel = ">=6.29.5,<7"
 ipywidgets ="*"
 nbclient ="*"
