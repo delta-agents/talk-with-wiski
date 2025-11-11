@@ -27,11 +27,11 @@ class GetGroupListInput(ExampleBaseModel):
     )
 
     @model_validator(mode="after")
-    def validate_exclusive_fields(cls, values):
+    def validate_exclusive_fields(self):
         group_name, group_purpose, group_type = (
-            values.group_name,
-            values.group_purpose,
-            values.group_type,
+            self.group_name,
+            self.group_purpose,
+            self.group_type,
         )
         if group_name and group_purpose:
             raise ModelRetry(
@@ -48,7 +48,7 @@ class GetGroupListInput(ExampleBaseModel):
                     "Invalid value for 'group_type'. Must be one of: "
                     "'station', 'parameter', 'timeseries', 'timeseries_dynamic'."
                 )
-        return values
+        return self
 
 
 class GroupItem(BaseModel):
