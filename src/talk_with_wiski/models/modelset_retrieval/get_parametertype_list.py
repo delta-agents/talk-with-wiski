@@ -23,10 +23,10 @@ class GetParametertypeListInput(ExampleBaseModel):
     )
 
     @model_validator(mode="after")
-    def validate_exclusive_fields(cls, values):
+    def validate_exclusive_fields(self):
         parametertype_id, parametertype_name = (
-            values.parametertype_id,
-            values.parametertype_name,
+            self.parametertype_id,
+            self.parametertype_name,
         )
         if parametertype_id and parametertype_name:
             raise ModelRetry(
@@ -36,7 +36,7 @@ class GetParametertypeListInput(ExampleBaseModel):
             raise ModelRetry(
                 "Wildcard (*) is only allowed for parametertype_name, e.g. WNS*."
             )
-        return values
+        return self
 
 
 class GetParametertypeListOutput(BaseModel):
