@@ -85,6 +85,7 @@ class Timeseries(BaseModel):
 
     ts_id: int
     station_name: str
+    station_no: str
     data: List
 
 
