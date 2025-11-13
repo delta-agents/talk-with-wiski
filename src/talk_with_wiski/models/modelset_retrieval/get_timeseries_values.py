@@ -92,6 +92,9 @@ class GetTimeseriesValuesOutput(BaseModel):
     """Output model for GetTimeseriesValuesOutput tool."""
 
     timeseries_values_list: List[Timeseries] = Field(
-        ..., description="Timeseries values"
+        ..., description="List of Timeseries objects with values"
     )
     description: str = Field(..., description="Timeseries values")
+    url: str = Field(
+        ..., description="URL that is returned upon request by using get_as_url"
+    )
