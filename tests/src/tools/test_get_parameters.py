@@ -1,6 +1,5 @@
 import os
 import pytest
-import asyncio
 import numpy as np
 
 from talk_with_wiski.tools import get_parameters
@@ -12,6 +11,7 @@ from talk_with_wiski.routers.setup_connections import get_runtime_ctx
 
 from tests.utils_tests import setup_dot_env
 from talk_with_wiski.utils.logging_utils import logger
+
 
 @pytest.fixture
 def test_context():
@@ -26,7 +26,6 @@ def test_context():
 )
 @pytest.mark.asyncio
 async def test_get_parameters(test_context):
-
     #
     #
     """Test handling of list of station_no"""
@@ -36,9 +35,11 @@ async def test_get_parameters(test_context):
     output: GetParametersOutput = await get_parameters(test_context, input)
     # get unique station_no
     unique_station_no = {
-        item.get("station_no") for item in output.data if item.get("station_no") is not None
+        item.get("station_no")
+        for item in output.data
+        if item.get("station_no") is not None
     }
-    #print(output.data)
+    # print(output.data)
     logger.debug(unique_station_no)
     assert len(unique_station_no) == 2
 
@@ -51,9 +52,11 @@ async def test_get_parameters(test_context):
     output: GetParametersOutput = await get_parameters(test_context, input)
     # get unique station_no
     unique_station_no = {
-        item.get("station_no") for item in output.data if item.get("station_no") is not None
+        item.get("station_no")
+        for item in output.data
+        if item.get("station_no") is not None
     }
-    #print(output.data)
+    # print(output.data)
     logger.debug(unique_station_no)
     assert len(unique_station_no) == 1
 
@@ -66,7 +69,9 @@ async def test_get_parameters(test_context):
     output: GetParametersOutput = await get_parameters(test_context, input)
     # get unique station_no
     unique_station_no = {
-        item.get("station_no") for item in output.data if item.get("station_no") is not None
+        item.get("station_no")
+        for item in output.data
+        if item.get("station_no") is not None
     }
     data_dict = output.data
     parameters = np.unique(

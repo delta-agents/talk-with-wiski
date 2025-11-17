@@ -28,18 +28,22 @@ def test_context():
 async def test_get_timeseries_list(test_context):
     """Test handling timeseries list"""
     input = GetTimeseriesListInput(
-        station_no='BRE0301_PMP1',
-        parametertype_name=['WNS918', 'WNS11872', 'WNS9030'],
+        station_no="BRE0301_PMP1",
+        parametertype_name=["WNS918", "WNS11872", "WNS9030"],
     )
     output: GetTimeseriesListOutput = await get_timeseries_list(test_context, input)
 
-    #print(output.data)
+    # print(output.data)
 
     unique_station_no = {
-        item.get("station_no") for item in output.data if item.get("station_no") is not None
+        item.get("station_no")
+        for item in output.data
+        if item.get("station_no") is not None
     }
     unique_parametertype_name = {
-        item.get("parametertype_name") for item in output.data if item.get("parametertype_name") is not None
+        item.get("parametertype_name")
+        for item in output.data
+        if item.get("parametertype_name") is not None
     }
 
     logger.debug(unique_station_no)
