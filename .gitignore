@@ -25,3 +25,5 @@ data/*
 .DS_Store
 # nog nice to share
 .vscode/settings.json
+# logs
+*.log
