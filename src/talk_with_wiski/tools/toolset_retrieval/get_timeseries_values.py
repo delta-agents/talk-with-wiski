@@ -53,7 +53,7 @@ async def get_timeseries_values(
         params["futureperiod"] = input.futureperiod
 
     # Data ophalen
-    res = requests.get(endpoint, params=params)
+    res =  requests.get(endpoint, params=params, timeout=30)
     data = list(json.loads(res.text))
 
     # return GetTimeseriesValuesOutput(data=data, description="Timeseries")

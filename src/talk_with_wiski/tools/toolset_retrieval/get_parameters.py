@@ -10,7 +10,7 @@ from talk_with_wiski.utils.logging_utils import log_tool_call
 import requests
 import json
 from itertools import compress
-
+from talk_with_wiski.utils.logging_utils import logger
 
 @log_tool_call
 async def get_parameters(ctx, input: GetParametersInput) -> GetParametersOutput:
@@ -51,10 +51,12 @@ async def get_parameters(ctx, input: GetParametersInput) -> GetParametersOutput:
     #     else:
     #         params['parametertype_name'] = input.parametertype_name
 
-    # requst data
-    res = requests.get(endpoint, params=params)
+    # request data
+    logger.debug(f"Requesting data from {endpoint} with params {params}")
+    res = requests.get(endpoint, params=params, timeout=30)
+    logger.debug(f"Received response: {res.status_code} {res.text}")
     data = list(json.loads(res.text))
-
+    
     # filter results
     if input.parameter_type is not None:
         idx = [

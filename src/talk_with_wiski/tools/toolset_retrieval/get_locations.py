@@ -100,7 +100,7 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     logger.debug("\n".join(endpoint.split("&")))
 
     # call to KiWIS API
-    res = requests.get(endpoint)
+    res = requests.get(endpoint, timeout=30)
     # maak er een json object van om terug te geven (default)
     data = list(json.loads(res.text))
 

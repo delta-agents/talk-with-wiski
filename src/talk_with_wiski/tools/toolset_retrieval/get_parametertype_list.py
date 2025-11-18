@@ -45,7 +45,7 @@ async def get_parametertype_list(
     logger.debug("\n".join(endpoint.split("&")))
 
     # call to KiWIS API
-    res = requests.get(endpoint)
+    res = requests.get(endpoint, timeout=30)
     # maak er een json object van om terug te geven (default)
     data = json.loads(res.text)
 
