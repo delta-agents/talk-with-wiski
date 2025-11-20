@@ -27,11 +27,11 @@ class GetTimeseriesTypeInput(ExampleBaseModel):
     )
 
     @model_validator(mode="after")
-    def validate_exclusive_fields(cls, values):
+    def validate_exclusive_fields(self):
         ts_type_id, ts_shortname, ts_name = (
-            values.ts_type_id,
-            values.ts_shortname,
-            values.ts_name,
+            self.ts_type_id,
+            self.ts_shortname,
+            self.ts_name,
         )
         if ts_shortname and ts_name:
             raise ModelRetry(
@@ -41,7 +41,7 @@ class GetTimeseriesTypeInput(ExampleBaseModel):
             raise ModelRetry(
                 "One of the fields: 'ts_type_id, ts_shortname, ts_name' must be provided."
             )
-        return values
+        return self
 
 
 class TimeseriesType(BaseModel):

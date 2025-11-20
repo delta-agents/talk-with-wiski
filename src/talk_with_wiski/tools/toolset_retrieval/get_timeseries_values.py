@@ -5,6 +5,7 @@ Example of a tool cal
 from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import (
     GetTimeseriesValuesInput,
     GetTimeseriesValuesOutput,
+    Timeseries,
 )
 from talk_with_wiski.utils.logging_utils import log_tool_call
 import requests
@@ -51,8 +52,54 @@ async def get_timeseries_values(
     if input.futureperiod is not None:
         params["futureperiod"] = input.futureperiod
 
-    # requst data
-    res = requests.get(endpoint, params=params)
+    # Data ophalen
+    res = requests.get(endpoint, params=params, timeout=30)
     data = list(json.loads(res.text))
 
-    return GetTimeseriesValuesOutput(data=data, description="Timeseries")
+    # return GetTimeseriesValuesOutput(data=data, description="Timeseries")
+
+    # max aantal elementen dat default mag worden teruggegeven
+    n_ids = input.number_of_tsids_to_retrieve
+    n_vals = input.number_of_values_per_tsid
+
+    # used for debugging
+    # print('\n')
+    # print(f'number of tsids to retrieve: {n_ids}')
+    # print(f'number of values per tsid to retrieve: {n_vals}')
+
+    # data vullen
+    timeseries_values_list = []
+    for timeseries_values in data:
+        timeseries_values["ts_id"] = int(timeseries_values["ts_id"])
+        # limit number of data points
+        timeseries_values["data"] = timeseries_values["data"][:n_vals]
+        # Append as Timeseries object
+        timeseries_values_list.append(Timeseries(**timeseries_values))
+
+    timeseries_values_list = timeseries_values_list[:n_ids]
+    description = (
+        f"Timeseries values retrieved successfully, containing a total of {len(timeseries_values_list)} ts_ids,"
+        f"with max {str(n_vals)} data values per ts_id (increase "
+        "number_of_timeseries_values_per_id"
+        " if more data required)."
+    )
+    if len(timeseries_values_list) > n_ids:
+        description += f"Only the first {n_ids} items are returned, search for specific items using the provided filters or increase the number of items requested."
+
+    if input.get_as_url:
+        # get url without actually doing a request
+        req = requests.Request("GET", endpoint, params=params)
+        prepared = req.prepare()
+        # only return URL
+        return GetTimeseriesValuesOutput(
+            timeseries_values_list=timeseries_values_list,
+            description="Reduced data in timeseries_values_list, use provided URL to retrieve full dataset",
+            url=prepared.url,
+        )
+
+    else:
+        return GetTimeseriesValuesOutput(
+            timeseries_values_list=timeseries_values_list,
+            description=description,
+            url="",
+        )

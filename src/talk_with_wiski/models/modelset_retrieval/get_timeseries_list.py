@@ -25,11 +25,11 @@ class GetTimeseriesListInput(ExampleBaseModel):
     )
 
     @model_validator(mode="after")
-    def validate_exclusive_fields(cls, values):
+    def validate_exclusive_fields(self):
         station_no, site_no, parametertype_name = (
-            values.station_no,
-            values.site_no,
-            values.parametertype_name,
+            self.station_no,
+            self.site_no,
+            self.parametertype_name,
         )
         if station_no and site_no:
             raise ModelRetry(
@@ -39,7 +39,7 @@ class GetTimeseriesListInput(ExampleBaseModel):
             raise ModelRetry(
                 "At least one of the arguments 'station_no', 'site_no', or 'parametertype_name' must be provided."
             )
-        return values
+        return self
 
 
 class GetTimeseriesListOutput(BaseModel):

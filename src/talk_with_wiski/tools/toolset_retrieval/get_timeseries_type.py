@@ -54,7 +54,7 @@ async def get_timeseries_type(
             params["ts_type_id"] = input.ts_type_id
 
     # requst data
-    res = requests.get(endpoint, params=params)
+    res = requests.get(endpoint, params=params, timeout=30)
     data = list(json.loads(res.text))
 
     timeseries_type_list = []

@@ -23,5 +23,7 @@ data/*
 !data/readme.md
 !data/.gitkeep
 .DS_Store
-# nog nice to share
+# not nice to share
 .vscode/settings.json
+# logging
+*.log

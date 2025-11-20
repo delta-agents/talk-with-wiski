@@ -24,16 +24,16 @@ class GetParametersInput(ExampleBaseModel):
     )
 
     @model_validator(mode="after")
-    def validate_exclusive_fields(cls, values):
+    def validate_exclusive_fields(self):
         station_no, site_no = (
-            values.station_no,
-            values.site_no,
+            self.station_no,
+            self.site_no,
         )
         if station_no and site_no:
             raise ModelRetry(
                 "Only one of 'station_no' or 'site_no' can be provided, not both."
             )
-        return values
+        return self
 
 
 class GetParametersOutput(BaseModel):

@@ -53,7 +53,7 @@ async def get_timeseries_list(
             params["parametertype_name"] = input.parametertype_name
 
     # request data
-    res = requests.get(endpoint, params=params)
+    res = requests.get(endpoint, params=params, timeout=30)
     data = list(json.loads(res.text))
 
     return GetTimeseriesListOutput(
