@@ -133,8 +133,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-documentatie">    
         <li>
-    <a class="dropdown-item" href="../../examples/notebooks/AI_agent.html">
+    <a class="dropdown-item" href="../../examples/notebooks/talk_with_wiski_tools.html">
  <span class="dropdown-text">Talk with WISKI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../examples/notebooks/analyse_timeseries_futher_examples.html">
+ <span class="dropdown-text">Analyse van Tijdseries</span></a>
   </li>  
     </ul>
   </li>
@@ -180,6 +184,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#timeseries-list" id="toc-timeseries-list" class="nav-link" data-scroll-target="#timeseries-list">6. Timeseries list</a></li>
   <li><a href="#timeseries-values" id="toc-timeseries-values" class="nav-link" data-scroll-target="#timeseries-values">7. Timeseries values</a></li>
   <li><a href="#timeseries-type" id="toc-timeseries-type" class="nav-link" data-scroll-target="#timeseries-type">8. Timeseries Type</a></li>
+  <li><a href="#analyse" id="toc-analyse" class="nav-link" data-scroll-target="#analyse">Analyse</a>
+  <ul class="collapse">
+  <li><a href="#analyse-timeseries-statistics" id="toc-analyse-timeseries-statistics" class="nav-link" data-scroll-target="#analyse-timeseries-statistics">9 Analyse Timeseries Statistics</a></li>
+  <li><a href="#analyse-timeseries-threshold" id="toc-analyse-timeseries-threshold" class="nav-link" data-scroll-target="#analyse-timeseries-threshold">10 Analyse Timeseries Threshold</a></li>
+  <li><a href="#analyse-timeseries-trend" id="toc-analyse-timeseries-trend" class="nav-link" data-scroll-target="#analyse-timeseries-trend">11 Analyse Timeseries trend</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -205,6 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p><em>Leave <code>eval: false, output: asis</code>for Github CI, remove to generate docs locally</em></p>
 <p>In de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># zorg dat alle variable goed staan</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
@@ -360,8 +371,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    ctx, get_timeseries_type_input</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>get_timeseries_type_output.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="analyse" class="level1">
+<h1>Analyse</h1>
+<p>Naast alleen data ophalen kunnen we ook data analyseren, hiervoor gebruiken we een vergelijkbare definitie als het ophalen van tijdseries. Onder de motorkap roepen de analyse tools de get timeseries aan, vervolgens analyseren ze deze data en geven het terug.</p>
+<section id="analyse-timeseries-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="analyse-timeseries-statistics">9 Analyse Timeseries Statistics</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> (</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    AnalyseTimeseriesStatsInput,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    AnalyseTimeseriesStatsOutput,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> analyse_timeseries_statistics</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We hergebruike het eerder gebruikte id</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ts_id <span class="op">=</span> get_timeseries_list_output.data[<span class="dv">0</span>][<span class="st">"ts_id"</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>ts_id</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>input_analyse_timeseries_statistics <span class="op">=</span> AnalyseTimeseriesStatsInput(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    ts_id<span class="op">=</span>ts_id,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    from_date<span class="op">=</span><span class="st">"2023-11-01"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    period<span class="op">=</span><span class="st">"P3M"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>output_analyse_timeseries_statistics: AnalyseTimeseriesStatsOutput <span class="op">=</span> (</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> analyse_timeseries_statistics(ctx, input_analyse_timeseries_statistics)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>output_analyse_timeseries_statistics.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="analyse-timeseries-threshold" class="level2">
+<h2 class="anchored" data-anchor-id="analyse-timeseries-threshold">10 Analyse Timeseries Threshold</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> (</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    AnalyseTimeseriesThresholdsInput,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    AnalyseTimeseriesThresholdsOutput,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> analyse_timeseries_thresholds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>analyse_timeseries_input <span class="op">=</span> AnalyseTimeseriesThresholdsInput(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    ts_id<span class="op">=</span>ts_id,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    from_date<span class="op">=</span><span class="st">"2023-11-01"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    period<span class="op">=</span><span class="st">"P3M"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    threshold<span class="op">=</span><span class="fl">5.3</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>output_analyse_timeseries_thresholds: AnalyseTimeseriesThresholdsOutput <span class="op">=</span> (</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> analyse_timeseries_thresholds(ctx, analyse_timeseries_input)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>output_analyse_timeseries_thresholds.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="analyse-timeseries-trend" class="level2">
+<h2 class="anchored" data-anchor-id="analyse-timeseries-trend">11 Analyse Timeseries trend</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to do analysis on timeseries</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> (</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    AnalyseTimeseriesTrendInput,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> analyse_timeseries_trend</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for statistics and trend, same object can be used</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>input_analyse_timeseries_trend <span class="op">=</span> AnalyseTimeseriesTrendInput(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    ts_id<span class="op">=</span>ts_id,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    from_date<span class="op">=</span><span class="st">"2023-11-01"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    period<span class="op">=</span><span class="st">"P3M"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>output_analyse_timeseries_trend: AnalyseTimeseriesTrendInput <span class="op">=</span> (</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">await</span> analyse_timeseries_trend(ctx, input_analyse_timeseries_trend)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>output_analyse_timeseries_trend.model_dump()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Meer informatie over hoe de analyse tools werken? zie ook <a href="../../examples/notebooks/analyse_timeseries_futher_examples.html">dit voorbeeld</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

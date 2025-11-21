@@ -28,67 +28,32 @@
     "text": "Documentatie voor Talk with WISKI.\nOverzicht van de uitgewerkte endpoints is [overzicht_endpoints.qmd] is hier te vinden.\nDit is ontwikkeld door HKV en wordt gepubliceerd onder de GNU GPL-3 licentie."
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html",
-    "href": "examples/notebooks/AI_agent.html",
-    "title": "Talk with WISKI",
+    "objectID": "examples/notebooks/analyse_timeseries_futher_examples.html",
+    "href": "examples/notebooks/analyse_timeseries_futher_examples.html",
+    "title": "Analyse van Tijdseries",
     "section": "",
-    "text": "Leave eval: false, output: asisfor Github CI, remove to generate docs locally\nIn de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt."
+    "text": "Hier laten we in iets meer detail zien hoe we een tijdseries analyse doen\n# zorg dat alle variable goed staan\nfrom setup_quarto import setup_dot_env\n\nctx = setup_dot_env()\nfrom talk_with_wiski.utils.logging_utils import setup_logging, logger\nfrom pathlib import Path\n\nlogging_path = setup_logging(log_level=\"WARN\", log_dir=str(Path.cwd()))\n# bijvoobeeld @Andries:\nlogger.info(f\"Logging path: {logging_path}\")\n# to retrieve a ts_id belonging to a specific station_no and parameter_type\nfrom talk_with_wiski.models import GetTimeseriesListInput, GetTimeseriesListOutput\nfrom talk_with_wiski.tools import get_timeseries_list\n\n# to do analysis on timeseries\nfrom talk_with_wiski.models import (\n    AnalyseTimeseriesStatsInput,\n    AnalyseTimeseriesThresholdsInput,\n)\nfrom talk_with_wiski.tools import (\n    analyse_timeseries_statistics,\n    analyse_timeseries_trend,\n    analyse_timeseries_thresholds,\n)\n\n# INPUTS\n# vind een station met waterhoogte-data\npartypenm = \"WNS8487\"  # dit is waterhoogte\nstation_no = \"1198_WTH_BOV\"  # dit is een station_no voor maken interessant figuur\nstation_name = \"Bovenstrooms\"  # dit is de naam van het station\n\nwlev_thresholds_dict = {\n    # station_no: threshold_value\n    \"1198_WTH_BOV\": 5.3,\n    \"7127_WTH_BEN\": -0.5,\n    \"7132_WTH_UIT\": 0.5,\n}\n\n# maken van input object\nget_timeseries_list_input = GetTimeseriesListInput(\n    parametertype_name=partypenm,\n    station_no=station_no,\n    station_name=station_name,\n)\n# uitlezen van timeseries beschikbaar voor dit station\nget_timeseries_list_output: GetTimeseriesListOutput = await get_timeseries_list(\n    ctx, get_timeseries_list_input\n)\n\ndata = get_timeseries_list_output.model_dump()\nprint(data)\n\n# lijst van de beschikbare ts_id's\nfor item in data[\"data\"]:\n    print(\n        f\"TS ID: {item['ts_id']} | station_name: {item['station_name']} | station_no: {item['station_no']} | ts_name: {item['ts_name']}\"\n    )\n\n# select from get_timeseries_list_output the ts_id belonging to station_no and parameter_type for station_name\n# and data type (ts_name) \"ts_name\": \"Uur.Gem\",\nts_id_in = None\nfor item in data[\"data\"]:\n    if item[\"ts_name\"] == \"Uur.Gem\":\n        ts_id_in = str(item[\"ts_id\"])\n        break\n\nprint(f\"using ts_id: {ts_id_in}\")\n\n# for statistics and trend, same object can be used\nanalyse_timeseries_input = AnalyseTimeseriesStatsInput(\n    ts_id=ts_id_in,  # belongs to stat_no \"1198_WTH_BOV\"\n    from_date=\"2023-11-01\",\n    period=\"P3M\",  # dit mag niet icm from_date.. to_date\n    max_number_of_tsids_to_retrieve=20,\n    max_number_of_values_per_tsid=1000000,\n)\nout_stats = await analyse_timeseries_statistics(ctx, analyse_timeseries_input)\nout_trend = await analyse_timeseries_trend(ctx, analyse_timeseries_input)\n\n# ts_id_in = \"37481042\"\n# find station_no belonging to this ts_id\nthreshold = wlev_thresholds_dict[station_no]\n\n# for threshold an extra input is required\nanalyse_timeseries_input = AnalyseTimeseriesThresholdsInput(\n    ts_id=ts_id_in,  # belongs to stat_no \"1198_WTH_BOV\"\n    from_date=\"2023-11-01\",\n    period=\"P3M\",  # dit mag niet icm from_date.. to_date\n    max_number_of_tsids_to_retrieve=20,\n    max_number_of_values_per_tsid=1000000,\n    threshold=threshold,\n)\n\nout_thresholds = await analyse_timeseries_thresholds(ctx, analyse_timeseries_input)\n\nprint(out_stats.model_dump())\nprint(out_trend.model_dump())\nprint(out_thresholds.model_dump())\n# maak hier nu een plotly fig van\n\n# maak een df van de bovenstaande gebruikte data\nfrom talk_with_wiski.models import GetTimeseriesValuesInput\nfrom talk_with_wiski.tools import get_timeseries_values\nimport pandas as pd\nimport plotly.express as px\nimport plotly.graph_objects as go\n\n# uitlezen van de data voor zelfde ts_id_in\nget_timeseries_input = GetTimeseriesValuesInput(\n    ts_id=ts_id_in,  # belongs to stat_no \"1198_WTH_BOV\"\n    from_date=\"2023-11-01\",\n    period=\"P3M\",\n    max_number_of_tsids_to_retrieve=20,\n    max_number_of_values_per_tsid=1000000,\n)\nout_timeseries_values = await get_timeseries_values(ctx, get_timeseries_input)\n# maak hier een dataframe van\ndata = out_timeseries_values.model_dump()\n\nrecords = [\n    {\"timestamp\": timestamp, \"value\": value}\n    for timestamp, value in data[\"timeseries_values_list\"][0][\"data\"]\n]\n\ndf = pd.DataFrame(records)\ndf[\"timestamp\"] = pd.to_datetime(df[\"timestamp\"])\ndf = df.sort_values([\"timestamp\"]).reset_index(drop=True)\n# Convert timestamp to numeric (seconds since start)\ndf.loc[:, \"time_numeric\"] = (df[\"timestamp\"] - df[\"timestamp\"].min()).dt.total_seconds()\nX = df[\"time_numeric\"].values / 86400\n\nslope = out_trend.linear_trend_line.slope\nintercept = out_trend.linear_trend_line.intercept\n\ny_fit = [slope * xi + intercept for xi in X]\ndf[\"trend\"] = y_fit\nslope_per_day_cm = slope * 100\ndf[\"station_no\"] = station_no\n\nfig = px.line(\n    df,\n    x=\"timestamp\",\n    y=\"value\",\n    color=\"station_no\",\n    title=f\"Timeseries h(t) \\n Aantal uur boven threshold: {out_thresholds.threshold_values.total_time_above_in_hours}\",\n)\n\n# threshold = wlev_thresholds_dict[stat_no]\nfig.add_hline(\n    y=threshold,\n    line_dash=\"dash\",\n    line_color=\"red\",\n    annotation_text=f\"Threshold = {out_thresholds.threshold_values.threshold_value}\",\n    annotation_position=\"top left\",\n)\nfig.add_trace(\n    go.Scatter(\n        x=df[\"timestamp\"],\n        y=df[\"trend\"],\n        line_dash=\"dash\",\n        line_color=\"green\",\n        # annotation_text=f\"Linear trend = {slope_per_day:.2f} cm/dag\", annotation_position=\"top right\"\n        name=\"linear trend\",\n    )\n)\n# Add annotation for slope/intercept\nannot_index = len(df[\"timestamp\"]) // 4\nfig.add_annotation(\n    x=df[\"timestamp\"].iloc[annot_index],  # place at last timestamp\n    y=df[\"trend\"].iloc[annot_index],  # y-coordinate on trend line\n    text=f\"Slope: {slope_per_day_cm:.2f} cm/dag&lt;br&gt;Intercept: {intercept:.2f} cm\",\n    # showarrow=True,\n    # arrowhead=2,\n    # ax=-50,  # offset x of the arrow\n    # ay=-50,  # offset y of the arrow\n    bgcolor=\"white\",\n    bordercolor=\"black\",\n    align=\"right\",\n)\n\nfig.show()"
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html#parameters",
-    "href": "examples/notebooks/AI_agent.html#parameters",
-    "title": "Talk with WISKI",
-    "section": "1. Parameters",
-    "text": "1. Parameters\nMet de tool get_parameters kan je de parameters van WISKI opvragen.\nfrom talk_with_wiski.models import GetLocationsInput, GetParametersInput\nfrom talk_with_wiski.tools import get_locations, get_parameters\nDit kan voor een aantal stations\nget_parameter_input = GetParametersInput(station_no=[\"ZUN0034_KKL_OW\", \"0300_TDB\"])\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.model_dump()\nOf voor alle stations\nimport numpy as np\n\nget_parameter_input = GetParametersInput()\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\ndata_dict = get_parameter_output.data\nparameters = np.unique(\n    [row[\"stationparameter_longname\"].split(\" [\")[0].lower() for row in data_dict]\n)\nprint(parameters)\nget_parameter_input = GetParametersInput(\n    station_no=\"BRE0301_PMP1\",\n)\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.data"
+    "objectID": "MCP_instalatie.html",
+    "href": "MCP_instalatie.html",
+    "title": "MCP verbinding maken",
+    "section": "",
+    "text": "Model Context Protocol (MCP) is een open-source framework gemaakt om verschillende LLM chatbots te verbinden aan Agents. Dit gebruiken wij zodat de Delta Agents beschikbaar zijn waar jij het meeste tijd doorbrengt. Hier leggen we uit hoe je dit in VSCode kan doen."
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html#locations",
-    "href": "examples/notebooks/AI_agent.html#locations",
-    "title": "Talk with WISKI",
-    "section": "2. Locations",
-    "text": "2. Locations\nMet de tool get_locations kan je de parameters van WISKI opvragen.\nget_locations_input = GetLocationsInput(max_number_of_station_ids=5)\n\nctx = setup_dot_env()\n\nget_locations_output = await get_locations(ctx, get_locations_input)\n\nget_locations_output.model_dump()\n\nUsing geocoding is also possible\nThis uses from geopy.geocoders import Nominatim,  which uses the OSM API, See the policy -&gt; No heavy uses (an absolute maximum of 1 request per second).\nget_locations_input = GetLocationsInput(\n    requested_geolocation=[\"Loon op Zand\", 5.0],\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n)\nprint(input)\nget_locations_output = await get_locations(ctx, input)\nfor item in get_locations_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_locations_output.data)}\")"
+    "objectID": "MCP_instalatie.html#voorbereidingen",
+    "href": "MCP_instalatie.html#voorbereidingen",
+    "title": "MCP verbinding maken",
+    "section": "voorbereidingen",
+    "text": "voorbereidingen\nZorg dat je de laatste versie van VSCode op hebt, via deze link of run:\npowershell -command \"Get-Process Code  | Stop-Process\"\nwinget upgrade --id Microsoft.VisualStudioCode\nZorg dat je toegang hebt to Copilot met je GitHub account, je krijgt standaard een aantal tokens. Zie deze link voor meer uitleg."
   },
   {
-    "objectID": "examples/notebooks/AI_agent.html#sites",
-    "href": "examples/notebooks/AI_agent.html#sites",
-    "title": "Talk with WISKI",
-    "section": "3. Sites",
-    "text": "3. Sites\nMet de tool get_sites kun je de beschikbare sites van WISKI opvragen.\nHier een aantal voorbeelden.\nfrom talk_with_wiski.models import GetSitesInput\nfrom talk_with_wiski.tools import get_sites\n\nget_sites_input = GetSitesInput(\n    returnfields=\"site_no,site_id,site_name\",\n)\nget_sites_output = await get_sites(ctx, get_sites_input)\nfor item in get_sites_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_sites_output.data)}\")"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent.html#group-lists",
-    "href": "examples/notebooks/AI_agent.html#group-lists",
-    "title": "Talk with WISKI",
-    "section": "4. Group lists",
-    "text": "4. Group lists\nfrom talk_with_wiski.models import GetGroupListInput, GetGroupListOutput\nfrom talk_with_wiski.tools import get_group_list\n\n# Test end time before start time\nget_group_list_input = GetGroupListInput(group_type=\"timeseries\")\n\nget_group_list_output: GetGroupListOutput = await get_group_list(\n    ctx, get_group_list_input\n)\nget_group_list_output.model_dump()"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent.html#parametertypelist",
-    "href": "examples/notebooks/AI_agent.html#parametertypelist",
-    "title": "Talk with WISKI",
-    "section": "5. ParametertypeList",
-    "text": "5. ParametertypeList\nfrom talk_with_wiski.models import GetParametertypeListInput, GetParametertypeListOutput\nfrom talk_with_wiski.tools import get_parametertype_list\nprint(\"Test ParametertypeList: get ids for given names\")\nget_parametertype_list_input = GetParametertypeListInput(\n    parametertype_name=[\"Evaporation\", \"WNS*\"],\n)\nprint(get_parametertype_list_input)\nget_parametertype_list_output: GetParametertypeListOutput = (\n    await get_parametertype_list(ctx, get_parametertype_list_input)\n)\n\nprint(f\"Aantal parametertype gevonden {len(get_parametertype_list_output.data)}\")\nget_parametertype_list_output.model_dump()"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent.html#timeseries-list",
-    "href": "examples/notebooks/AI_agent.html#timeseries-list",
-    "title": "Talk with WISKI",
-    "section": "6. Timeseries list",
-    "text": "6. Timeseries list\nMet de tool get_timeseries_list kan je de beschikbare timeseries ophalen voor een locatie, site en/of een parameter.\nfrom talk_with_wiski.models import GetTimeseriesListInput, GetTimeseriesListOutput\nfrom talk_with_wiski.tools import get_timeseries_list\nHiervoor gebruiken we de eerste op gehaalde parameter en locatie combinatie:\npreviously_retrieved_station = get_parameter_output.data[0][\"station_no\"]\npreviously_retrieved_parameter = [\n    data[\"parametertype_name\"] for data in get_parameter_output.data\n]\npreviously_retrieved_station, previously_retrieved_parameter\nget_timeseries_list_input = GetTimeseriesListInput(\n    station_no=previously_retrieved_station,\n    parametertype_name=previously_retrieved_parameter,\n)\nget_timeseries_list_output: GetTimeseriesListOutput = await get_timeseries_list(\n    ctx, get_timeseries_list_input\n)\n\nget_timeseries_list_output.model_dump()\nget_timeseries_list_output.model_dump()[\"data\"][0].keys()"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent.html#timeseries-values",
-    "href": "examples/notebooks/AI_agent.html#timeseries-values",
-    "title": "Talk with WISKI",
-    "section": "7. Timeseries values",
-    "text": "7. Timeseries values\nMet de tool get_timeseries_values kan je de timeseries data ophalen voor een timeseries_id.\nfrom talk_with_wiski.models import GetTimeseriesValuesInput, GetTimeseriesValuesOutput\nfrom talk_with_wiski.tools import get_timeseries_values\nget_timeseries_value_input = GetTimeseriesValuesInput(\n    ts_id=[item[\"ts_id\"] for item in get_timeseries_list_output.data],\n    from_date=\"2025-11-01\",\n    period=\"P1D\",\n    # to_date=\"2025-11-06\"\n)\nget_timeseries_value_output: GetTimeseriesValuesOutput = await get_timeseries_values(\n    ctx, get_timeseries_value_input\n)\n\nget_timeseries_value_output.model_dump()\n[item[\"ts_id\"] for item in get_timeseries_list_output.data]"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent.html#timeseries-type",
-    "href": "examples/notebooks/AI_agent.html#timeseries-type",
-    "title": "Talk with WISKI",
-    "section": "8. Timeseries Type",
-    "text": "8. Timeseries Type\nMet de tool get_timeseries_Type kan je de informatie ophalen of het type tijdserie.\nfrom talk_with_wiski.models import GetTimeseriesTypeInput, GetTimeseriesTypeOutput\nfrom talk_with_wiski.tools import get_timeseries_type\nWe reuse the timeseries types from when we retrieved the timeseries list\nts_type_id = get_timeseries_list_output.data[0][\"ts_type_id\"]\nts_type_id\nget_timeseries_type_input = GetTimeseriesTypeInput(ts_type_id=ts_type_id)\nget_timeseries_type_output: GetTimeseriesTypeOutput = await get_timeseries_type(\n    ctx, get_timeseries_type_input\n)\nget_timeseries_type_output.model_dump()"
+    "objectID": "MCP_instalatie.html#toevoegen-van-mcp-server",
+    "href": "MCP_instalatie.html#toevoegen-van-mcp-server",
+    "title": "MCP verbinding maken",
+    "section": "Toevoegen van MCP server",
+    "text": "Toevoegen van MCP server\nOpen een project waar in je met de Delta Agents wilt praten. In de .vscode map voeg je een mcp.json bestand toe. Soms staat deze map er al met bijvoorbeeld settings.json.\nVoeg de volgende configuratie toe:\n{\n    \"servers\": {\n      // test servers\n      \"talk-with-wiski-webservice-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithWebservice\"\n\n      },\n      \"talk-with-wiski-config-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithConfig\"\n\n      },\n      \"talk-with-wiski-validator-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithValidator\"\n\n      },\n    }\n  }\nJe kan nu de verschillende servers op starten in het bestand: \nVervolgens zie je de tools in je Copilot chat scherm."
   },
   {
     "objectID": "contributing.html",
@@ -126,158 +91,88 @@
     "text": "Dit is een stukje voor de hoofdontwikkelaars van Talk with WISKI.\n\nCheckout HEAD van de main branch met git checkout main en git pull.\nBeslis welke nieuwe versie (major, minor or patch) gebruikt gaat worden. We gebruiken semantic versioning.\nOmdat je niet direct naar de main branch kan schrijven (protected), maak een nieuwe branch aan met git checkout -b release-&lt;version&gt;.\nIndien dependencies zijn aangepast, maak een nieuw pixi lock bestand.\nPas de versie aan in src/talk_with_wiski/__init__.py, de pyproject.toml leest deze uit. \nZorg dat de format van je code correct is met pixi run ruff check.\nZorg dat alle bestaande testen werken met pixi run pytest.\nCommit & push je aanpassingen naar GitHub.\nMaak een pull request aan, laat iemand het reviewen, wacht op alle acties, deze worden groen, en merge de pull request.\nWacht tot de GitHub-acties op de main branch klaar zijn en er een groen vinkje bij staat.\nMaak een nieuwe 'release' aan op GitHub\n\nGebruik de versie als titel en pas een versie tag toe.\nAls beschrijving gebruik de intro van de README.md en veranderingen uit de changelog.qmd.\n\nCheck\n\nIs de wiki bijgewerkt?  \n\nVier je nieuwe versie!"
   },
   {
-    "objectID": "MCP_instalatie.html",
-    "href": "MCP_instalatie.html",
-    "title": "MCP verbinding maken",
-    "section": "",
-    "text": "Model Context Protocol (MCP) is een open-source framework gemaakt om verschillende LLM chatbots te verbinden aan Agents. Dit gebruiken wij zodat de Delta Agents beschikbaar zijn waar jij het meeste tijd doorbrengt. Hier leggen we uit hoe je dit in VSCode kan doen."
-  },
-  {
-    "objectID": "MCP_instalatie.html#voorbereidingen",
-    "href": "MCP_instalatie.html#voorbereidingen",
-    "title": "MCP verbinding maken",
-    "section": "voorbereidingen",
-    "text": "voorbereidingen\nZorg dat je de laatste versie van VSCode op hebt, via deze link of run:\npowershell -command \"Get-Process Code  | Stop-Process\"\nwinget upgrade --id Microsoft.VisualStudioCode\nZorg dat je toegang hebt to Copilot met je GitHub account, je krijgt standaard een aantal tokens. Zie deze link voor meer uitleg."
-  },
-  {
-    "objectID": "MCP_instalatie.html#toevoegen-van-mcp-server",
-    "href": "MCP_instalatie.html#toevoegen-van-mcp-server",
-    "title": "MCP verbinding maken",
-    "section": "Toevoegen van MCP server",
-    "text": "Toevoegen van MCP server\nOpen een project waar in je met de Delta Agents wilt praten. In de .vscode map voeg je een mcp.json bestand toe. Soms staat deze map er al met bijvoorbeeld settings.json.\nVoeg de volgende configuratie toe:\n{\n    \"servers\": {\n      // test servers\n      \"talk-with-wiski-webservice-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithWebservice\"\n\n      },\n      \"talk-with-wiski-config-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithConfig\"\n\n      },\n      \"talk-with-wiski-validator-test\":{\n        \"url\": \"https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithValidator\"\n\n      },\n    }\n  }\nJe kan nu de verschillende servers op starten in het bestand: \nVervolgens zie je de tools in je Copilot chat scherm."
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html",
+    "href": "examples/notebooks/talk_with_wiski_tools.html",
     "title": "Talk with WISKI",
     "section": "",
-    "text": "In de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt."
+    "text": "Leave eval: false, output: asisfor Github CI, remove to generate docs locally\nIn de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt."
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#parameters",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#parameters",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#parameters",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#parameters",
     "title": "Talk with WISKI",
     "section": "1. Parameters",
     "text": "1. Parameters\nMet de tool get_parameters kan je de parameters van WISKI opvragen.\nfrom talk_with_wiski.models import GetLocationsInput, GetParametersInput\nfrom talk_with_wiski.tools import get_locations, get_parameters\nDit kan voor een aantal stations\nget_parameter_input = GetParametersInput(station_no=[\"ZUN0034_KKL_OW\", \"0300_TDB\"])\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.model_dump()\nOf voor alle stations\nimport numpy as np\n\nget_parameter_input = GetParametersInput()\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\ndata_dict = get_parameter_output.data\nparameters = np.unique(\n    [row[\"stationparameter_longname\"].split(\" [\")[0].lower() for row in data_dict]\n)\nprint(parameters)\nget_parameter_input = GetParametersInput(\n    station_no=\"BRE0301_PMP1\",\n)\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.data"
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#locations",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#locations",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#locations",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#locations",
     "title": "Talk with WISKI",
     "section": "2. Locations",
     "text": "2. Locations\nMet de tool get_locations kan je de parameters van WISKI opvragen.\nget_locations_input = GetLocationsInput(max_number_of_station_ids=5)\n\nctx = setup_dot_env()\n\nget_locations_output = await get_locations(ctx, get_locations_input)\n\nget_locations_output.model_dump()\n\nUsing geocoding is also possible\nThis uses from geopy.geocoders import Nominatim,  which uses the OSM API, See the policy -&gt; No heavy uses (an absolute maximum of 1 request per second).\nget_locations_input = GetLocationsInput(\n    requested_geolocation=[\"Loon op Zand\", 5.0],\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n)\nprint(input)\nget_locations_output = await get_locations(ctx, input)\nfor item in get_locations_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_locations_output.data)}\")"
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#sites",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#sites",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#sites",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#sites",
     "title": "Talk with WISKI",
     "section": "3. Sites",
     "text": "3. Sites\nMet de tool get_sites kun je de beschikbare sites van WISKI opvragen.\nHier een aantal voorbeelden.\nfrom talk_with_wiski.models import GetSitesInput\nfrom talk_with_wiski.tools import get_sites\n\nget_sites_input = GetSitesInput(\n    returnfields=\"site_no,site_id,site_name\",\n)\nget_sites_output = await get_sites(ctx, get_sites_input)\nfor item in get_sites_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_sites_output.data)}\")"
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#group-lists",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#group-lists",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#group-lists",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#group-lists",
     "title": "Talk with WISKI",
     "section": "4. Group lists",
     "text": "4. Group lists\nfrom talk_with_wiski.models import GetGroupListInput, GetGroupListOutput\nfrom talk_with_wiski.tools import get_group_list\n\n# Test end time before start time\nget_group_list_input = GetGroupListInput(group_type=\"timeseries\")\n\nget_group_list_output: GetGroupListOutput = await get_group_list(\n    ctx, get_group_list_input\n)\nget_group_list_output.model_dump()"
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#parametertypelist",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#parametertypelist",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#parametertypelist",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#parametertypelist",
     "title": "Talk with WISKI",
     "section": "5. ParametertypeList",
     "text": "5. ParametertypeList\nfrom talk_with_wiski.models import GetParametertypeListInput, GetParametertypeListOutput\nfrom talk_with_wiski.tools import get_parametertype_list\nprint(\"Test ParametertypeList: get ids for given names\")\nget_parametertype_list_input = GetParametertypeListInput(\n    parametertype_name=[\"Evaporation\", \"WNS*\"],\n)\nprint(get_parametertype_list_input)\nget_parametertype_list_output: GetParametertypeListOutput = (\n    await get_parametertype_list(ctx, get_parametertype_list_input)\n)\n\nprint(f\"Aantal parametertype gevonden {len(get_parametertype_list_output.data)}\")\nget_parametertype_list_output.model_dump()"
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-list",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-list",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#timeseries-list",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#timeseries-list",
     "title": "Talk with WISKI",
     "section": "6. Timeseries list",
     "text": "6. Timeseries list\nMet de tool get_timeseries_list kan je de beschikbare timeseries ophalen voor een locatie, site en/of een parameter.\nfrom talk_with_wiski.models import GetTimeseriesListInput, GetTimeseriesListOutput\nfrom talk_with_wiski.tools import get_timeseries_list\nHiervoor gebruiken we de eerste op gehaalde parameter en locatie combinatie:\npreviously_retrieved_station = get_parameter_output.data[0][\"station_no\"]\npreviously_retrieved_parameter = [\n    data[\"parametertype_name\"] for data in get_parameter_output.data\n]\npreviously_retrieved_station, previously_retrieved_parameter\nget_timeseries_list_input = GetTimeseriesListInput(\n    station_no=previously_retrieved_station,\n    parametertype_name=previously_retrieved_parameter,\n)\nget_timeseries_list_output: GetTimeseriesListOutput = await get_timeseries_list(\n    ctx, get_timeseries_list_input\n)\n\nget_timeseries_list_output.model_dump()\nget_timeseries_list_output.model_dump()[\"data\"][0].keys()"
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-values",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-values",
-    "title": "Talk with WISKI",
-    "section": "7. Timeseries values",
-    "text": "7. Timeseries values\nMet de tool get_timeseries_values kan je de timeseries data ophalen voor een timeseries_id.\nfrom talk_with_wiski.models import GetTimeseriesValuesInput, GetTimeseriesValuesOutput\nfrom talk_with_wiski.tools import get_timeseries_values\nprint([item[\"ts_id\"] for item in get_timeseries_list_output.data])\nget_timeseries_value_input = GetTimeseriesValuesInput(\n    ts_id=[item[\"ts_id\"] for item in get_timeseries_list_output.data],\n    from_date=\"2025-11-01\",\n    period=\"P1D\",\n    number_of_tsids_to_retrieve=10,\n    number_of_values_per_tsid=60,\n    get_as_url=False,\n    # to_date=\"2025-11-06\"\n)\nget_timeseries_value_output: GetTimeseriesValuesOutput = await get_timeseries_values(\n    ctx, get_timeseries_value_input\n)\n\nget_timeseries_value_output.model_dump()\n# length = len(get_timeseries_value_output.model_dump()['timeseries_values_list'])\n# print(length)\n\ndata = get_timeseries_value_output.model_dump()\nprint(type(data))\n\nfor item in data[\"timeseries_values_list\"]:\n    ts_id = item[\"ts_id\"]\n    station = item[\"station_name\"]\n    data_length = len(item[\"data\"])\n    print(f\"TS ID: {ts_id} | Station: {station} | Number of data points: {data_length}\")\n[item[\"ts_id\"] for item in get_timeseries_list_output.data]\nget_timeseries_value_input = GetTimeseriesValuesInput(\n    ts_id=[item[\"ts_id\"] for item in get_timeseries_list_output.data],\n    from_date=\"2023-11-01\",\n    to_date=\"2025-11-06\",\n    # period=\"P1D\",   # dit mag niet icm from_date.. to_date\n    # number_of_tsids_to_retrieve=10,\n    # number_of_values_per_tsid=1000,\n    get_as_url=True,\n)\n\nget_timeseries_value_output: str = await get_timeseries_values(\n    ctx, get_timeseries_value_input\n)\n\nprint(get_timeseries_value_output)"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-type",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-type",
-    "title": "Talk with WISKI",
-    "section": "8. Timeseries Type",
-    "text": "8. Timeseries Type\nMet de tool get_timeseries_Type kan je de informatie ophalen of het type tijdserie.\nfrom talk_with_wiski.models import GetTimeseriesTypeInput, GetTimeseriesTypeOutput\nfrom talk_with_wiski.tools import get_timeseries_type\nWe reuse the timeseries types from when we retrieved the timeseries list\nts_type_id = get_timeseries_list_output.data[0][\"ts_type_id\"]\nts_type_id\nget_timeseries_type_input = GetTimeseriesTypeInput(ts_type_id=ts_type_id)\nget_timeseries_type_output: GetTimeseriesTypeOutput = await get_timeseries_type(\n    ctx, get_timeseries_type_input\n)\nget_timeseries_type_output.model_dump()"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-analysis",
-    "href": "examples/notebooks/AI_agent_werkversieAndries.html#timeseries-analysis",
-    "title": "Talk with WISKI",
-    "section": "9. Timeseries analysis",
-    "text": "9. Timeseries analysis\n# vind een station met waterhoogte-data\npartypenm = \"WNS8487\"  # dit is waterhoogte\nget_timeseries_list_input = GetTimeseriesListInput(parametertype_name=partypenm)\nget_timeseries_list_output: GetTimeseriesListOutput = await get_timeseries_list(\n    ctx, get_timeseries_list_input\n)\n\nprint(get_timeseries_list_output.model_dump())\n\nunique_ts_id = {\n    item.get(\"ts_id\")\n    for item in get_timeseries_list_output.data\n    if item.get(\"ts_id\") is not None\n}\n\nprint(unique_ts_id)\nprint(len(unique_ts_id))\nts_id_list1 = list(sorted(unique_ts_id))[:10]\nts_id_list1 = ts_id_list1 + [\"37481042\"]\nprint(ts_id_list1)\nget_timeseries_value_input = GetTimeseriesValuesInput(\n    ts_id=ts_id_list1,\n    # ts_id=[\"37481042\"],\n    from_date=\"2023-11-01\",\n    # to_date=\"2024-11-06\",\n    period=\"P3M\",  # dit mag niet icm from_date.. to_date\n    number_of_tsids_to_retrieve=20,\n    number_of_values_per_tsid=1000000,\n    get_as_url=False,\n)\n\nget_timeseries_value_output: str = await get_timeseries_values(\n    ctx, get_timeseries_value_input\n)\n\n# print(get_timeseries_value_output)\n\ndata = get_timeseries_value_output.model_dump()\nprint(type(data))\n\nfor item in data[\"timeseries_values_list\"]:\n    ts_id = item[\"ts_id\"]\n    station_name = item[\"station_name\"]\n    station_no = item[\"station_no\"]\n    data_length = len(item[\"data\"])\n    print(\n        f\"TS ID: {ts_id} | station_name: {station_name} | station_no: {station_no} | Number of data points: {data_length}\"\n    )\nimport pandas as pd\n\nrecords = []\n\nfor item in data[\"timeseries_values_list\"]:\n    ts_id = item[\"ts_id\"]\n    station_name = item[\"station_name\"]\n    station_no = item[\"station_no\"]\n    for timestamp, value in item[\"data\"]:  # unpack the [timestamp, value] pairs\n        records.append(\n            {\n                \"ts_id\": ts_id,\n                \"station_name\": station_name,\n                \"station_no\": station_no,\n                \"timestamp\": timestamp,\n                \"value\": value,\n            }\n        )\n\ndf0 = pd.DataFrame(records)\ndf0[\"timestamp\"] = pd.to_datetime(df0[\"timestamp\"])\ndf0 = df0.sort_values([\"ts_id\", \"timestamp\"]).reset_index(drop=True)\n\n# stat_name_list = ['Bovenstrooms','Instroomzijde']\nstat_no_list = [\"1198_WTH_BOV\", \"7132_WTH_UIT\"]\ndf1 = df0[df0[\"station_no\"].isin(stat_no_list)]\ndf1 = df1.sort_values([\"ts_id\", \"timestamp\"]).reset_index(drop=True)\n\nprint(df1)\nprint(np.unique(df1.station_no))\n\n# get_locations_input = GetLocationsInput(station_no=stat_no_list)\n# ctx = setup_dot_env()\n# get_locations_output = await get_locations(ctx, get_locations_input)\n# get_locations_output.model_dump()\nimport matplotlib\nimport platform\n\nprint(matplotlib.get_backend())\n\nprint(\"Matplotlib:\", matplotlib.__version__)\nprint(\"Python:\", platform.python_version())\n\n# fig, ax = plt.subplots()\n# ax.plot(df[\"timestamp\"], df[\"value\"]) #, label=station)\n# plt.legend()\n# plt.xlabel(\"Time\")\n# plt.ylabel(\"Value\")\n# plt.title(\"Timeseries by Station\")\n# plt.show()\n# import matplotlib\n# matplotlib.use('Agg')  # non-interactive backend (safe for remote)\n# import matplotlib.pyplot as plt\n# #%matplotlib inline\n\n# fig, ax = plt.subplots()\n# ax.plot([1,2,3], [1,4,9])\n# #plt.show()\n# fig.savefig(r'c:/Temp/tmp.png')\ndef timeseries_analyse(df_in, wlev_thresholds_dict):\n    df = df_in.copy()\n\n    timeseries_analysis = {}\n\n    # maximum\n    timeseries_analysis[\"max\"] = max(df[\"value\"])\n\n    # tijdsduur boven een grenswaarde\n    # Step 1: mark above threshold\n    df.loc[:, \"above\"] = df[\"value\"] &gt; wlev_thresholds_dict[df.iloc[0].station_no]\n    # Step 2: compute time differences between consecutive timestamps\n    df.loc[:, \"dt\"] = df[\"timestamp\"].diff().shift(-1)  # time to next row\n    # Step 3: sum durations only for rows where value is above threshold\n    total_time_above = df.loc[df[\"above\"], \"dt\"].sum()\n    timeseries_analysis[\"t_above_grenswaarde\"] = total_time_above\n\n    return timeseries_analysis\nprint(df1)\nprint(np.unique(df1.station_no))\nimport plotly.express as px\nimport plotly.graph_objects as go\nimport sys\n# import sklearn\n# from sklearn.linear_model import LinearRegression\n\nwlev_thresholds_dict = {\n    \"1198_WTH_BOV\": 5.3,\n    \"7127_WTH_BEN\": -0.5,\n    \"7132_WTH_UIT\": 0.5,\n}\n\nstat_no_list = [\"1198_WTH_BOV\", \"7132_WTH_UIT\"]\n\nfor stat_no in stat_no_list:\n    df = df1[df1[\"station_no\"].isin([stat_no])]\n    df = df.sort_values([\"timestamp\"]).reset_index(drop=True)\n\n    df = df.dropna()\n\n    # do some data-analysis on these time series\n    timeseries_analysis = timeseries_analyse(df, wlev_thresholds_dict)\n\n    # Convert timestamp to numeric (seconds since start)\n    df.loc[:, \"time_numeric\"] = (\n        df[\"timestamp\"] - df[\"timestamp\"].min()\n    ).dt.total_seconds()\n    X = df[\"time_numeric\"].values / 86400\n    y = df[\"value\"].values\n    # : Fit linear regression\n    n = len(X)\n\n    # Calculate means\n    mean_x = sum(X) / n\n    mean_y = sum(y) / n\n\n    # Calculate slope (a) and intercept (b)\n    numerator = sum((x - mean_x) * (y - mean_y) for x, y in zip(X, y))\n    denominator = sum((x - mean_x) ** 2 for x in X)\n\n    slope = numerator / denominator\n    intercept = mean_y - slope * mean_x\n\n    print(slope, intercept)\n\n    y_fit = [slope * xi + intercept for xi in X]\n    df[\"trend\"] = y_fit\n    slope_per_day_cm = slope * 100\n\n    fig = px.line(\n        df,\n        x=\"timestamp\",\n        y=\"value\",\n        color=\"station_no\",\n        title=f\"Timeseries h(t) \\n Aantal dagen boven threshold: {timeseries_analysis['t_above_grenswaarde']}\",\n    )\n    threshold = wlev_thresholds_dict[stat_no]\n    fig.add_hline(\n        y=threshold,\n        line_dash=\"dash\",\n        line_color=\"red\",\n        annotation_text=f\"Threshold = {threshold}\",\n        annotation_position=\"top left\",\n    )\n    fig.add_trace(\n        go.Scatter(\n            x=df[\"timestamp\"],\n            y=df[\"trend\"],\n            line_dash=\"dash\",\n            line_color=\"green\",\n            # annotation_text=f\"Linear trend = {slope_per_day:.2f} cm/dag\", annotation_position=\"top right\"\n            name=\"linear trend\",\n        )\n    )\n    # Add annotation for slope/intercept\n    annot_index = len(df[\"timestamp\"]) // 4\n    fig.add_annotation(\n        x=df[\"timestamp\"].iloc[annot_index],  # place at last timestamp\n        y=df[\"trend\"].iloc[annot_index],  # y-coordinate on trend line\n        text=f\"Slope: {slope_per_day_cm:.2f} cm/dag&lt;br&gt;Intercept: {intercept:.2f} cm\",\n        # showarrow=True,\n        # arrowhead=2,\n        # ax=-50,  # offset x of the arrow\n        # ay=-50,  # offset y of the arrow\n        bgcolor=\"white\",\n        bordercolor=\"black\",\n        align=\"right\",\n    )\n\n    fig.show()\nprint(\"Python version:\", sys.version)\nprint(\"NumPy version:\", np.__version__)\nprint(\"Pandas version:\", pd.__version__)\n# print(\"scikit-learn version:\", sklearn.__version__)"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html",
-    "title": "Talk with WISKI",
-    "section": "",
-    "text": "In de documentatie laten we voorbeelden zien hoe je verschillende tools gebruikt."
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#parameters",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html#parameters",
-    "title": "Talk with WISKI",
-    "section": "1. Parameters",
-    "text": "1. Parameters\nMet de tool get_parameters kan je de parameters van WISKI opvragen.\nfrom talk_with_wiski.models import GetLocationsInput, GetParametersInput\nfrom talk_with_wiski.tools import get_locations, get_parameters\nDit kan voor een aantal stations\nget_parameter_input = GetParametersInput(station_no=[\"ZUN0034_KKL_OW\", \"0300_TDB\"])\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.model_dump()\nOf voor alle stations\nimport numpy as np\n\nget_parameter_input = GetParametersInput()\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\ndata_dict = get_parameter_output.data\nparameters = np.unique(\n    [row[\"stationparameter_longname\"].split(\" [\")[0].lower() for row in data_dict]\n)\nprint(parameters)\nget_parameter_input = GetParametersInput(\n    station_no=\"BRE0301_PMP1\",\n)\nget_parameter_output = await get_parameters(ctx, get_parameter_input)\n\nget_parameter_output.data"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#locations",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html#locations",
-    "title": "Talk with WISKI",
-    "section": "2. Locations",
-    "text": "2. Locations\nMet de tool get_locations kan je de parameters van WISKI opvragen.\nget_locations_input = GetLocationsInput(max_number_of_station_ids=5)\n\nctx = setup_dot_env()\n\nget_locations_output = await get_locations(ctx, get_locations_input)\n\nget_locations_output.model_dump()\n\nUsing geocoding is also possible\nThis uses from geopy.geocoders import Nominatim,  which uses the OSM API, See the policy -&gt; No heavy uses (an absolute maximum of 1 request per second).\nget_locations_input = GetLocationsInput(\n    requested_geolocation=[\"Loon op Zand\", 5.0],\n    returnfields=\"station_no,station_id,station_name,stationparameter_name,station_latitude,station_longitude,site_name\",\n)\nprint(input)\nget_locations_output = await get_locations(ctx, input)\nfor item in get_locations_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_locations_output.data)}\")"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#sites",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html#sites",
-    "title": "Talk with WISKI",
-    "section": "3. Sites",
-    "text": "3. Sites\nMet de tool get_sites kun je de beschikbare sites van WISKI opvragen.\nHier een aantal voorbeelden.\nfrom talk_with_wiski.models import GetSitesInput\nfrom talk_with_wiski.tools import get_sites\n\nget_sites_input = GetSitesInput(\n    returnfields=\"site_no,site_id,site_name\",\n)\nget_sites_output = await get_sites(ctx, get_sites_input)\nfor item in get_sites_output.data:\n    print(json.dumps(item, indent=2))\nprint(f\"Aantal records returned {len(get_sites_output.data)}\")"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#group-lists",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html#group-lists",
-    "title": "Talk with WISKI",
-    "section": "4. Group lists",
-    "text": "4. Group lists\nfrom talk_with_wiski.models import GetGroupListInput, GetGroupListOutput\nfrom talk_with_wiski.tools import get_group_list\n\n# Test end time before start time\nget_group_list_input = GetGroupListInput(group_type=\"timeseries\")\n\nget_group_list_output: GetGroupListOutput = await get_group_list(\n    ctx, get_group_list_input\n)\nget_group_list_output.model_dump()"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#parametertypelist",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html#parametertypelist",
-    "title": "Talk with WISKI",
-    "section": "5. ParametertypeList",
-    "text": "5. ParametertypeList\nfrom talk_with_wiski.models import GetParametertypeListInput, GetParametertypeListOutput\nfrom talk_with_wiski.tools import get_parametertype_list\nprint(\"Test ParametertypeList: get ids for given names\")\nget_parametertype_list_input = GetParametertypeListInput(\n    parametertype_name=[\"Evaporation\", \"WNS*\"],\n)\nprint(get_parametertype_list_input)\nget_parametertype_list_output: GetParametertypeListOutput = (\n    await get_parametertype_list(ctx, get_parametertype_list_input)\n)\n\nprint(f\"Aantal parametertype gevonden {len(get_parametertype_list_output.data)}\")\nget_parametertype_list_output.model_dump()"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-list",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-list",
-    "title": "Talk with WISKI",
-    "section": "6. Timeseries list",
-    "text": "6. Timeseries list\nMet de tool get_timeseries_list kan je de beschikbare timeseries ophalen voor een locatie, site en/of een parameter.\nfrom talk_with_wiski.models import GetTimeseriesListInput, GetTimeseriesListOutput\nfrom talk_with_wiski.tools import get_timeseries_list\nHiervoor gebruiken we de eerste op gehaalde parameter en locatie combinatie:\npreviously_retrieved_station = get_parameter_output.data[0][\"station_no\"]\npreviously_retrieved_parameter = [\n    data[\"parametertype_name\"] for data in get_parameter_output.data\n]\npreviously_retrieved_station, previously_retrieved_parameter\nget_timeseries_list_input = GetTimeseriesListInput(\n    station_no=previously_retrieved_station,\n    parametertype_name=previously_retrieved_parameter,\n)\nget_timeseries_list_output: GetTimeseriesListOutput = await get_timeseries_list(\n    ctx, get_timeseries_list_input\n)\n\nget_timeseries_list_output.model_dump()\nget_timeseries_list_output.model_dump()[\"data\"][0].keys()"
-  },
-  {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-values",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-values",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#timeseries-values",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#timeseries-values",
     "title": "Talk with WISKI",
     "section": "7. Timeseries values",
     "text": "7. Timeseries values\nMet de tool get_timeseries_values kan je de timeseries data ophalen voor een timeseries_id.\nfrom talk_with_wiski.models import GetTimeseriesValuesInput, GetTimeseriesValuesOutput\nfrom talk_with_wiski.tools import get_timeseries_values\nget_timeseries_value_input = GetTimeseriesValuesInput(\n    ts_id=[item[\"ts_id\"] for item in get_timeseries_list_output.data],\n    from_date=\"2025-11-01\",\n    period=\"P1D\",\n    # to_date=\"2025-11-06\"\n)\nget_timeseries_value_output: GetTimeseriesValuesOutput = await get_timeseries_values(\n    ctx, get_timeseries_value_input\n)\n\nget_timeseries_value_output.model_dump()\n[item[\"ts_id\"] for item in get_timeseries_list_output.data]"
   },
   {
-    "objectID": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-type",
-    "href": "examples/notebooks/AI_agent_werkversieTom.html#timeseries-type",
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#timeseries-type",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#timeseries-type",
     "title": "Talk with WISKI",
     "section": "8. Timeseries Type",
     "text": "8. Timeseries Type\nMet de tool get_timeseries_Type kan je de informatie ophalen of het type tijdserie.\nfrom talk_with_wiski.models import GetTimeseriesTypeInput, GetTimeseriesTypeOutput\nfrom talk_with_wiski.tools import get_timeseries_type\nWe reuse the timeseries types from when we retrieved the timeseries list\nts_type_id = get_timeseries_list_output.data[0][\"ts_type_id\"]\nts_type_id\nget_timeseries_type_input = GetTimeseriesTypeInput(ts_type_id=ts_type_id)\nget_timeseries_type_output: GetTimeseriesTypeOutput = await get_timeseries_type(\n    ctx, get_timeseries_type_input\n)\nget_timeseries_type_output.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#analyse-timeseries-statistics",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#analyse-timeseries-statistics",
+    "title": "Talk with WISKI",
+    "section": "9 Analyse Timeseries Statistics",
+    "text": "9 Analyse Timeseries Statistics\nfrom talk_with_wiski.models import (\n    AnalyseTimeseriesStatsInput,\n    AnalyseTimeseriesStatsOutput,\n)\nfrom talk_with_wiski.tools import analyse_timeseries_statistics\nWe hergebruike het eerder gebruikte id\nts_id = get_timeseries_list_output.data[0][\"ts_id\"]\nts_id\ninput_analyse_timeseries_statistics = AnalyseTimeseriesStatsInput(\n    ts_id=ts_id,\n    from_date=\"2023-11-01\",\n    period=\"P3M\",\n)\n\noutput_analyse_timeseries_statistics: AnalyseTimeseriesStatsOutput = (\n    await analyse_timeseries_statistics(ctx, input_analyse_timeseries_statistics)\n)\n\noutput_analyse_timeseries_statistics.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#analyse-timeseries-threshold",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#analyse-timeseries-threshold",
+    "title": "Talk with WISKI",
+    "section": "10 Analyse Timeseries Threshold",
+    "text": "10 Analyse Timeseries Threshold\nfrom talk_with_wiski.models import (\n    AnalyseTimeseriesThresholdsInput,\n    AnalyseTimeseriesThresholdsOutput,\n)\nfrom talk_with_wiski.tools import analyse_timeseries_thresholds\nanalyse_timeseries_input = AnalyseTimeseriesThresholdsInput(\n    ts_id=ts_id,\n    from_date=\"2023-11-01\",\n    period=\"P3M\",\n    threshold=5.3,\n)\n\noutput_analyse_timeseries_thresholds: AnalyseTimeseriesThresholdsOutput = (\n    await analyse_timeseries_thresholds(ctx, analyse_timeseries_input)\n)\noutput_analyse_timeseries_thresholds.model_dump()"
+  },
+  {
+    "objectID": "examples/notebooks/talk_with_wiski_tools.html#analyse-timeseries-trend",
+    "href": "examples/notebooks/talk_with_wiski_tools.html#analyse-timeseries-trend",
+    "title": "Talk with WISKI",
+    "section": "11 Analyse Timeseries trend",
+    "text": "11 Analyse Timeseries trend\n# to do analysis on timeseries\nfrom talk_with_wiski.models import (\n    AnalyseTimeseriesTrendInput,\n)\nfrom talk_with_wiski.tools import analyse_timeseries_trend\n# for statistics and trend, same object can be used\ninput_analyse_timeseries_trend = AnalyseTimeseriesTrendInput(\n    ts_id=ts_id,\n    from_date=\"2023-11-01\",\n    period=\"P3M\",\n)\n\noutput_analyse_timeseries_trend: AnalyseTimeseriesTrendInput = (\n    await analyse_timeseries_trend(ctx, input_analyse_timeseries_trend)\n)\n\noutput_analyse_timeseries_trend.model_dump()\nMeer informatie over hoe de analyse tools werken? zie ook dit voorbeeld"
   },
   {
     "objectID": "reference/get_parameters.html",
