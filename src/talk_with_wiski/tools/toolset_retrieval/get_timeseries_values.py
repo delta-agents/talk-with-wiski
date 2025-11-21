@@ -59,8 +59,8 @@ async def get_timeseries_values(
     # return GetTimeseriesValuesOutput(data=data, description="Timeseries")
 
     # max aantal elementen dat default mag worden teruggegeven
-    n_ids = input.number_of_tsids_to_retrieve
-    n_vals = input.number_of_values_per_tsid
+    n_ids = input.max_number_of_tsids_to_retrieve
+    n_vals = input.max_number_of_values_per_tsid
 
     # used for debugging
     # print('\n')

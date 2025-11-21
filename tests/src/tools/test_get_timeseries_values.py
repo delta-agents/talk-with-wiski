@@ -32,8 +32,8 @@ async def test_get_timeseries_values(test_context):
         ts_id=["63158042", "63160042", "63162042"],
         from_date="2025-11-01",
         period="P10D",
-        number_of_tsids_to_retrieve=10,
-        number_of_values_per_tsid=60,
+        max_number_of_tsids_to_retrieve=10,
+        max_number_of_values_per_tsid=60,
         get_as_url=True,
     )
 
@@ -41,7 +41,9 @@ async def test_get_timeseries_values(test_context):
 
     if not input.get_as_url:
         # check on maximum number of ts_ids returned :
-        assert len(output.timeseries_values_list) <= input.number_of_tsids_to_retrieve
+        assert (
+            len(output.timeseries_values_list) <= input.max_number_of_tsids_to_retrieve
+        )
         assert "Only the first" not in output.description
 
         logger.debug(output)
@@ -60,7 +62,7 @@ async def test_get_timeseries_values(test_context):
                 f"TS ID: {ts_id} | Station: {station} | Number of data points: {data_length}"
             )
             # check on maximum number of records per ts_id :
-            assert data_length <= input.number_of_values_per_tsid
+            assert data_length <= input.max_number_of_values_per_tsid
 
         logger.debug("\n")
 

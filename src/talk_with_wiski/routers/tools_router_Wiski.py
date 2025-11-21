@@ -18,6 +18,16 @@ from talk_with_wiski.models import (
     GetTimeseriesValuesOutput,
     GetTimeseriesTypeInput,
     GetTimeseriesTypeOutput,
+    # TimeseriesType,
+    AnalyseTimeseriesTrendInput,
+    AnalyseTimeseriesTrendOutput,
+    # LinearTrendLine,
+    AnalyseTimeseriesStatsInput,
+    AnalyseTimeseriesStatsOutput,
+    # TimeseriesStatistics,
+    AnalyseTimeseriesThresholdsInput,
+    AnalyseTimeseriesThresholdsOutput,
+    # TimeseriesThresholds,
 )
 from talk_with_wiski.tools import get_locations as get_locations_pydantic_ai
 from talk_with_wiski.tools import get_parameters as get_parameters_pydantic_ai
@@ -32,6 +42,15 @@ from talk_with_wiski.tools import (
 )
 from talk_with_wiski.tools import (
     get_parametertype_list as get_parametertype_list_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    analyse_timeseries_statistics as get_analyse_timeseries_statistics_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    analyse_timeseries_thresholds as get_analyse_timeseries_thresholds_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    analyse_timeseries_trend as get_analyse_timeseries_trend_pydantic_ai,
 )
 
 # Import tool functions and their models
@@ -104,8 +123,22 @@ async def get_timeseries_list(
 
 
 @mcp.tool()
-@router.post("/tools/get_timeseries_values")
+@router.post("/tools/get_timeseries_type")
 @auto_docstring("Retrieves the timeseries data from the WISKI API")
+async def get_timeseries_type(
+    input: GetTimeseriesTypeInput,
+) -> GetTimeseriesTypeOutput:
+    ctx = get_runtime_ctx()
+    return await get_timeseries_type_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/get_timeseries_values")
+@auto_docstring(
+    "Retrieves the timeseries data from the WISKI API"
+    "Note 1: Increase the parameter max_number_of_tsids_to_retrieve to retrieve more timeseries (default=5)."
+    "Note 2: Increase the parameter max_number_of_values_per_tsid to retrieve more values per timeseries (default=10)."
+)
 async def get_timeseries_values(
     input: GetTimeseriesValuesInput,
 ) -> GetTimeseriesValuesOutput:
@@ -114,10 +147,42 @@ async def get_timeseries_values(
 
 
 @mcp.tool()
-@router.post("/tools/get_timeseries_type")
-@auto_docstring("Retrieves the timeseries data from the WISKI API")
-async def get_timeseries_type(
-    input: GetTimeseriesTypeInput,
-) -> GetTimeseriesTypeOutput:
+@router.post("/tools/analyse_timeseries_statistics")
+@auto_docstring(
+    "Analyse timeseries for a specific ts_id, get min/max/average/stddev"
+    "Note 1: Increase the parameter max_number_of_tsids_to_retrieve to retrieve more timeseries (default=5)."
+    "Note 2: Increase the parameter max_number_of_values_per_tsid to retrieve more values per timeseries (default=10)."
+)
+async def analyse_timeseries_statistics(
+    input: AnalyseTimeseriesStatsInput,
+) -> AnalyseTimeseriesStatsOutput:
     ctx = get_runtime_ctx()
-    return await get_timeseries_type_pydantic_ai(ctx, input)
+    return await get_analyse_timeseries_statistics_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/analyse_timeseries_thresholds")
+@auto_docstring(
+    "Analyse timeseries for a specific ts_id, get time in hours above a certain threshold"
+    "Note 1: Increase the parameter max_number_of_tsids_to_retrieve to retrieve more timeseries (default=5)."
+    "Note 2: Increase the parameter max_number_of_values_per_tsid to retrieve more values per timeseries (default=10)."
+)
+async def analyse_timeseries_thresholds(
+    input: AnalyseTimeseriesThresholdsInput,
+) -> AnalyseTimeseriesThresholdsOutput:
+    ctx = get_runtime_ctx()
+    return await get_analyse_timeseries_thresholds_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/analyse_timeseries_trend")
+@auto_docstring(
+    "Analyse timeseries for a specific ts_id, get trend information"
+    "Note 1: Increase the parameter max_number_of_tsids_to_retrieve to retrieve more timeseries (default=5)."
+    "Note 2: Increase the parameter max_number_of_values_per_tsid to retrieve more values per timeseries (default=10)."
+)
+async def analyse_timeseries_trend(
+    input: AnalyseTimeseriesTrendInput,
+) -> AnalyseTimeseriesTrendOutput:
+    ctx = get_runtime_ctx()
+    return await get_analyse_timeseries_trend_pydantic_ai(ctx, input)

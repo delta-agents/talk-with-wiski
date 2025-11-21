@@ -14,11 +14,17 @@ class GetTimeseriesValuesInput(ExampleBaseModel):
         default=None,
         description="Timeseries ID or IDs for which to provide all timeseries data. This variable can be obtained from getTimeseriesListOutput (the output of the function get_timeseries_list)",
     )
-    number_of_tsids_to_retrieve: int = Field(
-        default=5, description="Number of timeseries_id to retrieve"
+    max_number_of_tsids_to_retrieve: int = Field(
+        # max_number_of_tsids_to_retrieve of LIMIT? increase if you want....
+        default=5,
+        description="Maximum number of timeseries_id to retrieve, default=5, increase this parameter"
+        "if you need data for more timeseries_ids",
     )
-    number_of_values_per_tsid: int = Field(
-        default=10, description="Number of timeseries values per id to retrieve"
+    max_number_of_values_per_tsid: int = Field(
+        # max_number_of_values_per_tsid
+        default=10,
+        description="Maximum number of values per timeseries_id to retrieve, default=10, increase this parameter"
+        "if you need data for more values per timeseries_ids",
     )
     from_date: Optional[str] = Field(
         default=None,

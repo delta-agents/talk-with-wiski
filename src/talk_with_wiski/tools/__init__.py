@@ -19,6 +19,15 @@ from talk_with_wiski.tools.toolset_retrieval.get_parametertype_list import (
 from talk_with_wiski.tools.toolset_retrieval.get_timeseries_type import (
     get_timeseries_type,
 )
+from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_statistics import (
+    analyse_timeseries_statistics,
+)
+from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_thresholds import (
+    analyse_timeseries_thresholds,
+)
+from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_trend import (
+    analyse_timeseries_trend,
+)
 
 __all__ = [
     add_index,
@@ -31,4 +40,7 @@ __all__ = [
     get_timeseries_list,
     get_timeseries_values,
     get_timeseries_type,
+    analyse_timeseries_statistics,
+    analyse_timeseries_thresholds,
+    analyse_timeseries_trend,
 ]

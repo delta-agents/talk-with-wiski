@@ -15,6 +15,10 @@ class GetTimeseriesListInput(ExampleBaseModel):
         default=None,
         description="Station number or numbers for which to list all available parameters. This variable can be obtained from GetLocationsOutput (the output of the function get_locations)",
     )
+    station_name: Optional[str | List[str]] = Field(
+        default=None,
+        description="Station name or names for which to list all available parameters. This variable can be obtained from GetLocationsOutput (the output of the function get_locations)",
+    )
     site_no: Optional[str | List[str]] = Field(
         default=None,
         description="Site number or numbers for which to list all available parameters. This variable can be obtained from GetSitesOutput (the output of the function get_sites)",
