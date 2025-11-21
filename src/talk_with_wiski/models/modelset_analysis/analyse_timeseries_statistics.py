@@ -1,22 +1,24 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 
-from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import GetTimeseriesValuesInput
-from talk_with_wiski.models.base import ExampleBaseModel
-
+from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import (
+    GetTimeseriesValuesInput,
+)
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
 class AnalyseTimeseriesStatsInput(GetTimeseriesValuesInput):
     """
     Re-use Timeseries class from get_timeseries_values.
     """
+
     # Inherits from Timeseries, add or overwrite features below.
     ts_id: str = Field(
-            default=None,
-            description="SINGLE ts_id as string for timeseries analysis",
-        )
+        default=None,
+        description="SINGLE ts_id as string for timeseries analysis",
+    )
 
 
-class TimeseriesStatistics(BaseModel):
+class TimeseriesStatistics(WiskiBaseModel):
     """Model representing a trend line for a timeseries."""
 
     minimum: float
@@ -25,11 +27,15 @@ class TimeseriesStatistics(BaseModel):
     stddev: float
 
 
-class AnalyseTimeseriesStatsOutput(ExampleBaseModel):
+class AnalyseTimeseriesStatsOutput(WiskiBaseModel):
     """Output is LinearTrendLine with slope and intercept for a given Timeseries class (containing timeseries_values
-       for a certain ts_id)."""
+    for a certain ts_id)."""
 
     timeseries_statistics: TimeseriesStatistics = Field(
-        ..., description="Statistics of a given timeseries such as min/max/average/stddev."
+        ...,
+        description="Statistics of a given timeseries such as min/max/average/stddev.",
     )
-    description: str = Field(..., description="Statistics of a given timeseries such as min/max/average/stddev.")
+    description: str = Field(
+        ...,
+        description="Statistics of a given timeseries such as min/max/average/stddev.",
+    )

@@ -8,8 +8,11 @@
       "local-agent2":{
         "url": "http://localhost:8000/mcp/agent2"
       },
-      "local-wiski":{
+      "local-wiski-docker":{
         "url": "http://localhost:8000/mcp/wiski"
+      },
+      "local-wiski-dev":{
+        "url": "http://localhost:8001/mcp/wiski"
       },
     }
   }

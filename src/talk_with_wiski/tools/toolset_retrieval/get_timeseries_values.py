@@ -1,15 +1,12 @@
-"""
-Example of a tool cal
-"""
+import requests
+import json
 
 from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import (
     GetTimeseriesValuesInput,
     GetTimeseriesValuesOutput,
     Timeseries,
 )
-from talk_with_wiski.utils.logging_utils import log_tool_call
-import requests
-import json
+from talk_with_wiski.utils.logging_utils import log_tool_call, logger
 
 
 @log_tool_call
@@ -63,9 +60,8 @@ async def get_timeseries_values(
     n_vals = input.max_number_of_values_per_tsid
 
     # used for debugging
-    # print('\n')
-    # print(f'number of tsids to retrieve: {n_ids}')
-    # print(f'number of values per tsid to retrieve: {n_vals}')
+    logger.debug(f"number of tsids to retrieve: {n_ids}")
+    logger.debug(f"number of values per tsid to retrieve: {n_vals}")
 
     # data vullen
     timeseries_values_list = []

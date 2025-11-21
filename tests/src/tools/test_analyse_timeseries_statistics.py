@@ -3,11 +3,12 @@ import pytest
 
 
 # to do trend analysis
-from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_statistics import analyse_timeseries_statistics
+from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_statistics import (
+    analyse_timeseries_statistics,
+)
 from talk_with_wiski.models.modelset_analysis.analyse_timeseries_statistics import (
     AnalyseTimeseriesStatsInput,
     AnalyseTimeseriesStatsOutput,
-    TimeseriesStatistics,
 )
 
 from talk_with_wiski.routers.setup_connections import get_runtime_ctx
@@ -32,20 +33,19 @@ async def test_analyse_timeseries_statistics(test_context):
     """Test for List of ts_ids"""
     # Test end time before start time
     input = AnalyseTimeseriesStatsInput(
-        ts_id="37481042", # belongs to stat_no "1198_WTH_BOV"
+        ts_id="37481042",  # belongs to stat_no "1198_WTH_BOV"
         from_date="2023-11-01",
         period="P3M",  # dit mag niet icm from_date.. to_date
-        number_of_tsids_to_retrieve=20,
-        number_of_values_per_tsid=1000000,
+        max_number_of_tsids_to_retrieve=20,
+        max_number_of_values_per_tsid=1000000,
     )
 
-    output: AnalyseTimeseriesStatsOutput = await analyse_timeseries_statistics(test_context, input)
+    output: AnalyseTimeseriesStatsOutput = await analyse_timeseries_statistics(
+        test_context, input
+    )
 
-    data = output.model_dump()
     logger.debug(type(output))
-    
-    #print('\n')
-    logger.debug(f'maximum= {output.timeseries_statistics.maximum}')
+    logger.debug(f"maximum= {output.timeseries_statistics.maximum}")
 
     assert isinstance(output.timeseries_statistics.minimum, float)
     assert isinstance(output.timeseries_statistics.maximum, float)

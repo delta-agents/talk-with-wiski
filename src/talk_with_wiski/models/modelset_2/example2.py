@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 from typing import Dict
 
-from talk_with_wiski.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
-class Example2Input(ExampleBaseModel):
+class Example2Input(WiskiBaseModel):
     """
     Input model for Example2Input tool.
     Currently, no parameters are required, but this can be extended in the future.
@@ -13,6 +13,6 @@ class Example2Input(ExampleBaseModel):
     factor: int = Field(..., description="A factor for the example2 tool")
 
 
-class Example2Output(BaseModel):
+class Example2Output(WiskiBaseModel):
     data: Dict[str, int] = Field(..., description="data dictionary")
     description: str = Field(..., description="Description of the example2 output")

@@ -1,11 +1,11 @@
-from pydantic import BaseModel, Field, model_validator
+from pydantic import Field, model_validator
 from pydantic_ai import ModelRetry
 from typing import Dict, List, Optional
 
-from talk_with_wiski.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
-class GetParametersInput(ExampleBaseModel):
+class GetParametersInput(WiskiBaseModel):
     """
     Input model for get_parameters tool.
     """
@@ -36,7 +36,7 @@ class GetParametersInput(ExampleBaseModel):
         return self
 
 
-class GetParametersOutput(BaseModel):
+class GetParametersOutput(WiskiBaseModel):
     """
     Output model for get_parameters tool.
     """

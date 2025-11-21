@@ -1,6 +1,6 @@
 import os
 import pytest
-
+import json
 
 from talk_with_wiski.tools import get_timeseries_list
 from talk_with_wiski.models.modelset_retrieval.get_timeseries_list import (
@@ -33,8 +33,6 @@ async def test_get_timeseries_list(test_context):
     )
     output: GetTimeseriesListOutput = await get_timeseries_list(test_context, input)
 
-    # print(output.data)
-
     unique_station_no = {
         item.get("station_no")
         for item in output.data
@@ -59,9 +57,6 @@ async def test_get_timeseries_list(test_context):
     )
     output: GetTimeseriesListOutput = await get_timeseries_list(test_context, input)
 
-    # print(output.data)
-    import json
-
     for i, item in enumerate(output.data):
-        print(f"Item {i}:")
-        print(json.dumps(item, indent=2, ensure_ascii=False))
+        logger.debug(f"Item {i}:")
+        logger.debug(json.dumps(item, indent=2, ensure_ascii=False))

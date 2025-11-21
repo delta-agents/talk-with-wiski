@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 import duckdb
 
 
-class ExampleBaseModel(BaseModel):
+class WiskiBaseModel(BaseModel):
     """
     Base model that supports flexible input formats including strings.
 

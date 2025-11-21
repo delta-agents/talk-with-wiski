@@ -62,26 +62,19 @@ async def get_sites(ctx, input: GetSitesInput) -> GetSitesOutput:
     # if getattr(input, "requested_geolocation", None):
     #     from geopy.geocoders import Nominatim
     #     geolocator = Nominatim(user_agent="talk-with-wiski-notebook")
-    #     print(input.requested_geolocation)
     #     location, radius = input.requested_geolocation
     #     radius=float(radius)
     #     geo_location = geolocator.geocode(location)
-    #     print(geo_location)
-    #     #print((geo_location.longitude, geo_location.latitude))
     #     loc_bbox=calculate_bbox_from_geocoding(
     #         geo_location.longitude,
     #         geo_location.latitude,
     #         r=radius
     #     )
-    #     print(loc_bbox)
     #     endpoint += "&bbox=" + ",".join(map(str, loc_bbox))
 
     # filter on WSBDstations by default
     # dit moet alleen voor stations, niet voor sites
     # endpoint += "&object_type_shortname=WSBD_*"
-
-    # For debugging
-    # print(endpoint)
 
     # call to KiWIS API
     res = requests.get(endpoint, timeout=30)

@@ -1,11 +1,11 @@
-from pydantic import BaseModel, Field, model_validator
+from pydantic import Field, model_validator
 from pydantic_ai import ModelRetry
 from typing import Dict, List, Optional
 
-from talk_with_wiski.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
-class GetTimeseriesListInput(ExampleBaseModel):
+class GetTimeseriesListInput(WiskiBaseModel):
     """
     Input model for get_timeseries_list tool.
     Currently, no parameters are required, but this can be extended in the future.
@@ -46,7 +46,7 @@ class GetTimeseriesListInput(ExampleBaseModel):
         return self
 
 
-class GetTimeseriesListOutput(BaseModel):
+class GetTimeseriesListOutput(WiskiBaseModel):
     data: List[Dict[str, str]] = Field(
         ...,
         description="list of available timeseries. The variable ts_id can be used as input for GetTimeseriesValuesInput.",

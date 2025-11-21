@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 from typing import Dict, List, Optional
 
-from talk_with_wiski.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
-class GetLocationsInput(ExampleBaseModel):
+class GetLocationsInput(WiskiBaseModel):
     """
     Input model for get_locations tool.
     """
@@ -40,6 +40,6 @@ class GetLocationsInput(ExampleBaseModel):
     #  > 50 < 54
 
 
-class GetLocationsOutput(BaseModel):
+class GetLocationsOutput(WiskiBaseModel):
     data: List[Dict[str, str]] = Field(..., description="data dictionary")
     description: str = Field(..., description="Table relationships")

@@ -2,13 +2,17 @@
 Linear trend analysis
 """
 
-from talk_with_wiski.tools.toolset_retrieval.get_timeseries_values import get_timeseries_values
+from talk_with_wiski.tools.toolset_retrieval.get_timeseries_values import (
+    get_timeseries_values,
+)
 from talk_with_wiski.models.modelset_analysis.analyse_timeseries_trend import (
     AnalyseTimeseriesTrendInput,
     AnalyseTimeseriesTrendOutput,
     LinearTrendLine,
 )
 from talk_with_wiski.utils.logging_utils import log_tool_call
+import pandas as pd
+from talk_with_wiski.utils import logger
 
 
 @log_tool_call
@@ -16,22 +20,22 @@ async def analyse_timeseries_trend(
     ctx, input: AnalyseTimeseriesTrendInput
 ) -> AnalyseTimeseriesTrendOutput:
     """
-    Determine (linear) trend line of timeseries, input is a Timeseries class containing a single array of 
+    Determine (linear) trend line of timeseries, input is a Timeseries class containing a single array of
     timeseries values.
     """
-
+    input.max_number_of_values_per_tsid = 1000000
     output = await get_timeseries_values(ctx, input)
-    #print('\n')
-    #print(type(output))
+    logger.debug(type(output))
 
     data = output.model_dump()
-    #print(type(data))
-    #print(data)
+    logger.debug(type(data))
+    logger.debug(data)
 
     # make pandas dataframe to perform timeseries analysis
-    import pandas as pd
     records = []
-    for timestamp, value in data["timeseries_values_list"][0]["data"]:  # unpack the [timestamp, value] pairs
+    for timestamp, value in data["timeseries_values_list"][0][
+        "data"
+    ]:  # unpack the [timestamp, value] pairs
         records.append(
             {
                 "timestamp": timestamp,
@@ -40,13 +44,13 @@ async def analyse_timeseries_trend(
         )
 
     df = pd.DataFrame(records)
-    #print(df)
+    logger.debug(df)
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     df = df.sort_values(["timestamp"]).reset_index(drop=True)
     df = df.dropna()
 
     # do some data-analysis on these time series
-    #timeseries_analysis = timeseries_analyse(df, wlev_thresholds_dict)
+    # timeseries_analysis = timeseries_analyse(df, wlev_thresholds_dict)
 
     # Convert timestamp to numeric (seconds since start)
     df.loc[:, "time_numeric"] = (
@@ -68,7 +72,7 @@ async def analyse_timeseries_trend(
     slope = numerator / denominator
     intercept = mean_y - slope * mean_x
 
-    #print(slope, intercept)
+    logger.debug(slope, intercept)
 
     linear_trend = LinearTrendLine(
         slope=slope,

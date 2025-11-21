@@ -2,13 +2,17 @@
 Timeseries: analyze exceedance of thresholds
 """
 
-from talk_with_wiski.tools.toolset_retrieval.get_timeseries_values import get_timeseries_values
+from talk_with_wiski.tools.toolset_retrieval.get_timeseries_values import (
+    get_timeseries_values,
+)
 from talk_with_wiski.models.modelset_analysis.analyse_timeseries_thresholds import (
     AnalyseTimeseriesThresholdsInput,
     AnalyseTimeseriesThresholdsOutput,
     TimeseriesThresholds,
 )
 from talk_with_wiski.utils.logging_utils import log_tool_call
+import pandas as pd
+from talk_with_wiski.utils import logger
 
 
 @log_tool_call
@@ -16,20 +20,22 @@ async def analyse_timeseries_thresholds(
     ctx, input: AnalyseTimeseriesThresholdsInput
 ) -> AnalyseTimeseriesThresholdsOutput:
     """
-    Determine thresholds of timeseries, input is a Timeseries class containing a single array of 
+    Determine thresholds of timeseries, input is a Timeseries class containing a single array of
     timeseries values.
     """
 
     threshold = input.threshold
-    
+    input.max_number_of_values_per_tsid = 1000000
+
     output = await get_timeseries_values(ctx, input)
 
     data = output.model_dump()
 
     # make pandas dataframe to perform timeseries analysis
-    import pandas as pd
     records = []
-    for timestamp, value in data["timeseries_values_list"][0]["data"]:  # unpack the [timestamp, value] pairs
+    for timestamp, value in data["timeseries_values_list"][0][
+        "data"
+    ]:  # unpack the [timestamp, value] pairs
         records.append(
             {
                 "timestamp": timestamp,
@@ -51,9 +57,9 @@ async def analyse_timeseries_thresholds(
     total_time_above = df.loc[df["above"], "dt"].sum()
     total_time_above_in_hours = total_time_above / pd.Timedelta(hours=1)
 
-    #print('\n')        
-    #print(threshold)        
-    #print(total_time_above_in_hours)        
+    logger.debug("\n")
+    logger.debug(f"threshold= {threshold} mNAP")
+    logger.debug(f"total_time_above= {total_time_above_in_hours} hours")
 
     threshold_values = TimeseriesThresholds(
         threshold_value=threshold,

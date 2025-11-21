@@ -52,7 +52,6 @@ async def test_get_timeseries_values(test_context):
         )
 
         data = output.model_dump()
-        # print(type(data))
 
         for item in data["timeseries_values_list"]:
             ts_id = item["ts_id"]
@@ -67,8 +66,6 @@ async def test_get_timeseries_values(test_context):
         logger.debug("\n")
 
     else:
-        # output: str = await get_timeseries_values(test_context, input)
-        # logger.debug(output)
         data = output.model_dump()
         logger.debug(data["url"])
         assert "KiWIS" in data["url"]
