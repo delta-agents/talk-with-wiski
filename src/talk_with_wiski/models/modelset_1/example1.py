@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 from typing import Dict
 
-from talk_with_wiski.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
-class AddIndexInput(ExampleBaseModel):
+class AddIndexInput(WiskiBaseModel):
     """
     Input model for AddIndex tool.
     Requires index as an input.
@@ -18,6 +18,6 @@ class AddIndexInput(ExampleBaseModel):
     )
 
 
-class AddIndexOutput(BaseModel):
+class AddIndexOutput(WiskiBaseModel):
     data: Dict[str, int] = Field(..., description="data dictionary")
     description: str = Field(..., description="Table relationships")

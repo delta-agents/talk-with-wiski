@@ -1,6 +1,6 @@
 import os
 import pytest
-
+import json
 
 from talk_with_wiski.tools import get_timeseries_list
 from talk_with_wiski.models.modelset_retrieval.get_timeseries_list import (
@@ -33,8 +33,6 @@ async def test_get_timeseries_list(test_context):
     )
     output: GetTimeseriesListOutput = await get_timeseries_list(test_context, input)
 
-    # print(output.data)
-
     unique_station_no = {
         item.get("station_no")
         for item in output.data
@@ -51,3 +49,14 @@ async def test_get_timeseries_list(test_context):
 
     assert len(unique_station_no) == 1
     assert len(unique_parametertype_name) == 3
+
+    input = GetTimeseriesListInput(
+        parametertype_name="WNS8487",  # dit is waterhoogte
+        station_no="1198_WTH_BOV",  # dit is een station_no voor maken interessant figuur
+        station_name="Bovenstrooms",  # dit is de naam van het station
+    )
+    output: GetTimeseriesListOutput = await get_timeseries_list(test_context, input)
+
+    for i, item in enumerate(output.data):
+        logger.debug(f"Item {i}:")
+        logger.debug(json.dumps(item, indent=2, ensure_ascii=False))

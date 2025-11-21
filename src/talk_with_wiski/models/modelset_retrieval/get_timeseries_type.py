@@ -1,11 +1,11 @@
-from pydantic import BaseModel, Field, model_validator
+from pydantic import Field, model_validator
 from pydantic_ai import ModelRetry
 from typing import List, Optional
 
-from talk_with_wiski.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
-class GetTimeseriesTypeInput(ExampleBaseModel):
+class GetTimeseriesTypeInput(WiskiBaseModel):
     """
     Input model for get_timeseries_type tool.
     """
@@ -44,7 +44,7 @@ class GetTimeseriesTypeInput(ExampleBaseModel):
         return self
 
 
-class TimeseriesType(BaseModel):
+class TimeseriesType(WiskiBaseModel):
     """Model representing a timeseries type."""
 
     ts_type_id: int
@@ -53,7 +53,7 @@ class TimeseriesType(BaseModel):
     ts_shortname: str
 
 
-class GetTimeseriesTypeOutput(BaseModel):
+class GetTimeseriesTypeOutput(WiskiBaseModel):
     """Output model for GetTimeseriesTypeOutput tool."""
 
     timeseries_type_list: List[TimeseriesType] = Field(

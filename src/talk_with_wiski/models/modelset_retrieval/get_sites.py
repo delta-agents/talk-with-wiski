@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 from typing import Dict, List, Optional
 
-from talk_with_wiski.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
-class GetSitesInput(ExampleBaseModel):
+class GetSitesInput(WiskiBaseModel):
     """
     Input model for get_sites tool.
     """
@@ -38,7 +38,7 @@ class GetSitesInput(ExampleBaseModel):
     #  > 50 < 54
 
 
-class GetSitesOutput(BaseModel):
+class GetSitesOutput(WiskiBaseModel):
     """
     Output model for get_sites tool.
     """

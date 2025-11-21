@@ -1,11 +1,11 @@
-from pydantic import BaseModel, Field, model_validator
+from pydantic import Field, model_validator
 from pydantic_ai import ModelRetry
 from typing import List, Optional
 
-from talk_with_wiski.models.base import ExampleBaseModel
+from talk_with_wiski.models.base import WiskiBaseModel
 
 
-class GetGroupListInput(ExampleBaseModel):
+class GetGroupListInput(WiskiBaseModel):
     """
     Input model for GetGroupList tool.
     """
@@ -51,7 +51,7 @@ class GetGroupListInput(ExampleBaseModel):
         return self
 
 
-class GroupItem(BaseModel):
+class GroupItem(WiskiBaseModel):
     group_name: str
     group_type: str
     group_id: int
@@ -60,7 +60,7 @@ class GroupItem(BaseModel):
     group_private: bool
 
 
-class GetGroupListOutput(BaseModel):
+class GetGroupListOutput(WiskiBaseModel):
     group_item_list: List[GroupItem] = Field(
         ..., description="list of GroupItem objects"
     )

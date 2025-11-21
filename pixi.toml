@@ -12,6 +12,9 @@ license-file = "LICENSE"
 # Installation
 install = "pre-commit install"
 start = { cmd = "uvicorn main:app --host 0.0.0.0 --port 8000" }
+# ander port voor dev
+start-dev = { cmd = "uvicorn main:app --host 0.0.0.0 --port 8001" }
+
 
 # run scripts
 #script = { cmd = "python scipts.py", cwd = "scripts" }

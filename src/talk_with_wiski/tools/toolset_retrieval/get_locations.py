@@ -85,7 +85,6 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
             )
 
         logger.debug(geo_location)
-        # print((geo_location.longitude, geo_location.latitude))
         loc_bbox = calculate_bbox_from_geocoding(
             geo_location.longitude, geo_location.latitude, r=radius
         )

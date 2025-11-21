@@ -39,7 +39,6 @@ async def test_get_parameters(test_context):
         for item in output.data
         if item.get("station_no") is not None
     }
-    # print(output.data)
     logger.debug(unique_station_no)
     assert len(unique_station_no) == 2
 
@@ -56,7 +55,6 @@ async def test_get_parameters(test_context):
         for item in output.data
         if item.get("station_no") is not None
     }
-    # print(output.data)
     logger.debug(unique_station_no)
     assert len(unique_station_no) == 1
 
