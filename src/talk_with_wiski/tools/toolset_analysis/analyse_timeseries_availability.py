@@ -28,6 +28,7 @@ async def analyse_timeseries_availability(
     dict_TimeseriesAvailability = {}
     output = await get_timeseries_values(ctx, input)
     df = _process_timeseries_values(output)
+    #TODO: (optioneel) filteren op validatie-status?
 
     # availability analysis
     data_available = len(df) > 0
