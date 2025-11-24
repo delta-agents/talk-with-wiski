@@ -2,7 +2,9 @@
 Timeseries: analyze availability of data
 """
 
-from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import GetTimeseriesValuesOutput
+from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import (
+    GetTimeseriesValuesOutput,
+)
 from talk_with_wiski.tools.toolset_retrieval.get_timeseries_values import (
     get_timeseries_values,
 )
@@ -61,6 +63,7 @@ async def analyse_timeseries_availability(
         description="availability of timeseries data",
     )
 
+
 def _process_timeseries_values(output: GetTimeseriesValuesOutput) -> pd.DataFrame:
     data = output.model_dump()
 
@@ -75,6 +78,6 @@ def _process_timeseries_values(output: GetTimeseriesValuesOutput) -> pd.DataFram
                 "value": value,
             }
         )
-    
+
     df = pd.DataFrame(records)
     return df

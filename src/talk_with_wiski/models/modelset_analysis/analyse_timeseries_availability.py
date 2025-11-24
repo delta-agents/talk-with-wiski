@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Any
+from typing import Optional, Any
 from pydantic import Field
 
 from talk_with_wiski.models.modelset_retrieval.get_timeseries_values import (
