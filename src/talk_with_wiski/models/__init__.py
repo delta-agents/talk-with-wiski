@@ -69,6 +69,11 @@ from talk_with_wiski.models.modelset_analysis.analyse_timeseries_thresholds impo
     TimeseriesThresholds,
 )
 
+from talk_with_wiski.models.modelset_analysis.analyse_timeseries_availability import (
+    AnalyseTimeseriesAvailabilityInput,
+    AnalyseTimeseriesAvailabilityOutput,
+)
+
 __all__ = [
     "AddIndexInput",
     "AddIndexOutput",
@@ -101,4 +106,6 @@ __all__ = [
     "AnalyseTimeseriesThresholdsInput",
     "AnalyseTimeseriesThresholdsOutput",
     "TimeseriesThresholds",
+    "AnalyseTimeseriesAvailabilityInput",
+    "AnalyseTimeseriesAvailabilityOutput",
 ]
