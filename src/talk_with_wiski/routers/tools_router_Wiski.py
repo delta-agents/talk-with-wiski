@@ -28,6 +28,8 @@ from talk_with_wiski.models import (
     AnalyseTimeseriesThresholdsInput,
     AnalyseTimeseriesThresholdsOutput,
     # TimeseriesThresholds,
+    AnalyseTimeseriesQualityCodeInput,
+    AnalyseTimeseriesQualityCodeOutput,
 )
 from talk_with_wiski.tools import get_locations as get_locations_pydantic_ai
 from talk_with_wiski.tools import get_parameters as get_parameters_pydantic_ai
@@ -51,6 +53,9 @@ from talk_with_wiski.tools import (
 )
 from talk_with_wiski.tools import (
     analyse_timeseries_trend as get_analyse_timeseries_trend_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    analyse_timeseries_quality_code as get_analyse_timeseries_quality_code_pydantic_ai,
 )
 
 # Import tool functions and their models
@@ -186,3 +191,17 @@ async def analyse_timeseries_trend(
 ) -> AnalyseTimeseriesTrendOutput:
     ctx = get_runtime_ctx()
     return await get_analyse_timeseries_trend_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/analyse_timeseries_quality_code")
+@auto_docstring(
+    "Analyse timeseries for a specific ts_id, get quality code information"
+    "Note 1: Increase the parameter max_number_of_tsids_to_retrieve to retrieve more timeseries (default=5)."
+    "Note 2: Increase the parameter max_number_of_values_per_tsid to retrieve more values per timeseries (default=10)."
+)
+async def analyse_timeseries_quality_code(
+    input: AnalyseTimeseriesQualityCodeInput,
+) -> AnalyseTimeseriesQualityCodeOutput:
+    ctx = get_runtime_ctx()
+    return await get_analyse_timeseries_quality_code_pydantic_ai(ctx, input)

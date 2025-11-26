@@ -42,6 +42,10 @@ class GetTimeseriesValuesInput(WiskiBaseModel):
         default=None,
         description="Future time period for future timeseries data request. Must be according to ISO format P#Y#M#DT#H#M#S where P just indicates an arbitrary period with the # being integers",
     )
+    returnfields: Optional[str] = Field(
+        default=None,
+        description="Comma-separated list of fields (spaces allowed) to include in the response. If not specified, all default fields will be included.",
+    )
     get_as_url: Optional[bool] = Field(
         default=False,
         description="Option to get url instead of data in case of large data requests",

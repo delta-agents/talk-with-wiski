@@ -31,6 +31,9 @@ from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_trend import (
 from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_availability import (
     analyse_timeseries_availability,
 )
+from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_quality_code import (
+    analyse_timeseries_quality_code,
+)
 
 __all__ = [
     add_index,
@@ -47,4 +50,5 @@ __all__ = [
     analyse_timeseries_thresholds,
     analyse_timeseries_trend,
     analyse_timeseries_availability,
+    analyse_timeseries_quality_code,
 ]

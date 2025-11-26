@@ -74,6 +74,11 @@ from talk_with_wiski.models.modelset_analysis.analyse_timeseries_availability im
     AnalyseTimeseriesAvailabilityOutput,
 )
 
+from talk_with_wiski.models.modelset_analysis.analyse_timeseries_quality_code import (
+    AnalyseTimeseriesQualityCodeInput,
+    AnalyseTimeseriesQualityCodeOutput,
+)
+
 __all__ = [
     "AddIndexInput",
     "AddIndexOutput",
@@ -108,4 +113,6 @@ __all__ = [
     "TimeseriesThresholds",
     "AnalyseTimeseriesAvailabilityInput",
     "AnalyseTimeseriesAvailabilityOutput",
+    "AnalyseTimeseriesQualityCodeInput",
+    "AnalyseTimeseriesQualityCodeOutput",
 ]

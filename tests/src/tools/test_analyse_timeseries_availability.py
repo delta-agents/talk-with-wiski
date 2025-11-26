@@ -48,6 +48,7 @@ async def test_analyse_timeseries_availability_case_true(test_context):
     assert output.available
     assert output.Tmin is None
 
+
 @pytest.mark.skipif(
     os.getenv("GITHUB_ACTIONS") == "true",
     reason="Kan alleen lokaal getest worden",
