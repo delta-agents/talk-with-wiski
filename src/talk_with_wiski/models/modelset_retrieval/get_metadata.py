@@ -43,4 +43,7 @@ class GetMetadataOutput(WiskiBaseModel):
         ...,
         description="List of metadata for ts_id, site_no, or station_no, depending on input provided.",
     )
-    description: str = Field(..., description="List of metadata for ts_id, site_no, or station_no, depending on input provided")
+    description: str = Field(
+        ...,
+        description="List of metadata for ts_id, site_no, or station_no, depending on input provided",
+    )
