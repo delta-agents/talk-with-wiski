@@ -31,27 +31,7 @@ async def get_timeseries_values(
         "metadata": "true",
     }
 
-    # extend url
-    if isinstance(input.ts_id, list):
-        params["ts_id"] = ",".join(input.ts_id)
-    else:
-        params["ts_id"] = input.ts_id
-
-    if input.from_date is not None:
-        params["from"] = input.from_date
-
-    if input.to_date is not None:
-        params["to"] = input.to_date
-
-    if input.period is not None:
-        params["period"] = input.period
-
-    if input.futureperiod is not None:
-        params["futureperiod"] = input.futureperiod
-
-    # Data ophalen
-    res = requests.get(endpoint, params=params, timeout=30)
-    data = list(json.loads(res.text))
+    data = _get_timeseries_request(endpoint, input, params)
 
     # return GetTimeseriesValuesOutput(data=data, description="Timeseries")
 
@@ -99,3 +79,37 @@ async def get_timeseries_values(
             description=description,
             url="",
         )
+
+
+def _get_timeseries_request(endpoint, input, params):
+    # extend url
+    if isinstance(input.ts_id, list):
+        params["ts_id"] = ",".join(input.ts_id)
+    else:
+        params["ts_id"] = input.ts_id
+
+    if input.from_date is not None:
+        params["from"] = input.from_date
+
+    if input.to_date is not None:
+        params["to"] = input.to_date
+
+    if input.period is not None:
+        params["period"] = input.period
+
+    if input.futureperiod is not None:
+        params["futureperiod"] = input.futureperiod
+
+    if input.returnfields is not None:
+        params["returnfields"] = input.returnfields
+
+    # for debugging
+    # req = requests.Request("GET", endpoint, params=params)
+    # prepared = req.prepare()
+    # print(prepared.url)
+
+    # Data ophalen
+    res = requests.get(endpoint, params=params, timeout=30)
+    data = list(json.loads(res.text))
+
+    return data

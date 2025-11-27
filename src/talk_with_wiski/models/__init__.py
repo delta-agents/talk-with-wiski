@@ -51,6 +51,11 @@ from talk_with_wiski.models.modelset_retrieval.get_timeseries_type import (
     TimeseriesType,
 )
 
+from talk_with_wiski.models.modelset_retrieval.get_metadata import (
+    GetMetadataInput,
+    GetMetadataOutput,
+)
+
 from talk_with_wiski.models.modelset_analysis.analyse_timeseries_trend import (
     AnalyseTimeseriesTrendInput,
     AnalyseTimeseriesTrendOutput,
@@ -67,6 +72,16 @@ from talk_with_wiski.models.modelset_analysis.analyse_timeseries_thresholds impo
     AnalyseTimeseriesThresholdsInput,
     AnalyseTimeseriesThresholdsOutput,
     TimeseriesThresholds,
+)
+
+from talk_with_wiski.models.modelset_analysis.analyse_timeseries_availability import (
+    AnalyseTimeseriesAvailabilityInput,
+    AnalyseTimeseriesAvailabilityOutput,
+)
+
+from talk_with_wiski.models.modelset_analysis.analyse_timeseries_quality_code import (
+    AnalyseTimeseriesQualityCodeInput,
+    AnalyseTimeseriesQualityCodeOutput,
 )
 
 __all__ = [
@@ -92,6 +107,8 @@ __all__ = [
     "GetTimeseriesTypeInput",
     "GetTimeseriesTypeOutput",
     "TimeseriesType",
+    "GetMetadataInput",
+    "GetMetadataOutput",
     "AnalyseTimeseriesTrendInput",
     "AnalyseTimeseriesTrendOutput",
     "LinearTrendLine",
@@ -101,4 +118,8 @@ __all__ = [
     "AnalyseTimeseriesThresholdsInput",
     "AnalyseTimeseriesThresholdsOutput",
     "TimeseriesThresholds",
+    "AnalyseTimeseriesAvailabilityInput",
+    "AnalyseTimeseriesAvailabilityOutput",
+    "AnalyseTimeseriesQualityCodeInput",
+    "AnalyseTimeseriesQualityCodeOutput",
 ]

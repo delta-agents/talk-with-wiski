@@ -19,6 +19,8 @@ from talk_with_wiski.models import (
     GetTimeseriesTypeInput,
     GetTimeseriesTypeOutput,
     # TimeseriesType,
+    GetMetadataInput,
+    GetMetadataOutput,
     AnalyseTimeseriesTrendInput,
     AnalyseTimeseriesTrendOutput,
     # LinearTrendLine,
@@ -28,6 +30,10 @@ from talk_with_wiski.models import (
     AnalyseTimeseriesThresholdsInput,
     AnalyseTimeseriesThresholdsOutput,
     # TimeseriesThresholds,
+    AnalyseTimeseriesQualityCodeInput,
+    AnalyseTimeseriesQualityCodeOutput,
+    AnalyseTimeseriesAvailabilityInput,
+    AnalyseTimeseriesAvailabilityOutput,
 )
 from talk_with_wiski.tools import get_locations as get_locations_pydantic_ai
 from talk_with_wiski.tools import get_parameters as get_parameters_pydantic_ai
@@ -44,6 +50,9 @@ from talk_with_wiski.tools import (
     get_parametertype_list as get_parametertype_list_pydantic_ai,
 )
 from talk_with_wiski.tools import (
+    get_metadata as get_metadata_pydantic_ai,
+)
+from talk_with_wiski.tools import (
     analyse_timeseries_statistics as get_analyse_timeseries_statistics_pydantic_ai,
 )
 from talk_with_wiski.tools import (
@@ -51,6 +60,12 @@ from talk_with_wiski.tools import (
 )
 from talk_with_wiski.tools import (
     analyse_timeseries_trend as get_analyse_timeseries_trend_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    analyse_timeseries_quality_code as get_analyse_timeseries_quality_code_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    analyse_timeseries_availability as get_analyse_timeseries_availability_pydantic_ai,
 )
 
 # Import tool functions and their models
@@ -110,6 +125,18 @@ async def get_parametertype_list(
 ) -> GetParametertypeListOutput:
     ctx = get_runtime_ctx()
     return await get_parametertype_list_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/get_metadata")
+@auto_docstring(
+    "Retrieves metadata from the WISKI API, input can be (str of List[str]) of either ts_id, site_no or station_no"
+)
+async def get_metadata(
+    input: GetMetadataInput,
+) -> GetMetadataOutput:
+    ctx = get_runtime_ctx()
+    return await get_metadata_pydantic_ai(ctx, input)
 
 
 @mcp.tool()
@@ -186,3 +213,27 @@ async def analyse_timeseries_trend(
 ) -> AnalyseTimeseriesTrendOutput:
     ctx = get_runtime_ctx()
     return await get_analyse_timeseries_trend_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/analyse_timeseries_availability")
+@auto_docstring("Analyse timeseries for a specific ts_id, get availability information")
+async def analyse_timeseries_availability(
+    input: AnalyseTimeseriesAvailabilityInput,
+) -> AnalyseTimeseriesAvailabilityOutput:
+    ctx = get_runtime_ctx()
+    return await get_analyse_timeseries_availability_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/analyse_timeseries_quality_code")
+@auto_docstring(
+    "Analyse timeseries for a specific ts_id, get quality code information"
+    "Note 1: Increase the parameter max_number_of_tsids_to_retrieve to retrieve more timeseries (default=5)."
+    "Note 2: Increase the parameter max_number_of_values_per_tsid to retrieve more values per timeseries (default=10)."
+)
+async def analyse_timeseries_quality_code(
+    input: AnalyseTimeseriesQualityCodeInput,
+) -> AnalyseTimeseriesQualityCodeOutput:
+    ctx = get_runtime_ctx()
+    return await get_analyse_timeseries_quality_code_pydantic_ai(ctx, input)
