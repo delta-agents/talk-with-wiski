@@ -33,11 +33,11 @@ async def test_analyse_timeseries_quality_code(test_context):
     """Test for List of ts_ids"""
     # Test end time before start time
     input = AnalyseTimeseriesQualityCodeInput(
-        ts_id=["37481042","63160042"],  # belongs to stat_no "1198_WTH_BOV"
+        ts_id=["37481042", "63160042"],  # belongs to stat_no "1198_WTH_BOV"
         from_date="2023-11-01",
         period="P1D",  # dit mag niet icm from_date.. to_date
-        #max_number_of_tsids_to_retrieve=20,
-        #max_number_of_values_per_tsid=1000000,
+        # max_number_of_tsids_to_retrieve=20,
+        # max_number_of_values_per_tsid=1000000,
     )
 
     output: AnalyseTimeseriesQualityCodeOutput = await analyse_timeseries_quality_code(
@@ -50,7 +50,7 @@ async def test_analyse_timeseries_quality_code(test_context):
 
     # Find the index of the 'n_datapoints' column
     idx = df.columns.get_loc("n_datapoints")
-    right_cols = df.columns[idx + 1:]
+    right_cols = df.columns[idx + 1 :]
     # Row by row check
     # Row by row check: n_datapoints == sum of right_cols
     for i, row in df.iterrows():
@@ -58,4 +58,3 @@ async def test_analyse_timeseries_quality_code(test_context):
         assert row["n_datapoints"] == right_sum, (
             f"Row {i}: n_datapoints ({row['n_datapoints']}) != sum({list(right_cols)}) ({right_sum})"
         )
-    
