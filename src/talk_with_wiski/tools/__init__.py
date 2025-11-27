@@ -39,8 +39,10 @@ from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_quality_code impo
 )
 
 __all__ = [
+    # dummy/example tools
     add_index,
     example2,
+    # real tools:
     get_locations,
     get_sites,
     get_parameters,

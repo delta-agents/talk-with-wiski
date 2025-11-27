@@ -6,23 +6,23 @@ website:
   title: "Talk with WISKI"
   navbar:
     left:
-      - text: "Documentatie"
-        menu:
-          - examples/notebooks/talk_with_wiski_tools.ipynb
-          - examples/notebooks/analyse_timeseries_futher_examples.ipynb
-      - text: "Python API"
-        file: reference/index.qmd
+    - text: "Documentatie"
+      menu:
+      - examples/notebooks/talk_with_wiski_tools.ipynb
+      - examples/notebooks/analyse_timeseries_futher_examples.ipynb
+      - examples/notebooks/talk_with_wiski_agent.ipynb
+    - text: "Python API"
+      file: reference/index.qmd
     right:
-      - icon: github
-        href: https://github.com/HKV-products-services/talk_with_wiski
-        aria-label: GitHub
-      - text: "Contributing"
-        file: contributing.qmd
+    - icon: github
+      href: https://github.com/HKV-products-services/talk_with_wiski
+      aria-label: GitHub
+    - text: "Contributing"
+      file: contributing.qmd
 format:
   html:
     theme: cosmo
     toc: true
-
 
 quartodoc:
   style: pkgdown
@@ -39,9 +39,9 @@ quartodoc:
     include_classes: true
     include_functions: true
   sections:
-    - title: Tools
-      desc: Beschikbare tools
-      package: talk_with_wiski.tools
-      contents:
-        - get_locations
-        - get_parameters
+  - title: Tools
+    desc: Beschikbare tools
+    package: talk_with_wiski.tools
+    contents:
+    - get_locations
+    - get_parameters
