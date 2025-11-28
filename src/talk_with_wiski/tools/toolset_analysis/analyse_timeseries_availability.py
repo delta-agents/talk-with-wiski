@@ -38,7 +38,7 @@ async def analyse_timeseries_availability(
 
     # find period of availability data outside selected period
     if not data_available:
-        # do a second get_timeseries_values call, with all values of input to None (except ts_id)
+        # do a second get_timeseries_values call for the complete coverage of the given ts_id
         input.from_date = None
         input.to_date = None
         input.period = "complete"

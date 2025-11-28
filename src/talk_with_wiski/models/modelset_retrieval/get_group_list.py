@@ -15,11 +15,13 @@ class GetGroupListInput(WiskiBaseModel):
     )
     group_name: Optional[str | List[str]] = Field(
         default=None,
-        description="Group name or names for which to list all available parameters.",
+        description="Group name or names for which to list all available parameters."
+        "List of 1 or more, * as wildcard is allowed.",
     )
     group_purpose: Optional[str | List[str]] = Field(
         default=None,
-        description="Group purpose or purposes for which to list all available parameters.",
+        description="Group purpose or purposes for which to list all available parameters."
+        "List of 1 or more, * as wildcard is allowed.",
     )
     group_type: Optional[str] = Field(
         default=None,

@@ -46,11 +46,11 @@ async def get_timeseries_list(
         else:
             params["station_name"] = input.station_name
 
-    if input.site_no is not None:
-        if isinstance(input.site_no, list):
-            params["site_no"] = ",".join(input.site_no)
-        else:
-            params["site_no"] = input.site_no
+    # if input.site_no is not None:
+    #     if isinstance(input.site_no, list):
+    #         params["site_no"] = ",".join(input.site_no)
+    #     else:
+    #         params["site_no"] = input.site_no
 
     if input.parametertype_name is not None:
         if isinstance(input.parametertype_name, list):
