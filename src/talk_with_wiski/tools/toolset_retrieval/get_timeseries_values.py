@@ -43,6 +43,7 @@ async def get_timeseries_values(
     logger.debug(f"number of tsids to retrieve: {n_ids}")
     logger.debug(f"number of values per tsid to retrieve: {n_vals}")
 
+    print(data)
     # data vullen
     timeseries_values_list = []
     for timeseries_values in data:
@@ -81,6 +82,7 @@ async def get_timeseries_values(
         )
 
 
+# Function to retrieve data from WISKI
 def _get_timeseries_request(endpoint, input, params):
     # extend url
     if isinstance(input.ts_id, list):
@@ -102,6 +104,9 @@ def _get_timeseries_request(endpoint, input, params):
 
     if input.returnfields is not None:
         params["returnfields"] = input.returnfields
+
+    if input.include_quality_codes:
+        params["returnfields"] = "Timestamp,Value,Quality Code"
 
     # for debugging
     # req = requests.Request("GET", endpoint, params=params)

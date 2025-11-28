@@ -35,6 +35,7 @@ async def test_get_timeseries_values(test_context):
         max_number_of_tsids_to_retrieve=10,
         max_number_of_values_per_tsid=60,
         get_as_url=True,
+        include_quality_codes=False,
     )
 
     output: GetTimeseriesValuesOutput = await get_timeseries_values(test_context, input)

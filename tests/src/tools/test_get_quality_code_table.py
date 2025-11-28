@@ -30,7 +30,7 @@ async def test_get_quality_code_table(test_context):
     quality_code_table: GetQualityCodeTableOutput = await get_quality_code_table(
         test_context, input
     )
-    quality_code_table=quality_code_table.data
+    quality_code_table = quality_code_table.data
 
     logger.debug(quality_code_table)
 

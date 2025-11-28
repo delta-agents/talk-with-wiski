@@ -9,6 +9,7 @@ class GetQualityCodeTableInput(WiskiBaseModel):
     Input model for get_timeseries_metadata tool.
     ts_id is required (string or list of strings).
     """
+
     # no input required
 
 
