@@ -22,6 +22,9 @@ from talk_with_wiski.tools.toolset_retrieval.get_timeseries_type import (
 from talk_with_wiski.tools.toolset_retrieval.get_metadata import (
     get_metadata,
 )
+from talk_with_wiski.tools.toolset_retrieval.get_quality_code_table import (
+    get_quality_code_table,
+)
 from talk_with_wiski.tools.toolset_analysis.analyse_timeseries_statistics import (
     analyse_timeseries_statistics,
 )
@@ -52,6 +55,7 @@ __all__ = [
     get_timeseries_values,
     get_timeseries_type,
     get_metadata,
+    get_quality_code_table,
     analyse_timeseries_statistics,
     analyse_timeseries_thresholds,
     analyse_timeseries_trend,

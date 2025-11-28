@@ -21,6 +21,8 @@ from talk_with_wiski.models import (
     # TimeseriesType,
     GetMetadataInput,
     GetMetadataOutput,
+    GetQualityCodeTableInput,
+    GetQualityCodeTableOutput,
     AnalyseTimeseriesTrendInput,
     AnalyseTimeseriesTrendOutput,
     # LinearTrendLine,
@@ -51,6 +53,9 @@ from talk_with_wiski.tools import (
 )
 from talk_with_wiski.tools import (
     get_metadata as get_metadata_pydantic_ai,
+)
+from talk_with_wiski.tools import (
+    get_quality_code_table as get_quality_code_table_pydantic_ai,
 )
 from talk_with_wiski.tools import (
     analyse_timeseries_statistics as get_analyse_timeseries_statistics_pydantic_ai,
@@ -137,6 +142,16 @@ async def get_metadata(
 ) -> GetMetadataOutput:
     ctx = get_runtime_ctx()
     return await get_metadata_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
+@router.post("/tools/get_quality_code_table")
+@auto_docstring("Dictionary of quality codes from the WISKI API")
+async def get_quality_code_table(
+    input: GetQualityCodeTableInput,
+) -> GetQualityCodeTableOutput:
+    ctx = get_runtime_ctx()
+    return await get_quality_code_table_pydantic_ai(ctx, input)
 
 
 @mcp.tool()
