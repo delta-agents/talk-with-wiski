@@ -60,3 +60,41 @@ async def test_get_timeseries_list(test_context):
     for i, item in enumerate(output.data):
         logger.debug(f"Item {i}:")
         logger.debug(json.dumps(item, indent=2, ensure_ascii=False))
+
+    # alleen parametertype_name als input, met een wildcard
+    input = GetTimeseriesListInput(
+        parametertype_name="WNS*",
+    )
+    output: GetTimeseriesListOutput = await get_timeseries_list(test_context, input)
+    unique_station_no = {
+        item.get("station_no")
+        for item in output.data
+        if item.get("station_no") is not None
+    }
+    unique_station_no = sorted(list(unique_station_no))
+    # print(unique_station_no[:10])  # print first 10 station numbers
+    assert len(unique_station_no) > 0
+
+    unique_station_name = {
+        item.get("station_name")
+        for item in output.data
+        if item.get("station_name") is not None
+    }
+    unique_station_name = sorted(list(unique_station_name))
+    # print(unique_station_name[:10])  # print first 10 station numbers
+    assert len(unique_station_name) > 0
+
+    # alleen station_name, met een wildcard
+    input = GetTimeseriesListInput(
+        # station_name=["*Beneden*","*Diver*"],
+        station_name=["*beneden*", "*diver*"],
+    )
+    output: GetTimeseriesListOutput = await get_timeseries_list(test_context, input)
+    unique_station_name = {
+        item.get("station_name")
+        for item in output.data
+        if item.get("station_name") is not None
+    }
+    unique_station_name = sorted(list(unique_station_name))
+    # print(unique_station_name)  # print first 10 station numbers
+    assert len(unique_station_name) > 0

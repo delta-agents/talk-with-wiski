@@ -42,7 +42,7 @@ class GetParametersInput(WiskiBaseModel):
             raise ModelRetry(
                 "Only one of 'station_no' or 'site_no' can be provided, not both."
             )
-        if parametertype_name and site_no:
+        if parametertype_name and parameter_type:
             raise ModelRetry(
                 "Only one of 'parametertype_name' or 'parameter_type' can be provided, not both."
             )

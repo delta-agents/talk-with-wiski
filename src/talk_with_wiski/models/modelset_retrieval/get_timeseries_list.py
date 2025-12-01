@@ -23,6 +23,7 @@ class GetTimeseriesListInput(WiskiBaseModel):
         "List of 1 or more, * as wildcard is allowed."
         "This variable can be obtained from GetLocationsOutput (the output of the function get_locations)",
     )
+    # volgens de documentatie is site_no geen mogelijk Query Field!!, daarom uitgezet. Ook uit model_validator gehaald.
     # site_no: Optional[str | List[str]] = Field(
     #     default=None,
     #     description="Site number or numbers for which to list all available parameters."
@@ -40,18 +41,18 @@ class GetTimeseriesListInput(WiskiBaseModel):
 
     @model_validator(mode="after")
     def validate_exclusive_fields(self):
-        station_no, site_no, parametertype_name = (
+        station_no, station_name, parametertype_name = (
             self.station_no,
-            self.site_no,
+            self.station_name,
             self.parametertype_name,
         )
-        if station_no and site_no:
+        # if station_no and station_name:
+        #    raise ModelRetry(
+        #        "Only one of 'station_no' or 'station_name' can be provided, not both."
+        #    )
+        if not (station_no or station_name or parametertype_name):
             raise ModelRetry(
-                "Only one of 'station_no' or 'site_no' can be provided, not both."
-            )
-        elif not (station_no or site_no or parametertype_name):
-            raise ModelRetry(
-                "At least one of the arguments 'station_no', 'site_no', or 'parametertype_name' must be provided."
+                "At least one of the arguments 'station_no', 'station_name', or 'parametertype_name' must be provided."
             )
         return self
 
