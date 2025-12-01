@@ -84,7 +84,7 @@ mcp = FastMCP(name="Wiski")
 # describe_timeseries tool registration
 @mcp.tool()
 @router.post("/tools/get_locations")
-@auto_docstring("Retrieves the locations from the WISKI API")
+@auto_docstring("Retrieves the locations from the WISKI API. May contain * as wildcard for some parameters")
 async def get_locations(
     input: GetLocationsInput,
 ) -> GetLocationsOutput:
@@ -104,7 +104,7 @@ async def get_parameters(
 
 @mcp.tool()
 @router.post("/tools/get_sites")
-@auto_docstring("Retrieves the sites information from the WISKI API")
+@auto_docstring("Retrieves the sites information from the WISKI API. May contain * as wildcard for some parameters")
 async def get_sites(
     input: GetSitesInput,
 ) -> GetSitesOutput:
@@ -114,7 +114,7 @@ async def get_sites(
 
 @mcp.tool()
 @router.post("/tools/get_group_list")
-@auto_docstring("Retrieves the group list from the WISKI API")
+@auto_docstring("Retrieves the group list from the WISKI API. May contain * as wildcard for some parameters")
 async def get_group_list(
     input: GetGroupListInput,
 ) -> GetGroupListOutput:
@@ -124,7 +124,7 @@ async def get_group_list(
 
 @mcp.tool()
 @router.post("/tools/get_parametertype_list")
-@auto_docstring("Retrieves the parametertype list from the WISKI API")
+@auto_docstring("Retrieves the parametertype list from the WISKI API. May contain * as wildcard for some parameters")
 async def get_parametertype_list(
     input: GetParametertypeListInput,
 ) -> GetParametertypeListOutput:
@@ -156,7 +156,7 @@ async def get_quality_code_table(
 
 @mcp.tool()
 @router.post("/tools/get_timeseries_list")
-@auto_docstring("Retrieves the available timeseries from the WISKI API")
+@auto_docstring("Retrieves the available timeseries from the WISKI API. May contain * as wildcard for some parameters")
 async def get_timeseries_list(
     input: GetTimeseriesListInput,
 ) -> GetTimeseriesListOutput:

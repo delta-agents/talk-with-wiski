@@ -18,20 +18,33 @@ class GetParametersInput(WiskiBaseModel):
         default=None,
         description="Site number or numbersfor which to list all available parameters.",
     )
+    parametertype_name: Optional[str | List[str]] = Field(
+        default=None,
+        description="List of parametertype_name requested. List of 1 or more, * as wildcard is allowed, "
+        "examples of parametertype_names are 'WNS*' or 'Evaporation'"
+        "WNS staat voor Waarnemingssoort volgens de Aquo-standaard van Informatiehuis Water"
+        "zie https://www.aquo.nl/index.php/Id-a225c399-903d-4ee1-ec2f-521b4f255cb5",
+    )
     parameter_type: Optional[str] = Field(
         default=None,
-        description="List all available parameters that feature the parameter type. Examples of parameter types are 'debiet', 'waterhoogte' or 'drempelhoogte'",
+        description="Filter the output to list all available parameters that feature the parameter type. Examples of parameter types are 'debiet', 'waterhoogte' or 'drempelhoogte'",
     )
 
     @model_validator(mode="after")
     def validate_exclusive_fields(self):
-        station_no, site_no = (
+        station_no, site_no, parametertype_name, parameter_type = (
             self.station_no,
             self.site_no,
+            self.parametertype_name,
+            self.parameter_type,
         )
         if station_no and site_no:
             raise ModelRetry(
                 "Only one of 'station_no' or 'site_no' can be provided, not both."
+            )
+        if parametertype_name and site_no:
+            raise ModelRetry(
+                "Only one of 'parametertype_name' or 'parameter_type' can be provided, not both."
             )
         return self
 
