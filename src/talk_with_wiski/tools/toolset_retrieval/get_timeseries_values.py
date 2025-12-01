@@ -43,7 +43,7 @@ async def get_timeseries_values(
     logger.debug(f"number of tsids to retrieve: {n_ids}")
     logger.debug(f"number of values per tsid to retrieve: {n_vals}")
 
-    print(data)
+    logger.debug(data)
     # data vullen
     timeseries_values_list = []
     for timeseries_values in data:
