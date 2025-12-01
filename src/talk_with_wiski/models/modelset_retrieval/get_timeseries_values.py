@@ -50,6 +50,10 @@ class GetTimeseriesValuesInput(WiskiBaseModel):
         default=False,
         description="Option to get url instead of data in case of large data requests",
     )
+    include_quality_codes: Optional[bool] = Field(
+        default=False,
+        description="Option to include quality codes in the response",
+    )
 
     @model_validator(mode="after")
     def validate_exclusive_fields(self):
@@ -103,7 +107,8 @@ class GetTimeseriesValuesOutput(WiskiBaseModel):
     """Output model for GetTimeseriesValuesOutput tool."""
 
     timeseries_values_list: List[Timeseries] = Field(
-        ..., description="List of Timeseries objects with values"
+        ...,
+        description="List of Timeseries objects with values; if include_quality_codes is True, data includes quality code keys (which can be matched with quality code table)",
     )
     description: str = Field(..., description="Timeseries values")
     url: str = Field(

@@ -56,6 +56,11 @@ from talk_with_wiski.models.modelset_retrieval.get_metadata import (
     GetMetadataOutput,
 )
 
+from talk_with_wiski.models.modelset_retrieval.get_quality_code_table import (
+    GetQualityCodeTableInput,
+    GetQualityCodeTableOutput,
+)
+
 from talk_with_wiski.models.modelset_analysis.analyse_timeseries_trend import (
     AnalyseTimeseriesTrendInput,
     AnalyseTimeseriesTrendOutput,
@@ -109,6 +114,8 @@ __all__ = [
     "TimeseriesType",
     "GetMetadataInput",
     "GetMetadataOutput",
+    "GetQualityCodeTableInput",
+    "GetQualityCodeTableOutput",
     "AnalyseTimeseriesTrendInput",
     "AnalyseTimeseriesTrendOutput",
     "LinearTrendLine",

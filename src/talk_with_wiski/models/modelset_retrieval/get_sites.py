@@ -11,7 +11,8 @@ class GetSitesInput(WiskiBaseModel):
 
     site_no: Optional[List[str]] = Field(
         default=None,
-        description="Name of station (station_no). Total to return smaller than 5",
+        description="Name of station (station_no). Total to return smaller than 5"
+        "List of 1 or more, * as wildcard is allowed.",
     )
     site_id: Optional[List[int]] = Field(
         default=None,

@@ -108,11 +108,11 @@ async def test_getlocations_by_bbox(test_context):
     reason="Kan alleen lokaal getest worden",
 )
 @pytest.mark.asyncio
-async def test_getlocations_by_geocodeing(test_context):
+async def test_getlocations_by_geocoding(test_context):
     logger.debug("Test 5: stations, using a geocoding")
 
     input = GetLocationsInput(
-        requested_geolocation=["Loon op Zand", 5.0],
+        requested_geolocation=["Loon op Zand", 50.0],
         returnfields="station_id,station_name,station_latitude,station_longitude",
     )
     output: GetLocationsOutput = await get_locations(test_context, input)
@@ -121,6 +121,30 @@ async def test_getlocations_by_geocodeing(test_context):
     logger.debug(len(output.data))
 
 
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Kan alleen lokaal getest worden",
+)
+@pytest.mark.asyncio
+async def test_getlocations_using_wildcard_as_url(test_context):
+    logger.debug("Test 6: test_getlocations_by_station_no_wildcard_as_url")
+
+    input = GetLocationsInput(
+        # station_no=["*PMP*","*BEN*","*diver*"],
+        station_name=["*debiet*", "*BEN*"],
+        returnfields="station_id,station_name,station_no,station_latitude,station_longitude",
+        max_number_of_station_ids=20,
+        get_as_url=True,
+    )
+    output: GetLocationsOutput = await get_locations(test_context, input)
+    assert len(output.data) == 20
+    # print(output.data)
+    # print(output.model_dump())
+    logger.debug(output.model_dump()["url"])
+
+
 if __name__ == "__main__":
     asyncio.run(test_getlocations_by_station_id_list(test_context()))
     asyncio.run(test_getlocations_by_bbox(test_context()))
+    asyncio.run(test_getlocations_by_geocoding(test_context()))
+    asyncio.run(test_getlocations_using_wildcard_as_url(test_context()))

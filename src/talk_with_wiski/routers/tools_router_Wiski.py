@@ -21,6 +21,8 @@ from talk_with_wiski.models import (
     # TimeseriesType,
     GetMetadataInput,
     GetMetadataOutput,
+    GetQualityCodeTableInput,
+    GetQualityCodeTableOutput,
     AnalyseTimeseriesTrendInput,
     AnalyseTimeseriesTrendOutput,
     # LinearTrendLine,
@@ -53,6 +55,9 @@ from talk_with_wiski.tools import (
     get_metadata as get_metadata_pydantic_ai,
 )
 from talk_with_wiski.tools import (
+    get_quality_code_table as get_quality_code_table_pydantic_ai,
+)
+from talk_with_wiski.tools import (
     analyse_timeseries_statistics as get_analyse_timeseries_statistics_pydantic_ai,
 )
 from talk_with_wiski.tools import (
@@ -79,7 +84,9 @@ mcp = FastMCP(name="Wiski")
 # describe_timeseries tool registration
 @mcp.tool()
 @router.post("/tools/get_locations")
-@auto_docstring("Retrieves the locations from the WISKI API")
+@auto_docstring(
+    "Retrieves the locations from the WISKI API. May contain * as wildcard for some parameters"
+)
 async def get_locations(
     input: GetLocationsInput,
 ) -> GetLocationsOutput:
@@ -99,7 +106,9 @@ async def get_parameters(
 
 @mcp.tool()
 @router.post("/tools/get_sites")
-@auto_docstring("Retrieves the sites information from the WISKI API")
+@auto_docstring(
+    "Retrieves the sites information from the WISKI API. May contain * as wildcard for some parameters"
+)
 async def get_sites(
     input: GetSitesInput,
 ) -> GetSitesOutput:
@@ -109,7 +118,9 @@ async def get_sites(
 
 @mcp.tool()
 @router.post("/tools/get_group_list")
-@auto_docstring("Retrieves the group list from the WISKI API")
+@auto_docstring(
+    "Retrieves the group list from the WISKI API. May contain * as wildcard for some parameters"
+)
 async def get_group_list(
     input: GetGroupListInput,
 ) -> GetGroupListOutput:
@@ -119,7 +130,9 @@ async def get_group_list(
 
 @mcp.tool()
 @router.post("/tools/get_parametertype_list")
-@auto_docstring("Retrieves the parametertype list from the WISKI API")
+@auto_docstring(
+    "Retrieves the parametertype list from the WISKI API. May contain * as wildcard for some parameters"
+)
 async def get_parametertype_list(
     input: GetParametertypeListInput,
 ) -> GetParametertypeListOutput:
@@ -140,8 +153,20 @@ async def get_metadata(
 
 
 @mcp.tool()
+@router.post("/tools/get_quality_code_table")
+@auto_docstring("Dictionary of quality codes from the WISKI API")
+async def get_quality_code_table(
+    input: GetQualityCodeTableInput,
+) -> GetQualityCodeTableOutput:
+    ctx = get_runtime_ctx()
+    return await get_quality_code_table_pydantic_ai(ctx, input)
+
+
+@mcp.tool()
 @router.post("/tools/get_timeseries_list")
-@auto_docstring("Retrieves the available timeseries from the WISKI API")
+@auto_docstring(
+    "Retrieves the available timeseries from the WISKI API. May contain * as wildcard for some parameters"
+)
 async def get_timeseries_list(
     input: GetTimeseriesListInput,
 ) -> GetTimeseriesListOutput:

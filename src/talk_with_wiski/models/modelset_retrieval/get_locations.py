@@ -15,7 +15,13 @@ class GetLocationsInput(WiskiBaseModel):
     )
     station_no: Optional[List[str]] = Field(
         default=None,
-        description="Name of station (station_no). Total to return smaller than 5",
+        description="Name of station (station_no). Total to return smaller than 5"
+        "List of 1 or more, * as wildcard is allowed.",
+    )
+    station_name: Optional[List[str]] = Field(
+        default=None,
+        description="Name of station (station_name). Total to return smaller than 5"
+        "List of 1 or more, * as wildcard is allowed.",
     )
     station_id: Optional[List[int]] = Field(
         default=None,
@@ -33,6 +39,10 @@ class GetLocationsInput(WiskiBaseModel):
         default="station_no,station_id,station_name,station_latitude,station_longitude,site_id,site_name,parametertype_id,stationparameter_name,stationparameter_id,object_type,object_type_shortname",
         description="Returnfields from API as string",
     )
+    get_as_url: Optional[bool] = Field(
+        default=False,
+        description="Option to get url instead of data in case of large data requests",
+    )
     bbox: Optional[List[float]] = Field(default=None, description="bbox to clip data")
 
     # def validate_bbox():
@@ -43,3 +53,4 @@ class GetLocationsInput(WiskiBaseModel):
 class GetLocationsOutput(WiskiBaseModel):
     data: List[Dict[str, str]] = Field(..., description="data dictionary")
     description: str = Field(..., description="Table relationships")
+    url: str = Field(..., description="URL to retrieve large data sets")

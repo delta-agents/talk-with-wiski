@@ -46,11 +46,11 @@ async def get_parameters(ctx, input: GetParametersInput) -> GetParametersOutput:
         else:
             params["site_no"] = input.site_no
 
-    # if input.parametertype_name is not None:
-    #     if isinstance(input.parametertype_name, list):
-    #         params['parametertype_name'] = ','.join(input.parametertype_name)
-    #     else:
-    #         params['parametertype_name'] = input.parametertype_name
+    if input.parametertype_name is not None:
+        if isinstance(input.parametertype_name, list):
+            params["parametertype_name"] = ",".join(input.parametertype_name)
+        else:
+            params["parametertype_name"] = input.parametertype_name
 
     # request data
     logger.debug(f"Requesting data from {endpoint} with params {params}")

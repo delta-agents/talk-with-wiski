@@ -62,6 +62,9 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     if getattr(input, "station_no", None):
         endpoint += "&station_no=" + ",".join(map(str, input.station_no))
 
+    if getattr(input, "station_name", None):
+        endpoint += "&station_name=" + ",".join(map(str, input.station_name))
+
     if getattr(input, "bbox", None):
         endpoint += "&bbox=" + ",".join(map(str, input.bbox))
 
@@ -125,7 +128,22 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
 
     logger.debug("filtered count:", len(filtered_data))
 
-    return GetLocationsOutput(data=filtered_data, description="Data from KiWIS API")
+    if input.get_as_url:
+        # only return URL
+        return GetLocationsOutput(
+            data=filtered_data,
+            description="Reduced data in locations output, use provided URL to retrieve full dataset",
+            url=endpoint,
+        )
+
+    else:
+        return GetLocationsOutput(
+            data=filtered_data,
+            description="Locations obtained from KiWIS API",
+            url="",
+        )
+
+    # return GetLocationsOutput(data=filtered_data, description="Data from KiWIS API")
 
 
 def do_geocode(address, geolocator, attempt=1, max_attempts=10):

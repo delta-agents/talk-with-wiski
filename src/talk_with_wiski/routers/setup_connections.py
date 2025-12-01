@@ -40,9 +40,9 @@ def get_runtime_ctx() -> RunContext:
 
     # TODO: later nog toevoegen aan de environmental variables?
     if _url is None:
-        _url = os.environ.get("WEB_SERVICE_URL", "http://vpweb600.wsbd.nl:8080/KiWIS/")
+        _url = os.environ.get("WISKI_URL", "http://vpweb600.wsbd.nl:8080/KiWIS/")
 
-    # TODO: later nog toevoegen
+    # TODO: wellicht later nog toevoegen?
     if _cache_database_db is None and not disable_cache_db:
         _cache_database_db = duckdb.connect(database=":memory:", read_only=False)
         # _cache_database_db.execute("INSTALL spatial;")
