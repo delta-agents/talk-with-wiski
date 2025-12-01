@@ -134,11 +134,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-documentatie">    
         <li>
     <a class="dropdown-item" href="../../examples/notebooks/talk_with_wiski_tools.html">
- <span class="dropdown-text">Talk with WISKI</span></a>
+ <span class="dropdown-text">Talk with WISKI - tools</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../examples/notebooks/analyse_timeseries_futher_examples.html">
  <span class="dropdown-text">Analyse van Tijdseries</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../examples/notebooks/talk_with_wiski_agent.html">
+ <span class="dropdown-text">Talk with WISKI - Agent</span></a>
   </li>  
     </ul>
   </li>
@@ -325,6 +329,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(merged_list[<span class="dv">0</span>])</span>
 <span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(ts_id_list), <span class="bu">len</span>(site_no_list), <span class="bu">len</span>(merged_list))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># all_keys = set().union(*(d.keys() for d in ts_metadata_list_of_dicts.data))</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># all_keys = set().union(*(d.keys() for d in site_metadata_list_of_dicts.data))</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>all_keys <span class="op">=</span> <span class="bu">set</span>().union(<span class="op">*</span>(d.keys() <span class="cf">for</span> d <span class="kw">in</span> station_metadata_list_of_dicts.data))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>all_keys</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mydict <span class="op">=</span> ts_metadata_list_of_dicts.data[<span class="dv">0</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mydict</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key <span class="kw">in</span> <span class="bu">sorted</span>(mydict):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    value <span class="op">=</span> mydict[key]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(value, <span class="bu">str</span>):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> <span class="ss">f"'</span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">'"</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">': </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.models <span class="im">import</span> GetTimeseriesListInput, GetTimeseriesListOutput</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_input <span class="op">=</span> GetTimeseriesListInput(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    parametertype_name<span class="op">=</span><span class="st">"WNS*"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># parametertype_name=['WNS9688','WNS1919','WNS8487'],</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># parametertype_name=["WNS8487"],</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    returnfields<span class="op">=</span><span class="st">"station_name,station_no,station_id,ts_id,ts_name,parametertype_id,parametertype_name,ts_type_id,ts_type_name"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_output: GetTimeseriesListOutput <span class="op">=</span> <span class="cf">await</span> get_timeseries_list(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    ctx, get_timeseries_list_input</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> get_timeseries_list_output.model_dump()</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>ts_id_list <span class="op">=</span> <span class="bu">list</span>({x[<span class="st">"ts_id"</span>] <span class="cf">for</span> x <span class="kw">in</span> data[<span class="st">"data"</span>]})</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ts_id_list)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>ts_id_list <span class="op">=</span> ts_id_list[:<span class="dv">10</span>]  <span class="co"># reduce to first 10</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>ts_ids_string <span class="op">=</span> <span class="st">","</span>.join(ts_id_list)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ts_ids_string)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

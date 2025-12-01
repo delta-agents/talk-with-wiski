@@ -134,11 +134,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu" aria-labelledby="nav-menu-documentatie">    
         <li>
     <a class="dropdown-item" href="../../examples/notebooks/talk_with_wiski_tools.html">
- <span class="dropdown-text">Talk with WISKI</span></a>
+ <span class="dropdown-text">Talk with WISKI - tools</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../examples/notebooks/analyse_timeseries_futher_examples.html">
  <span class="dropdown-text">Analyse van Tijdseries</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../examples/notebooks/talk_with_wiski_agent.html">
+ <span class="dropdown-text">Talk with WISKI - Agent</span></a>
   </li>  
     </ul>
   </li>
@@ -217,15 +221,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> talk_with_wiski.tools <span class="im">import</span> get_timeseries_list, analyse_timeseries_availability</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_input <span class="op">=</span> GetTimeseriesListInput(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    station_no<span class="op">=</span><span class="st">"BRE0301_PMP1"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    parametertype_name<span class="op">=</span><span class="st">"WNS11872"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_output: GetTimeseriesListOutput <span class="op">=</span> <span class="cf">await</span> get_timeseries_list(</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ctx, get_timeseries_list_input</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ts_id <span class="op">=</span> get_timeseries_list_output.data[<span class="dv">0</span>][<span class="st">"ts_id"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    parametertype_name<span class="op">=</span><span class="st">"WNS*"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># parametertype_name="WNS11872",</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>get_timeseries_list_output: GetTimeseriesListOutput <span class="op">=</span> <span class="cf">await</span> get_timeseries_list(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ctx, get_timeseries_list_input</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ts_id <span class="op">=</span> [val[<span class="st">"ts_id"</span>] <span class="cf">for</span> val <span class="kw">in</span> get_timeseries_list_output.data]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ts_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for statistics and trend, same object can be used</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>input_analyse_timeseries_availability <span class="op">=</span> AnalyseTimeseriesAvailabilityInput(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ts_id<span class="op">=</span>ts_id,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ts_id<span class="op">=</span>ts_id[<span class="dv">0</span>],</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    from_date<span class="op">=</span><span class="st">"2023-11-01"</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    period<span class="op">=</span><span class="st">"P3M"</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
