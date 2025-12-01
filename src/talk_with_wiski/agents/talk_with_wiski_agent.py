@@ -118,7 +118,8 @@ class WISKIAgent:
         if base_url:
             logger.info(f"Using custom base URL: {base_url}")
 
-        # Create agent with tools
+        # Dit is een manier om de tools toe te voegen aan de agent
+        # scripts/mcp_to_agent.py genereert deze code automatisch in scripts/generated_tools.py
         self.agent = Agent(
             model=model,
             system_prompt=system_prompt,
@@ -211,7 +212,15 @@ class WISKIAgent:
                 ),
             ],
         )
-
+        # Andere mogelijkheid, maar dan moet de mcp server draaien
+        # from pydantic_ai.toolsets.fastmcp import FastMCPToolset
+        # toolset = FastMCPToolset('http://localhost:8000/mcp')
+        # self.agent = Agent(
+        #     model=model,
+        #     system_prompt=system_prompt,
+        #     output_type=AgentResponse,
+        #     tools=[toolset]
+        # )
         # Initialize deps with database path
         self.deps = Deps(url=self.url)
 
