@@ -45,3 +45,16 @@ quartodoc:
     contents:
     - get_locations
     - get_parameters
+    - get_group_list
+    - get_parameters
+    - get_parametertype_list
+    - get_timeseries_list
+    - get_timeseries_values
+    - get_timeseries_type
+    - get_metadata
+    - get_quality_code_table
+    - analyse_timeseries_statistics
+    - analyse_timeseries_thresholds
+    - analyse_timeseries_trend
+    - analyse_timeseries_availability
+    - analyse_timeseries_quality_code
