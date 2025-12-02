@@ -1,0 +1,11 @@
+---
+title: "Demo"
+---
+
+## Talk with WISKI
+{{< video https://www.youtube.com/embed/hz2koRkz9KU >}}
+
+
+### Zelf proberen?
+
+Zie [hier](MCP_instalatie.qmd) het stappenplan.

@@ -2,7 +2,7 @@
 title: "Talk with WISKI"
 ---
 
-Documentatie voor Talk with WISKI.
+Documentatie & demo voor de Delta Agent: Talk with WISKI.
 
 Overzicht van de uitgewerkte endpoints is [overzicht_endpoints.qmd] is hier te vinden.
 
