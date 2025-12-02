@@ -2,7 +2,7 @@
 title: "Demo"
 ---
 
-## Talk with WISKI 
+## Talk with WISKI
 {{< video https://www.youtube.com/embed/hz2koRkz9KU >}}
 
 
