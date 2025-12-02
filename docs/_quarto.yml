@@ -6,6 +6,8 @@ website:
   title: "Talk with WISKI"
   navbar:
     left:
+    - text: "Demo"
+      menu:
     - text: "Documentatie"
       menu:
       - examples/notebooks/talk_with_wiski_tools.ipynb
