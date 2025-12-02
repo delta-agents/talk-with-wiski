@@ -28,17 +28,8 @@ Voeg de volgende configuratie toe:
 {
     "servers": {
       // test servers
-      "talk-with-wiski-webservice-test":{
-        "url": "https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithWebservice"
-
-      },
-      "talk-with-wiski-config-test":{
-        "url": "https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithConfig"
-
-      },
-      "talk-with-wiski-validator-test":{
-        "url": "https://talk-with-wiski-api-test.hkvservices.nl/mcp/TalkWithValidator"
-
+      "local-wiski-docker":{
+        "url": "http://localhost:8000/mcp/wiski"
       },
     }
   }
