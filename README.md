@@ -40,7 +40,7 @@ Here are a couple quick useful things to know when using this repo.
 
 `pixi run start`
 
-check if the docs are runnning: http://localhost:8000/docs  \
+check if sever is running by viewing the docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 In `.\vscode\mcp.json` start the server.
 
