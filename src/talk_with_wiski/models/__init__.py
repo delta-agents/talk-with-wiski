@@ -88,6 +88,10 @@ from talk_with_wiski.models.modelset_analysis.analyse_timeseries_quality_code im
     AnalyseTimeseriesQualityCodeInput,
     AnalyseTimeseriesQualityCodeOutput,
 )
+from talk_with_wiski.models.modelset_retrieval.get_current_time import (
+    GetCurrentTimeInput,
+    GetCurrentTimeOutput,
+)
 
 __all__ = [
     "AddIndexInput",
@@ -129,4 +133,6 @@ __all__ = [
     "AnalyseTimeseriesAvailabilityOutput",
     "AnalyseTimeseriesQualityCodeInput",
     "AnalyseTimeseriesQualityCodeOutput",
+    "GetCurrentTimeInput",
+    "GetCurrentTimeOutput"
 ]
