@@ -75,8 +75,7 @@ from talk_with_wiski.tools import (
     analyse_timeseries_availability as get_analyse_timeseries_availability_pydantic_ai,
 )
 
-from talk_with_wiski.tools import (
-    get_current_time as get_current_time_pydantic_ai)
+from talk_with_wiski.tools import get_current_time as get_current_time_pydantic_ai
 
 
 # Import tool functions and their models

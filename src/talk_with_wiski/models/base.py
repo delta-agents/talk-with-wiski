@@ -100,3 +100,4 @@ class Deps:
         self.url = url
         self.tracker = tracker
         self.cache_database_db: Optional[duckdb.DuckDBPyConnection] = None
+        self.object_type_shortname: Optional[str] | None = None

@@ -45,7 +45,11 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
     #  you can access any context added to the ctx: Deps object
     ctx.deps.cache_database_db
     url = ctx.deps.url
-
+    object_type_shortname = (
+        ctx.deps.object_type_shortname
+        if hasattr(ctx.deps, "object_type_shortname")
+        else "*"
+    )
     # base url
     endpoint = (
         url
@@ -95,7 +99,8 @@ async def get_locations(ctx, input: GetLocationsInput) -> GetLocationsOutput:
         endpoint += "&bbox=" + ",".join(map(str, loc_bbox))
 
     # filter on WSBDstations by default
-    endpoint += "&object_type_shortname=WSBD_*"
+    # object_type_shortname=WSBD_*
+    endpoint += f"&object_type_shortname={object_type_shortname}"
 
     # For debugging
     logger.debug(endpoint)

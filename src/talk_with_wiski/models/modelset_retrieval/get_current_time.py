@@ -7,8 +7,6 @@ class GetCurrentTimeInput(WiskiBaseModel):
     Input model for get_current_time tool.
     """
 
-    
-
 
 class GetCurrentTimeOutput(WiskiBaseModel):
     """

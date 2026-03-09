@@ -134,5 +134,5 @@ __all__ = [
     "AnalyseTimeseriesQualityCodeInput",
     "AnalyseTimeseriesQualityCodeOutput",
     "GetCurrentTimeInput",
-    "GetCurrentTimeOutput"
+    "GetCurrentTimeOutput",
 ]

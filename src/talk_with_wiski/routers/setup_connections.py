@@ -52,4 +52,5 @@ def get_runtime_ctx() -> RunContext:
     deps = Deps(url=_url)
     # for now this is limited to the session
     deps.cache_database_db = _cache_database_db
+    deps.object_type_shortname = os.environ.get("OBJECT_TYPE_SHORTNAME", None)
     return CtxWithDeps(deps)
