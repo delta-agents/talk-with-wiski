@@ -1,5 +1,7 @@
 from fastapi import APIRouter
 from fastmcp import FastMCP
+from fastmcp.server.auth.providers.jwt import StaticTokenVerifier
+
 from talk_with_wiski.utils.docstring_generator import auto_docstring
 from talk_with_wiski.models import (
     GetLocationsInput,
@@ -79,11 +81,13 @@ from talk_with_wiski.tools import get_current_time as get_current_time_pydantic_
 
 
 # Import tool functions and their models
-from talk_with_wiski.routers.setup_connections import get_runtime_ctx
+from talk_with_wiski.routers.setup_connections import get_runtime_ctx, get_user_settings, setup_env
 
+tokens = setup_env()
+verifier = StaticTokenVerifier(tokens=tokens, required_scopes=["read:data"])
 
 router = APIRouter()
-mcp = FastMCP(name="Wiski")
+mcp = FastMCP(name="Wiski", auth=verifier)
 
 
 # describe_timeseries tool registration
@@ -95,7 +99,8 @@ mcp = FastMCP(name="Wiski")
 async def get_locations(
     input: GetLocationsInput,
 ) -> GetLocationsOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_locations_pydantic_ai(ctx, input)
 
 
@@ -105,7 +110,8 @@ async def get_locations(
 async def get_parameters(
     input: GetParametersInput,
 ) -> GetParametersOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_parameters_pydantic_ai(ctx, input)
 
 
@@ -117,7 +123,8 @@ async def get_parameters(
 async def get_sites(
     input: GetSitesInput,
 ) -> GetSitesOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_sites_pydantic_ai(ctx, input)
 
 
@@ -129,7 +136,8 @@ async def get_sites(
 async def get_group_list(
     input: GetGroupListInput,
 ) -> GetGroupListOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_group_list_pydantic_ai(ctx, input)
 
 
@@ -141,7 +149,8 @@ async def get_group_list(
 async def get_parametertype_list(
     input: GetParametertypeListInput,
 ) -> GetParametertypeListOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_parametertype_list_pydantic_ai(ctx, input)
 
 
@@ -153,7 +162,8 @@ async def get_parametertype_list(
 async def get_metadata(
     input: GetMetadataInput,
 ) -> GetMetadataOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_metadata_pydantic_ai(ctx, input)
 
 
@@ -163,7 +173,8 @@ async def get_metadata(
 async def get_quality_code_table(
     input: GetQualityCodeTableInput,
 ) -> GetQualityCodeTableOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_quality_code_table_pydantic_ai(ctx, input)
 
 
@@ -175,7 +186,8 @@ async def get_quality_code_table(
 async def get_timeseries_list(
     input: GetTimeseriesListInput,
 ) -> GetTimeseriesListOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_timeseries_list_pydantic_ai(ctx, input)
 
 
@@ -185,7 +197,8 @@ async def get_timeseries_list(
 async def get_timeseries_type(
     input: GetTimeseriesTypeInput,
 ) -> GetTimeseriesTypeOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_timeseries_type_pydantic_ai(ctx, input)
 
 
@@ -199,7 +212,8 @@ async def get_timeseries_type(
 async def get_timeseries_values(
     input: GetTimeseriesValuesInput,
 ) -> GetTimeseriesValuesOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_timeseries_values_pydantic_ai(ctx, input)
 
 
@@ -213,7 +227,8 @@ async def get_timeseries_values(
 async def analyse_timeseries_statistics(
     input: AnalyseTimeseriesStatsInput,
 ) -> AnalyseTimeseriesStatsOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_analyse_timeseries_statistics_pydantic_ai(ctx, input)
 
 
@@ -227,7 +242,8 @@ async def analyse_timeseries_statistics(
 async def analyse_timeseries_thresholds(
     input: AnalyseTimeseriesThresholdsInput,
 ) -> AnalyseTimeseriesThresholdsOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_analyse_timeseries_thresholds_pydantic_ai(ctx, input)
 
 
@@ -241,7 +257,8 @@ async def analyse_timeseries_thresholds(
 async def analyse_timeseries_trend(
     input: AnalyseTimeseriesTrendInput,
 ) -> AnalyseTimeseriesTrendOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_analyse_timeseries_trend_pydantic_ai(ctx, input)
 
 
@@ -251,7 +268,8 @@ async def analyse_timeseries_trend(
 async def analyse_timeseries_availability(
     input: AnalyseTimeseriesAvailabilityInput,
 ) -> AnalyseTimeseriesAvailabilityOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_analyse_timeseries_availability_pydantic_ai(ctx, input)
 
 
@@ -265,7 +283,8 @@ async def analyse_timeseries_availability(
 async def analyse_timeseries_quality_code(
     input: AnalyseTimeseriesQualityCodeInput,
 ) -> AnalyseTimeseriesQualityCodeOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_analyse_timeseries_quality_code_pydantic_ai(ctx, input)
 
 
@@ -277,5 +296,6 @@ async def analyse_timeseries_quality_code(
 async def get_current_time(
     input: GetCurrentTimeInput,
 ) -> GetCurrentTimeOutput:
-    ctx = get_runtime_ctx()
+    user_settings: dict = get_user_settings(verifier)
+    ctx = get_runtime_ctx(user_settings)
     return await get_current_time_pydantic_ai(ctx, input)

@@ -27,3 +27,5 @@ data/*
 .vscode/settings.json
 # logging
 *.log
+.vscode/mcp.json
+env/.static_tokens.json

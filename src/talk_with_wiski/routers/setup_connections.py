@@ -1,8 +1,11 @@
 import json
 import os
 from pathlib import Path
+import warnings
 from dotenv import load_dotenv
+from requests import Request
 from pydantic_ai import RunContext
+from fastmcp.server.dependencies import get_http_request
 from talk_with_wiski.models.base import Deps
 import duckdb
 
@@ -26,7 +29,37 @@ def setup_env():
     )
 
 
-def get_runtime_ctx() -> RunContext:
+def get_user_settings(verifier) -> dict:
+    """ "
+    Extract user settings from the Authorization header using the provided verifier.
+    This allows the user tools to have user specific settings
+    """
+    # maybe could be improved using `get_access_token` from `fastmcp.server.dependencies`
+    try:
+        request: Request = get_http_request()
+    except RuntimeError as e:
+        # allow debugging and testing without an HTTP request context
+        warnings.warn(
+            f"Failed to get HTTP request context {e}, reverting to environment variables."
+        )
+    else:
+        authorization = request.headers.get("Authorization", None)
+        if authorization is not None and authorization.startswith("Bearer "):
+            authorization = authorization[len("Bearer ") :]
+            user_settings = verifier.tokens[authorization]
+        else:
+            raise ValueError("Missing or invalid Authorization header")
+
+    # Validate WISKI_URL before returning
+    wiski_url = user_settings.get("WISKI_URL")
+    if not wiski_url:
+        raise ValueError(
+            "WISKI_URL not configured in user settings. "
+            "Please check your authentication token configuration."
+        )
+    return user_settings
+
+def get_runtime_ctx(user_settings) -> RunContext:
     """
     Returns a RunContext[Deps] with a shared database connection and schema.
     Uses DB_PATH env var or defaults to './database.db'.
@@ -40,7 +73,7 @@ def get_runtime_ctx() -> RunContext:
 
     # TODO: later nog toevoegen aan de environmental variables?
     if _url is None:
-        _url = os.environ.get("WISKI_URL", "http://vpweb600.wsbd.nl:8080/KiWIS/")
+        _url = user_settings.get("WISKI_URL", "")
 
     # TODO: wellicht later nog toevoegen?
     if _cache_database_db is None and not disable_cache_db:
@@ -52,5 +85,5 @@ def get_runtime_ctx() -> RunContext:
     deps = Deps(url=_url)
     # for now this is limited to the session
     deps.cache_database_db = _cache_database_db
-    deps.object_type_shortname = os.environ.get("OBJECT_TYPE_SHORTNAME", None)
+    deps.object_type_shortname = user_settings.get("OBJECT_TYPE_SHORTNAME", None)
     return CtxWithDeps(deps)

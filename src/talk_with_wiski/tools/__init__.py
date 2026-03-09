@@ -1,7 +1,3 @@
-# Example tools
-from talk_with_wiski.tools.toolset_1.example1 import add_index
-from talk_with_wiski.tools.toolset_2.example2 import example2
-
 # Actual tools
 from talk_with_wiski.tools.toolset_retrieval.get_locations import get_locations
 from talk_with_wiski.tools.toolset_retrieval.get_sites import get_sites
@@ -46,8 +42,6 @@ from talk_with_wiski.tools.toolset_retrieval.get_current_time import (
 
 __all__ = [
     # dummy/example tools
-    add_index,
-    example2,
     # real tools:
     get_locations,
     get_sites,
